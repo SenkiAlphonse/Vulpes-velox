@@ -17,6 +17,23 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void save(Product product) {
-    productRepository.save(product);
+    if(!existsByName(product.getName())) {
+      productRepository.save(product);
+    }
+  }
+
+  @Override
+  public void deleteAll() {
+    productRepository.deleteAll();
+  }
+
+  @Override
+  public boolean existsByName(String name) {
+    return productRepository.existsByName(name);
+  }
+
+  @Override
+  public Product getByName(String name) {
+    return productRepository.findByName(name);
   }
 }
