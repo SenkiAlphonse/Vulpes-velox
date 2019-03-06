@@ -28,3 +28,9 @@ CREATE TABLE shipments (
   best_before         VARCHAR(255),
   bulk_product_id VARCHAR(255)
 );
+
+CREATE TABLE orders (
+  id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name                VARCHAR(255),
+  date                VARCHAR(255)
+);
