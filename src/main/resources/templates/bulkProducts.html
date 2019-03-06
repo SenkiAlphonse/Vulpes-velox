@@ -11,6 +11,42 @@
 <body>
 <div class="container">
 
+    <!----------------------Bulk products table------------------------------------->
+    <table class="table table-borderless">
+
+        <tr>
+            <th>Bulk Product Name</th>
+            <th>Quantity</th>
+            <th>Arrival</th>
+            <th>Best before</th>
+        </tr>
+        <div th:each="shipment : ${shipments}">
+            <tr class="bg-light mb-3">
+                <td>
+                    <h2>
+                        <div th:text="${shipment.getBulkProduct().getName()}" class="badge badge-info"></div>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <div th:text="${shipment.getQuantity()}" class="badge badge-info"></div>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <div th:text="${shipment.getArrival()}" class="badge badge-info"></div>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <div th:text="${shipment.getBestBefore()}" class="badge badge-info"></div>
+                    </h2>
+                </td>
+            </tr>
+        </div>
+</div>
+</div>
+</table>
 
 </div>
 <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>

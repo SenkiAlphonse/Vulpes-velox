@@ -2,6 +2,7 @@ package com.vulpes.velox.models;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "shipments")
@@ -12,9 +13,9 @@ public class Shipment {
   private Long id;
 
   private Long quantity;
-  private Instant arrival;
+  private LocalDate arrival;
   @Column(name = "best_before")
-  private Instant bestBefore;
+  private LocalDate bestBefore;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "bulk_product_id")
@@ -36,19 +37,19 @@ public class Shipment {
     this.quantity = quantity;
   }
 
-  public Instant getArrival() {
+  public LocalDate getArrival() {
     return arrival;
   }
 
-  public void setArrival(Instant arrival) {
+  public void setArrival(LocalDate arrival) {
     this.arrival = arrival;
   }
 
-  public Instant getBestBefore() {
+  public LocalDate getBestBefore() {
     return bestBefore;
   }
 
-  public void setBestBefore(Instant bestBefore) {
+  public void setBestBefore(LocalDate bestBefore) {
     this.bestBefore = bestBefore;
   }
 

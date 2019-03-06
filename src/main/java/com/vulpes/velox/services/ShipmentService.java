@@ -2,12 +2,15 @@ package com.vulpes.velox.services;
 
 import com.vulpes.velox.models.Shipment;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.util.List;
 
 public interface ShipmentService {
 
   void save(Shipment shipment);
 
-  Instant getInstantFromDateString(String date);
+  LocalDate getLocalDateFromDateString(String date);
+
+  List<Shipment> getAll();
 
 }
