@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link th:href="@{/styles.css}" rel="stylesheet" type="text/css" media="all"/>
+    <meta charset="UTF-8">
+    <title>New product</title>
+</head>
+<body>
+<div class="container">
+    <!----------------------Users table------------------------------------->
+    <table class="table table-borderless">
+        <tr>
+            <th><h3>ID</h3></th>
+            <th><h3>E-mail</h3></th>
+        </tr>
+        <div th:each="user : ${users}">
+            <tr class="bg-light mb-3">
+                <td>
+                    <form th:action="@{'/users/delete/' + ${user.getEmail()}}" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <h2>
+                        <div th:text="${user.getId()}" class="font-weight-bold"></div>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <div th:text="${user.getEmail()}" class="font-weight-bold"></div>
+                    </h2>
+                </td>
+            </tr>
+        </div>
+    </table>
+
+    <!-----------------------New user-------------------------------->
+    <form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
+          id="userNew">
+        <label for="newUserName">Name</label>
+        <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
+        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">Save user</span>
+        </button>
+    </form>
+
+</div>
+</body>
+</html>

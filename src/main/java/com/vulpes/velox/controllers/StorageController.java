@@ -50,7 +50,7 @@ public class StorageController {
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication) {
-    if (isAuthorized(authentication)){
+    if (userService.isAuthorized(authentication)){
     model.addAttribute("identifiedProducts", identifiedProductService.getAll());
     model.addAttribute("bulkProducts", bulkProductService.getAll());
     return "addProducts";}
@@ -72,19 +72,29 @@ public class StorageController {
     return "redirect:/storage/add";
   }
 
-  @PreAuthorize("hasEmail('the.nagy.kriszta@gmail.com')")
   @PostMapping("/deleteAll")
-  public String deleteAll() {
+  public String deleteAll(OAuth2Authentication authentication) {
+    if (userService.isAuthorized(authentication) && userService.isGod(authentication)){
     productService.deleteAll();
     return "redirect:/storage/add";
+    }
+    else {
+      throw new UnauthorizedException("Nice try but nope.");
+    }
   }
 
   @PostMapping("/item/new")
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
-                        @ModelAttribute(value = "itemNew") Item item) {
-    item.setIdentifiedProduct((IdentifiedProduct) productService.getByName(identifiedProductName));
-    itemService.save(item);
-    return "redirect:/storage/add";
+                        @ModelAttribute(value = "itemNew") Item item,
+                        OAuth2Authentication authentication) {
+    if (userService.isAuthorized(authentication)) {
+      item.setIdentifiedProduct((IdentifiedProduct) productService.getByName(identifiedProductName));
+      itemService.save(item);
+      return "redirect:/storage/add";
+    }
+    else {
+      throw new UnauthorizedException("Unauthorized_request");
+    }
   }
 
   @PostMapping("/shipment/new")
@@ -99,16 +109,4 @@ public class StorageController {
     shipmentService.save(shipment);
     return "redirect:/storage/add";
   }
-
-  Boolean isAuthorized(OAuth2Authentication authentication){
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
-    if (userService.findByEmail(userEmail)!=null) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
 }
