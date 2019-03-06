@@ -12,7 +12,7 @@
 <div class="container">
 
     <!-----------------------New bulk product-------------------------------->
-    <form action="#" th:action="@{/bulkProductNew}" th:object="${bulkProductNew}" method="post"
+    <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
           id="bulkProductNew">
         <label for="bulkProductNewNameId">Name</label>
         <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
@@ -21,7 +21,7 @@
     </form>
     <br>
     <!---------------------New identified product-------------------------------->
-    <form action="#" th:action="@{/identifiedProductNew}" th:object="${identifiedProductNew}" method="post"
+    <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
           id="identifiedProductNew">
         <label for="identifiedProductNewNameId">Name</label>
         <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
@@ -70,7 +70,7 @@
         <label for="bestBeforeToSet">Best before</label>
         <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
                pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-               title="Arrival date DD-MM-YYYY">>
+               title="Arrival date DD-MM-YYYY">
         <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false" name="bulkProductToSet">
             <div th:each="bulkProduct : ${bulkProducts}">
