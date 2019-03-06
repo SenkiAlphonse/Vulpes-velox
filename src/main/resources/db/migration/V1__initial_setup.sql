@@ -1,7 +1,3 @@
-CREATE TABLE product_ids (
-  product_id          BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL
-);
-
 CREATE TABLE identified_products (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name                VARCHAR(255)
@@ -24,7 +20,7 @@ CREATE TABLE items (
   identified_product_id  BIGINT
 );
 
-CREATE TABLE product_without_id_items (
+CREATE TABLE shipments (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   quantity            BIGINT,
   arrival             VARCHAR(255),

@@ -12,25 +12,78 @@
 <div class="container">
 
     <!-----------------------New bulk product-------------------------------->
-    <form action="#" th:action="@{/bulkProductNew}" th:object="${bulkProductNew}" method="post"
+    <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
           id="bulkProductNew">
         <label for="bulkProductNewNameId">Name</label>
         <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
-        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">ProductWithoutId</span>
+        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">bulk product</span>
         </button>
     </form>
     <br>
     <!---------------------New identified product-------------------------------->
-    <form action="#" th:action="@{/identifiedProductNew}" th:object="${identifiedProductNew}" method="post"
+    <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
           id="identifiedProductNew">
         <label for="identifiedProductNewNameId">Name</label>
         <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
-        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">ProductWithId</span>
+        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">identified product</span>
         </button>
     </form>
     <br>
     <br>
 
+    <!-----------------------Delete all products----------------------------------->
+    <form action="#" th:action="@{/deleteAll}" method="post">
+        <button type="submit" class="btn btn-danger">Delete <span class="badge badge-light"
+                                                                  id="delete">all products</span>
+        </button>
+    </form>
+    <br>
+    <br>
+    <!-----------------------Add item------------------------------------->
+    <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
+        <label for="number">Product number</label>
+        <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
+
+        <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false" name="identifiedProductToSet">
+            <div th:each="identifiedProduct : ${identifiedProducts}">
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" th:value="${identifiedProduct.getName()}">
+                        <p th:text="${identifiedProduct.getName()}"></p>
+                    </option>
+                </div>
+            </div>
+        </select>
+        <button type="submit" class="btn btn-primary">Add <span class="badge badge-light">item</span>
+        </button>
+    </form>
+    <br>
+    <br>
+    <!----------------------Add shipment--------------------------------------->
+    <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
+        <label for="quantity">Quantity</label>
+        <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
+        <label for="arrivalToSet">Arrival</label>
+        <input type="text" name="arrivalToSet" id="arrivalToSet"
+               pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
+               title="Arrival date DD-MM-YYYY">
+        <label for="bestBeforeToSet">Best before</label>
+        <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
+               pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
+               title="Arrival date DD-MM-YYYY">
+        <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false" name="bulkProductToSet">
+            <div th:each="bulkProduct : ${bulkProducts}">
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" th:value="${bulkProduct.getName()}">
+                        <p th:text="${bulkProduct.getName()}"></p>
+                    </option>
+                </div>
+            </div>
+        </select>
+        <button type="submit" class="btn btn-primary">Add <span class="badge badge-light">shipment</span>
+        </button>
+    </form>
 
 </div>
 <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
