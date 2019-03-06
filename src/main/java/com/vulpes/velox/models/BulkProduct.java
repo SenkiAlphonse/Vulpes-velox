@@ -11,13 +11,13 @@ import java.util.List;
 public class BulkProduct extends Product  {
 
   @OneToMany(mappedBy = "bulkProduct", cascade = CascadeType.REMOVE)
-  private List<BulkProductShipment> bulkProductShipments;
+  private List<Shipment> shipments;
 
-  public List<BulkProductShipment> getBulkProductShipments() {
-    return bulkProductShipments;
+  public List<Shipment> getShipments() {
+    return shipments;
   }
 
-  public void setBulkProductShipments(List<BulkProductShipment> bulkProductShipments) {
-    this.bulkProductShipments = bulkProductShipments;
+  public void setShipments(List<Shipment> shipments) {
+    this.shipments = shipments;
   }
 }

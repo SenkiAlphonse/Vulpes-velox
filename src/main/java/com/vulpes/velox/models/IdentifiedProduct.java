@@ -11,13 +11,13 @@ import java.util.List;
 public class IdentifiedProduct extends Product {
 
   @OneToMany(mappedBy = "identifiedProduct", cascade = CascadeType.REMOVE)
-  private List<IdentifiedProductItem> identifiedProductItems;
+  private List<Item> items;
 
-  public List<IdentifiedProductItem> getIdentifiedProductItems() {
-    return identifiedProductItems;
+  public List<Item> getItems() {
+    return items;
   }
 
-  public void setIdentifiedProductItems(List<IdentifiedProductItem> identifiedProductItems) {
-    this.identifiedProductItems = identifiedProductItems;
+  public void setItems(List<Item> items) {
+    this.items = items;
   }
 }

@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "bulk_product_shipments")
-public class BulkProductShipment {
+@Table(name = "shipments")
+public class Shipment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
