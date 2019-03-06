@@ -4,6 +4,7 @@ import com.vulpes.velox.models.BulkProduct;
 import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
+import com.vulpes.velox.services.IdentifiedProductService;
 import com.vulpes.velox.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,15 +12,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class StorageController {
 
   private ProductService productService;
+  private IdentifiedProductService identifiedProductService;
 
   @Autowired
-  public StorageController(ProductService productService) {
+  public StorageController(ProductService productService, IdentifiedProductService identifiedProductService) {
     this.productService = productService;
+    this.identifiedProductService = identifiedProductService;
   }
 
 
@@ -29,6 +33,7 @@ public class StorageController {
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
+    model.addAttribute("identifiedProducts", identifiedProductService.getAll());
     return "addProducts";
   }
 
@@ -49,6 +54,13 @@ public class StorageController {
   public String deleteAll() {
     productService.deleteAll();
     return "redirect:/storage/add";
+  }
+
+  @PostMapping("/addItem")
+  public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
+                        @ModelAttribute(value = "itemNew") Item item) {
+
+
   }
 
 }

@@ -8,5 +8,7 @@ public interface ProductService {
 
   void deleteAll();
 
+  boolean existsByName(String name);
+
 }
 

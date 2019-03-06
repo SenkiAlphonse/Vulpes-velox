@@ -45,11 +45,11 @@
         <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
 
         <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="false" aria-expanded="false" name="productWithIdSet">
-            <div th:each="productWithId : ${productsWithId}">
+                aria-haspopup="false" aria-expanded="false" name="identifiedProductToSet">
+            <div th:each="identifiedProduct : ${identifiedProducts}">
                 <div class="dropdown-menu">
-                    <option class="dropdown-item" th:value="${productWithId.getName()}">
-                        <p th:text="${productWithId.getName()}"></p>
+                    <option class="dropdown-item" th:value="${identifiedProduct.getName()}">
+                        <p th:text="${identifiedProduct.getName()}"></p>
                     </option>
                 </div>
             </div>
