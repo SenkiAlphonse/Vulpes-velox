@@ -6,9 +6,22 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
 </head>
 <body>
+<header>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/storage/add}">Add item</a></li>
+                <li><a th:href="@{/shipments}">Shipments</a></li>
+                <li><a th:href="@{/shipments}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="container">
     <!-----------------------New bulk product-------------------------------->
-            <h1>Add new item</h1>
+    <div class="add-product">
+        <div class="full-height"></div>
+            <h2>Add new item</h2>
             <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
                   id="bulkProductNew">
                 <label for="bulkProductNewNameId">Name</label>
@@ -17,18 +30,17 @@
             </form>
             <br>
     <!---------------------New identified product-------------------------------->
-        <div class="column">
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
             <label for="identifiedProductNewNameId">Name</label>
             <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
             <button type="submit">New identified product</button>
         </form>
-        </div>
+    </div>
     <br>
     <br>
     <!-----------------------Delete all products----------------------------------->
-        <div class="column">
+        <div class="delete">
         <form action="#" th:action="@{/deleteAll}" method="post">
             <button type="submit" class="delete">Delete all products</button>
         </form>
@@ -36,12 +48,13 @@
     <br>
     <br>
     <!-----------------------Add item------------------------------------->
+    <div class="add-item">
+        <div class="full-height"></div>
         <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
             <label for="number">Product number</label>
             <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
 
-            <select data-toggle="dropdown"
-                    aria-haspopup="false" aria-expanded="false" name="identifiedProductToSet">
+            <select name="identifiedProductToSet">
                 <div th:each="identifiedProduct : ${identifiedProducts}">
                     <div class="dropdown-menu">
                         <option class="dropdown-item" th:value="${identifiedProduct.getName()}">
@@ -52,8 +65,11 @@
             </select>
             <button type="submit">Add item</button>
         </form>
+    </div>
     <!----------------------Add shipment--------------------------------------->
-        <h1 class="section-two__title">Add shipment</h1>
+    <div class="add-shipment">
+        <div class="full-height"></div>
+    <h2>Add shipment</h2>
         <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
@@ -65,8 +81,7 @@
             <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
                    pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
                    title="Arrival date DD-MM-YYYY">
-            <select data-toggle="dropdown"
-                    aria-haspopup="false" aria-expanded="false" name="bulkProductToSet">
+            <select name="bulkProductToSet">
                 <div th:each="bulkProduct : ${bulkProducts}">
                     <div class="dropdown-menu">
                         <option class="dropdown-item" th:value="${bulkProduct.getName()}">
@@ -78,6 +93,7 @@
             <button type="submit">Add shipment</span>
             </button>
         </form>
-</div>
+    </div>
+    </div>
 </body>
 </html>

@@ -8,40 +8,98 @@ html {
     font-size: 1rem;
     text-decoration: none;
     color: black;
-    font-family: Arial;
+}
+
+.container {
+    overflow: auto;
+    color: #fff;
+}
+
+.container:before {
+    content: "";
+    position: fixed;
+    left: -5%;
+    right: -5%;
+    z-index: -1;
+
+    display: block;
+    background-image: url(background.jpg);
+    background-size:cover;
+    width: 110%;
+    height: 110%;
+
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+}
+
+.nav-container {
+    width: 80%;
+    margin: 0 auto;
 }
 
 header {
-    width: 100%;
-    z-index: 1;
-    padding: 1rem;
-    box-sizing: border-box;
-    background-color: #333;
-    color: white;
-    box-shadow: 1px 1px 3px rgba(0,0,0, .5);
+    background: #333;
+    padding-bottom: 5px;
+}
+
+header::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+nav {
+    float: right;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: bold;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 70px;
+    padding-top: 23px;
+
+    position: relative;
+}
+
+nav a {
+    color: #c7c7c7;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #dedede;
+}
+
+nav a::before {
+    content: '';
     display: block;
+    height: 5px;
+    background-color: #c7c7c7;
+
+    position: absolute;
+    top: 0;
+    width: 0;
+
+    transition: all ease-in-out 250ms;
 }
 
-header a {
-    color: #eee;
-}
-
-header a:hover {
-    text-decoration: underline;
-}
-
-header a + a::before {
-    content: "|";
-    margin: 0 1rem;
-}
-
-header nav {
-    padding-left: 100px;
+nav a:hover::before {
+    width: 100%;
 }
 
 body {
-    background: linear-gradient(to right, #99FF33 0%,#ffff33 100%);
-    color: #000;
+    color: #fff;
 }
 
 p {
@@ -50,14 +108,15 @@ p {
     margin: 10px;
 }
 
-
 h1 {
     text-align: center;
     font-size: 32px;
+    color: #fff;
 }
 
 h2 {
     text-align: center;
+    color: #fff;
 }
 
 button {
@@ -68,8 +127,9 @@ button {
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 14px;
+    margin-top: 5px;
 }
 
 form {
@@ -90,17 +150,51 @@ form {
 }
 
 label {
-
+    margin-top: 5px;
+    color: #fff;
 }
 
-input[type=text] {
+input[type=text],
+    input[type=number] {
+    outline: none;
     padding: 5px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    display: block;
+    margin-top: 5px;
+    border: 1px solid #999;
 }
 
-input[type=number] {
+.dropdown-menu {
     padding: 5px;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 300px;
 }
 
-.dropdown-item {
-    padding: 5px;
+.add-product,
+.add-item,
+.add-shipment {
+    width: 400px;
+    height: auto;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    position: absolute;
+}
+
+.add-product {
+    top: 30%;
+    left: 10%;
+}
+
+.add-item {
+    top: 30%;
+    left: 40%;
+}
+
+.add-shipment {
+    top: 30%;
+    left: 70%;
 }
