@@ -10,5 +10,7 @@ public interface ProductService {
 
   boolean existsByName(String name);
 
+  Product getByName(String name);
+
 }
 

@@ -5,6 +5,7 @@ import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.services.IdentifiedProductService;
+import com.vulpes.velox.services.ItemService;
 import com.vulpes.velox.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,13 @@ public class StorageController {
 
   private ProductService productService;
   private IdentifiedProductService identifiedProductService;
+  private ItemService itemService;
 
   @Autowired
-  public StorageController(ProductService productService, IdentifiedProductService identifiedProductService) {
+  public StorageController(ProductService productService, IdentifiedProductService identifiedProductService, ItemService itemService) {
     this.productService = productService;
     this.identifiedProductService = identifiedProductService;
+    this.itemService = itemService;
   }
 
 
@@ -56,11 +59,12 @@ public class StorageController {
     return "redirect:/storage/add";
   }
 
-  @PostMapping("/addItem")
+  @PostMapping("/item/new")
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item) {
-
-
+    item.setIdentifiedProduct((IdentifiedProduct) productService.getByName(identifiedProductName));
+    itemService.save(item);
+    return "redirect:/storage/add";
   }
 
 }
