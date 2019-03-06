@@ -38,4 +38,17 @@ public class StorageController {
     return "redirect:/storage/add";
   }
 
+  @PostMapping("/identifiedProduct/new")
+  public String identifiedProductNew(
+      @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct) {
+    productService.save(identifiedProduct);
+    return "redirect:/storage/add";
+  }
+
+  @PostMapping("/deleteAll")
+  public String deleteAll() {
+    productService.deleteAll();
+    return "redirect:/storage/add";
+  }
+
 }

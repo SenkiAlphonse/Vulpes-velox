@@ -16,7 +16,7 @@
           id="bulkProductNew">
         <label for="bulkProductNewNameId">Name</label>
         <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
-        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">ProductWithoutId</span>
+        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">bulk product</span>
         </button>
     </form>
     <br>
@@ -25,7 +25,36 @@
           id="identifiedProductNew">
         <label for="identifiedProductNewNameId">Name</label>
         <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
-        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">ProductWithId</span>
+        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">identified product</span>
+        </button>
+    </form>
+    <br>
+    <br>
+
+    <!-----------------------Delete all products----------------------------------->
+    <form action="#" th:action="@{/deleteAll}" method="post">
+        <button type="submit" class="btn btn-danger">Delete <span class="badge badge-light"
+                                                                  id="delete">all products</span>
+        </button>
+    </form>
+    <br>
+    <br>
+    <!-----------------------Add identified item------------------------------------->
+    <form action="#" th:action="@{/addItem}" th:object="${itemNew}" method="post">
+        <label for="number">Product number</label>
+        <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
+
+        <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false" name="productWithIdSet">
+            <div th:each="productWithId : ${productsWithId}">
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" th:value="${productWithId.getName()}">
+                        <p th:text="${productWithId.getName()}"></p>
+                    </option>
+                </div>
+            </div>
+        </select>
+        <button type="submit" class="btn btn-primary">Add <span class="badge badge-light">item</span>
         </button>
     </form>
     <br>
