@@ -4,9 +4,7 @@ import com.vulpes.velox.models.BulkProduct;
 import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
-import com.vulpes.velox.services.IdentifiedProductService;
-import com.vulpes.velox.services.ItemService;
-import com.vulpes.velox.services.ProductService;
+import com.vulpes.velox.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +13,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 @Controller
 public class StorageController {
 
   private ProductService productService;
   private IdentifiedProductService identifiedProductService;
   private ItemService itemService;
+  private BulkProductService bulkProductService;
+  private ShipmentService shipmentService;
 
   @Autowired
-  public StorageController(ProductService productService, IdentifiedProductService identifiedProductService, ItemService itemService) {
+  public StorageController(ProductService productService, IdentifiedProductService identifiedProductService, ItemService itemService, BulkProductService bulkProductService, ShipmentService shipmentService) {
     this.productService = productService;
     this.identifiedProductService = identifiedProductService;
     this.itemService = itemService;
+    this.bulkProductService = bulkProductService;
+    this.shipmentService = shipmentService;
   }
 
 
@@ -37,6 +43,7 @@ public class StorageController {
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
     model.addAttribute("identifiedProducts", identifiedProductService.getAll());
+    model.addAttribute("bulkProducts", bulkProductService.getAll());
     return "addProducts";
   }
 
@@ -66,5 +73,22 @@ public class StorageController {
     itemService.save(item);
     return "redirect:/storage/add";
   }
+
+  @PostMapping("/shipment/new")
+  public String addItemWithout(@RequestParam(value = "bulkProductToSet") String bulkProductName,
+                               @RequestParam(value = "arrivalToSet") String arrivalDate,
+                               @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
+                               @ModelAttribute(value = "shipmentNew")
+                                   Shipment shipment) {
+
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate localDate = LocalDate.parse(arrivalDate, dateTimeFormatter);
+
+    shipment.setArrival(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
+    shipmentService.save(shipment);
+    return "redirect:/product/add";
+  }
+
 
 }
