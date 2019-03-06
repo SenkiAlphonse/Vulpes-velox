@@ -75,19 +75,17 @@ public class StorageController {
   }
 
   @PostMapping("/shipment/new")
-  public String addItemWithout(@RequestParam(value = "bulkProductToSet") String bulkProductName,
-                               @RequestParam(value = "arrivalToSet") String arrivalDate,
-                               @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
-                               @ModelAttribute(value = "shipmentNew")
-                                   Shipment shipment) {
+  public String shipmentNew(@RequestParam(value = "bulkProductToSet") String bulkProductName,
+                            @RequestParam(value = "arrivalToSet") String arrivalDate,
+                            @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
+                            @ModelAttribute(value = "shipmentNew")
+                                Shipment shipment) {
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate localDate = LocalDate.parse(arrivalDate, dateTimeFormatter);
-
-    shipment.setArrival(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    shipment.setArrival(shipmentService.getInstantFromDateString(arrivalDate));
+    shipment.setBestBefore(shipmentService.getInstantFromDateString(bestBeforeDate));
     shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
     shipmentService.save(shipment);
-    return "redirect:/product/add";
+    return "redirect:/storage/add";
   }
 
 
