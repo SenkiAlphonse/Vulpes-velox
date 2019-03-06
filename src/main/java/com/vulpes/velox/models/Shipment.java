@@ -5,7 +5,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "bulk_product_shipments")
-public class BulkProductShipment {
+public class Shipment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
