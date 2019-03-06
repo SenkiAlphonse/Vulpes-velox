@@ -5,10 +5,9 @@ import com.vulpes.velox.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
@@ -25,11 +24,13 @@ public class ShipmentServiceImpl implements ShipmentService {
   }
 
   @Override
-  public Instant getInstantFromDateString(String date) {
+  public LocalDate getLocalDateFromDateString(String date) {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate localDate = LocalDate.parse(date, dateTimeFormatter);
+    return LocalDate.parse(date, dateTimeFormatter);
+  }
 
-    return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
-
+  @Override
+  public List<Shipment> getAll() {
+    return shipmentRepository.findAll();
   }
 }
