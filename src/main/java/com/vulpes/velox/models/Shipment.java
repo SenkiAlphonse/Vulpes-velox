@@ -1,7 +1,6 @@
 package com.vulpes.velox.models;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity

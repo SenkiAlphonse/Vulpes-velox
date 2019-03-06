@@ -13,40 +13,38 @@
 
     <!----------------------Bulk products table------------------------------------->
     <table class="table table-borderless">
-
         <tr>
-            <th>Bulk Product Name</th>
-            <th>Quantity</th>
-            <th>Arrival</th>
-            <th>Best before</th>
+            <th class="badge badge-warning"><h3>Bulk Product Name</h3></th>
+            <th><h3>Quantity</h3></th>
+            <th><h3>Arrival</h3></th>
+            <th><h3>Best before</h3></th>
         </tr>
         <div th:each="shipment : ${shipments}">
             <tr class="bg-light mb-3">
                 <td>
                     <h2>
-                        <div th:text="${shipment.getBulkProduct().getName()}" class="badge badge-info"></div>
+                        <button th:text="${shipment.getBulkProduct().getName()}" class="badge badge-warning"
+                                disabled></button>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <div th:text="${shipment.getQuantity()}" class="badge badge-info"></div>
+                        <button th:text="${shipment.getQuantity()}" class="badge badge-light" disabled></button>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <div th:text="${shipment.getArrival()}" class="badge badge-info"></div>
+                        <div th:text="${shipment.getArrival()}" class="font-weight-bold"></div>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <div th:text="${shipment.getBestBefore()}" class="badge badge-info"></div>
+                        <div th:text="${shipment.getBestBefore()}" class="font-weight-bold"></div>
                     </h2>
                 </td>
             </tr>
         </div>
-</div>
-</div>
-</table>
+    </table>
 
 </div>
 <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
