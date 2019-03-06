@@ -142,7 +142,8 @@ form {
     border: none;
     border-radius: 5px;
     color: #fff;
-    padding: 10px 10px;
+    padding: 5px 5px;
+    margin-left: 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -165,11 +166,10 @@ input[type=text],
     border: 1px solid #999;
 }
 
-.dropdown-menu {
+select {
     padding: 5px;
     border-radius: 10px;
     margin-top: 5px;
-    margin-left: 300px;
 }
 
 .add-product,
@@ -197,4 +197,16 @@ input[type=text],
 .add-shipment {
     top: 30%;
     left: 70%;
+}
+
+table {
+    width: auto;
+    height: auto;
+    top: 30%;
+    left: 30%;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    position: fixed;
 }

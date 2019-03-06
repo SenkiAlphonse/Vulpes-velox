@@ -7,49 +7,51 @@
 </head>
 <body>
 <header>
-    <nav>
-        <a th:href="@{/storage/add}">Add item</a>
-        <a th:href="@{/shipments}">Shipments</a>
-        <a th:href="@{/shipments}">Logout</a>
-    </nav>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/storage/add}">Add item</a></li>
+                <li><a th:href="@{/shipments}">Shipments</a></li>
+                <li><a th:href="@{/shipments}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 <div class="container">
 
     <!----------------------Bulk products table------------------------------------->
-    <table class="table table-borderless">
+    <table>
         <tr>
-            <th class="badge badge-warning"><h3>Bulk Product Name</h3></th>
+            <th><h3>Bulk Product Name</h3></th>
             <th><h3>Quantity</h3></th>
             <th><h3>Arrival</h3></th>
             <th><h3>Best before</h3></th>
         </tr>
         <div th:each="shipment : ${shipments}">
-            <tr class="bg-light mb-3">
+            <tr>
                 <td>
                     <h2>
-                        <button th:text="${shipment.getBulkProduct().getName()}" class="badge badge-warning"
-                                disabled></button>
+                        <button th:text="${shipment.getBulkProduct().getName()}"></button>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${shipment.getQuantity()}" class="badge badge-light" disabled></button>
+                        <button th:text="${shipment.getQuantity()}"></button>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <div th:text="${shipment.getArrival()}" class="font-weight-bold"></div>
+                        <div th:text="${shipment.getArrival()}"></div>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <div th:text="${shipment.getBestBefore()}" class="font-weight-bold"></div>
+                        <div th:text="${shipment.getBestBefore()}"></div>
                     </h2>
                 </td>
             </tr>
         </div>
     </table>
-
 </div>
 </body>
 </html>
