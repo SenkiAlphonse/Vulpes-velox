@@ -65,8 +65,13 @@ public class StorageController {
   @PostMapping("/item/new")
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item) {
-    item.setIdentifiedProduct((IdentifiedProduct) productService.getByName(identifiedProductName));
+    IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
+
+    item.setIdentifiedProduct(identifiedProduct);
     itemService.save(item);
+
+    identifiedProduct.setQuantity((long) itemService.getAllByIdentifiedProduct(identifiedProduct).size());
+    productService.save(identifiedProduct);
     return "redirect:/storage/add";
   }
 
@@ -78,8 +83,14 @@ public class StorageController {
 
     shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
     shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
-    shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
+
+    BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
+
+    shipment.setBulkProduct(bulkProduct);
     shipmentService.save(shipment);
+
+    bulkProduct.setQuantity((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
+    productService.save(bulkProduct);
     return "redirect:/storage/add";
   }
 
