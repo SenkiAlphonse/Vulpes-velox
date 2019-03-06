@@ -3,7 +3,7 @@ package com.vulpes.velox.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "identified_product_items")
+@Table(name = "items")
 public class Item {
 
   @Id

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "bulk_product_shipments")
+@Table(name = "shipments")
 public class Shipment {
 
   @Id
