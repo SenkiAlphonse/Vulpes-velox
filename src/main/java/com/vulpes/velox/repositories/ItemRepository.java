@@ -1,5 +1,6 @@
 package com.vulpes.velox.repositories;
 
+import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,6 @@ import java.util.List;
 public interface ItemRepository extends CrudRepository<Item, Long> {
 
   List<Item> findAll();
+
+  List<Item> findAllByIdentifiedProduct(IdentifiedProduct identifiedProduct);
 }

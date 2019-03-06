@@ -10,6 +10,15 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  private Long quantity;
+
+  public Long getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Long quantity) {
+    this.quantity = quantity;
+  }
 
   public Long getId() {
     return id;
