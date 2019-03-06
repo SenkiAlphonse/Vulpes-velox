@@ -19,11 +19,10 @@ public class ProductController {
     this.shipmentService = shipmentService;
   }
 
-  @GetMapping("/bulk-products")
-  public String bulkProducts(Model model) {
+  @GetMapping("/shipments")
+  public String shipments(Model model) {
     model.addAttribute("shipments", shipmentService.getAll());
-    return "bulkProducts";
+    return "shipments";
   }
-
 
 }
