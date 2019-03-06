@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-
 @Controller
 public class StorageController {
 
@@ -80,12 +76,11 @@ public class StorageController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
-    shipment.setArrival(shipmentService.getInstantFromDateString(arrivalDate));
-    shipment.setBestBefore(shipmentService.getInstantFromDateString(bestBeforeDate));
+    shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
+    shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
     shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
     shipmentService.save(shipment);
     return "redirect:/storage/add";
   }
-
 
 }
