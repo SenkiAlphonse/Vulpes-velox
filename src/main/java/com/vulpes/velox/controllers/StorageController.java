@@ -87,5 +87,4 @@ public class StorageController {
     return "redirect:/storage/add";
   }
 
-
 }
