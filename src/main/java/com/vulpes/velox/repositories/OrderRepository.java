@@ -13,4 +13,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
   Order findByName(String name);
 
+  boolean existsByName(String name);
+
 }

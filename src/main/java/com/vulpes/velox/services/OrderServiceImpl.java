@@ -24,11 +24,18 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public void save(Order order) {
-    orderRepository.save(order);
+    if (!existsByName(order.getName())) {
+      orderRepository.save(order);
+    }
   }
 
   @Override
   public Order getByName(String name) {
     return orderRepository.findByName(name);
+  }
+
+  @Override
+  public boolean existsByName(String name) {
+    return orderRepository.existsByName(name);
   }
 }

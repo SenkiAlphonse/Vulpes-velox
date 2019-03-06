@@ -24,6 +24,28 @@
     <br>
     <br>
 
+    <!----------------------Ordered products table------------------------------------->
+    <table class="table table-borderless">
+        <tr>
+            <th><h3>Product Name</h3></th>
+            <th><h3>Quantity</h3></th>
+        </tr>
+        <div th:each="orderedProduct : ${orderedProducts}">
+            <tr class="bg-light mb-3">
+                <td>
+                    <h2>
+                        <button th:text="${orderedProduct.getProductName()}" class="badge badge-warning"
+                                disabled></button>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <button th:text="${orderedProduct.getQuantity()}" class="badge badge-light" disabled></button>
+                    </h2>
+                </td>
+            </tr>
+        </div>
+    </table>
 </div>
 <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>

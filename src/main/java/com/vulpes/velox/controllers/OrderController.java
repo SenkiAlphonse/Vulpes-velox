@@ -46,6 +46,7 @@ public class OrderController {
   public String addOrderedProducts(@PathVariable(value = "orderName") String orderName,
                                    @ModelAttribute(value = "orderedProductNew") OrderedProduct orderedProduct,
                                    Model model) {
+    model.addAttribute("orderedProducts", orderedProductService.getAllByOrder(orderService.getByName(orderName)));
     model.addAttribute("orderName", orderName);
     return "addOrderedProducts";
   }
