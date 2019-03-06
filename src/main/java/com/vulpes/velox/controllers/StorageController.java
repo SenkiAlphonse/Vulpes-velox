@@ -91,7 +91,6 @@ public class StorageController {
 
     bulkProduct.setQuantity((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
     productService.save(bulkProduct);
-    System.out.println((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
     return "redirect:/storage/add";
   }
 
