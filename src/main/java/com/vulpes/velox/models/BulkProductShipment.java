@@ -17,6 +17,46 @@ public class BulkProductShipment {
   private Instant bestBefore;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_without_id_id")
+  @JoinColumn(name = "bulk_product_id")
   private BulkProduct bulkProduct;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Long getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Long quantity) {
+    this.quantity = quantity;
+  }
+
+  public Instant getArrival() {
+    return arrival;
+  }
+
+  public void setArrival(Instant arrival) {
+    this.arrival = arrival;
+  }
+
+  public Instant getBestBefore() {
+    return bestBefore;
+  }
+
+  public void setBestBefore(Instant bestBefore) {
+    this.bestBefore = bestBefore;
+  }
+
+  public BulkProduct getBulkProduct() {
+    return bulkProduct;
+  }
+
+  public void setBulkProduct(BulkProduct bulkProduct) {
+    this.bulkProduct = bulkProduct;
+  }
 }
