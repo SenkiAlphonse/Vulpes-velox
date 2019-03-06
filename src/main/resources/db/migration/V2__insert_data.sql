@@ -1,3 +1,3 @@
-INSERT INTO users(email)
-VALUES ('kalendaryoii@gmail.com'),
-       ('the.nagy.kriszta@gmail.com');
+INSERT INTO users(email, is_god)
+VALUES ('kalendaryoii@gmail.com', false),
+       ('the.nagy.kriszta@gmail.com', true);

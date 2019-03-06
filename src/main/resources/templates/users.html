@@ -15,6 +15,7 @@
         <tr>
             <th><h3>ID</h3></th>
             <th><h3>E-mail</h3></th>
+            <th><h3>God mode</h3></th>
         </tr>
         <div th:each="user : ${users}">
             <tr class="bg-light mb-3">
@@ -32,6 +33,16 @@
                     <h2>
                         <div th:text="${user.getEmail()}" class="font-weight-bold"></div>
                     </h2>
+                </td>
+                <td th:if="${user.getGod()}">
+                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                        <button type="submit" class="btn btn-danger">Dethrone</button>
+                    </form>
+                </td>
+                <td th:unless="${user.getGod()}">
+                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                        <button type="submit" class="btn btn-danger">Make God</button>
+                    </form>
                 </td>
             </tr>
         </div>

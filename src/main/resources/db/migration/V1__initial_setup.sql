@@ -30,5 +30,6 @@ CREATE TABLE shipments (
 
 CREATE TABLE users (
                          id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-                         email               VARCHAR(255)
+                         email               VARCHAR(255),
+                         is_god              BOOL
 );

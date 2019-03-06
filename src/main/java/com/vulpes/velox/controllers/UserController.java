@@ -1,5 +1,6 @@
 package com.vulpes.velox.controllers;
 
+import com.vulpes.velox.exceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.UserService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
-import java.util.LinkedHashMap;
 
 @Controller
 public class UserController {
@@ -25,6 +24,7 @@ public class UserController {
 
   @GetMapping("/")
   public String enterApp(OAuth2Authentication authentication){
+
     return "index";
   }
 
@@ -35,25 +35,51 @@ public class UserController {
   }
 
   @GetMapping("/users")
-  public  String showUsers(Model model){
-    //implement users to model logic
+  public  String showUsers(Model model, OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication) && userService.isGod(authentication)){
     model.addAttribute("users", userService.getAll());
     model.addAttribute("newuser", new User());
-    return "users";
+    return "users";}
+    else {
+      throw new UnauthorizedException("Only Gods can tamper with users");
+    }
   }
 
   @PostMapping("/users")
-  public String addUser(@ModelAttribute(name = "newuser") User newUser){
-    if (newUser!=null){
-      userService.addUser(newUser);
+  public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+      if (newUser != null) {
+        userService.addUser(newUser);
+      }
+      return "redirect:/users";
     }
-    return "redirect:/users";
+    else {
+      throw new UnauthorizedException("Only Gods can tamper with users");
+    }
   }
 
   @PostMapping("/users/delete/{id}")
-  public String deleteUser(@PathVariable(value = "id")Long id){
-    userService.deleteUserById(id);
-    return "redirect:/users";
+  public String deleteUser(@PathVariable(value = "id")Long id, OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+      userService.deleteUserById(id);
+      return "redirect:/users";
+    }
+    else {
+      throw new UnauthorizedException("Only Gods can tamper with users");
+    }
+  }
+
+  @PostMapping("/users/update/{id}")
+  public String updateUser(@PathVariable(value = "id")Long id, OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication) && userService.isGod(authentication)){
+      User updateUser = userService.findById(id);
+      updateUser.setGod(!updateUser.getGod());
+      userService.addUser(updateUser);
+      return "redirect:/users";
+    }
+    else {
+      throw new UnauthorizedException("Only Gods can tamper with users");
+    }
   }
 
 }
