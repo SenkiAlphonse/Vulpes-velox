@@ -78,8 +78,7 @@ public class StorageController {
   public String shipmentNew(@RequestParam(value = "bulkProductToSet") String bulkProductName,
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
-                            @ModelAttribute(value = "shipmentNew")
-                                Shipment shipment) {
+                            @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
     shipment.setArrival(shipmentService.getInstantFromDateString(arrivalDate));
     shipment.setBestBefore(shipmentService.getInstantFromDateString(bestBeforeDate));
