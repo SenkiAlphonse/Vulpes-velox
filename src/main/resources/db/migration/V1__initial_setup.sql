@@ -31,3 +31,11 @@ CREATE TABLE product_without_id_items (
   best_before         VARCHAR(255),
   bulk_product_id VARCHAR(255)
 );
+
+CREATE TABLE users (
+  id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name                VARCHAR(255),
+  email               VARCHAR(255),
+  image_url           VARCHAR(255),
+  user_role           VARCHAR(255)
+)
