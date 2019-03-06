@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
   User findByEmail(String email);
   User findById(Long id);
-  List<User>getAll();
+  List<User>getAll(int pageId);
   void addUser(User user);
   void deleteUserById(Long id);
   Boolean isAuthorized(OAuth2Authentication authentication);

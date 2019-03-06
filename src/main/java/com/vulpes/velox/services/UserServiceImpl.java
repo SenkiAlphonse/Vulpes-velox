@@ -3,6 +3,7 @@ package com.vulpes.velox.services;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> getAll() {
-    return userRepo.findAll();
+  public List<User> getAll(int pageId) {
+    return userRepo.findAllByOrderByEmailAsc(PageRequest.of(pageId, 10));
   }
 
   @Override

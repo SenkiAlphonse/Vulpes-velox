@@ -9,6 +9,18 @@
     <title>New product</title>
 </head>
 <body>
+    <!----------------------Paging navigation------------------------------------->
+<div class="container my-3">
+    <div class="row">
+        <a th:unless="${pageid == 0}" th:href="'/users?pageId=' + ${pageid -1}"><i class="fas fa-arrow-left"></i></a>
+        <span class="text-muted" th:if="${pageid == 0}"><i class="fas fa-arrow-left"></i></span>
+        <div class="px-2" th:text="'page ' + ${pageid +1}"></div>
+        <a th:unless="${islastpage}" th:href="'/users?pageId=' + ${pageid +1}"><i
+                class="fas fa-arrow-right text-info"></i></a>
+        <span class="text-muted" th:if="${islastpage}"><i class="fas fa-arrow-right"></i></span>
+    </div>
+</div>
+
 <div class="container">
     <!----------------------Users table------------------------------------->
     <table class="table table-borderless">

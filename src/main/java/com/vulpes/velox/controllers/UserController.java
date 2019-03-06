@@ -6,12 +6,10 @@ import com.vulpes.velox.services.UserService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -35,14 +33,20 @@ public class UserController {
   }
 
   @GetMapping("/users")
-  public  String showUsers(Model model, OAuth2Authentication authentication){
+  public  String showUsers(Model model, OAuth2Authentication authentication, @RequestParam(required = false, defaultValue = "0") int pageId){
     if (userService.isAuthorized(authentication) && userService.isGod(authentication)){
-    model.addAttribute("users", userService.getAll());
-    model.addAttribute("newuser", new User());
-    return "users";}
-    else {
-      throw new UnauthorizedException("Only Gods can tamper with users");
+      List<User> myPage = userService.getAll(pageId);
+      List<User> peekPage = userService.getAll(pageId + 1);
+
+      model.addAttribute("users", myPage);
+      model.addAttribute("pageid", pageId);
+      model.addAttribute("islastpage", peekPage.size() == 0);
+      model.addAttribute("newuser", new User());
+      return "users";
     }
+      else {
+      throw new UnauthorizedException("Only Gods can tamper with users");
+      }
   }
 
   @PostMapping("/users")
