@@ -1,8 +1,5 @@
 package com.vulpes.velox.models;
 
-import com.vulpes.velox.dtos.BulkProductOrderDto;
-import com.vulpes.velox.dtos.IdentifiedProductOrderDto;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,9 +15,8 @@ public class Order {
   private String name;
   private Date date;
 
-  private List<BulkProductOrderDto> bulkProductOrderDtos;
-  private List<IdentifiedProductOrderDto> identifiedProductOrderDtos;
-
+  @OneToMany(mappedBy = "order")
+  private List<ProductForOrder> productForOrders;
 
   public Long getId() {
     return id;
@@ -30,19 +26,27 @@ public class Order {
     this.id = id;
   }
 
-  public List<BulkProductOrderDto> getBulkProductOrderDtos() {
-    return bulkProductOrderDtos;
+  public String getName() {
+    return name;
   }
 
-  public void setBulkProductOrderDtos(List<BulkProductOrderDto> bulkProductOrderDtos) {
-    this.bulkProductOrderDtos = bulkProductOrderDtos;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public List<IdentifiedProductOrderDto> getIdentifiedProductOrderDtos() {
-    return identifiedProductOrderDtos;
+  public Date getDate() {
+    return date;
   }
 
-  public void setIdentifiedProductOrderDtos(List<IdentifiedProductOrderDto> identifiedProductOrderDtos) {
-    this.identifiedProductOrderDtos = identifiedProductOrderDtos;
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
+  public List<ProductForOrder> getProductForOrders() {
+    return productForOrders;
+  }
+
+  public void setProductForOrders(List<ProductForOrder> productForOrders) {
+    this.productForOrders = productForOrders;
   }
 }
