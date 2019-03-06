@@ -20,8 +20,6 @@ public class StorageController {
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
-
-
     return "addProducts";
   }
 

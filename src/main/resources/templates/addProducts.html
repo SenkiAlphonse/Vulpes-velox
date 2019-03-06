@@ -21,10 +21,10 @@
     </form>
     <br>
     <!---------------------New identified product-------------------------------->
-    <form action="#" th:action="@{/productWithIdNew}" th:object="${productWithIdNew}" method="post"
-          id="productWithIdNew">
-        <label for="productWithIdNewNameId">Name</label>
-        <input type="text" name="productWithIdNewName" id="productWithIdNewNameId" th:field="*{name}">
+    <form action="#" th:action="@{/identifiedProductNew}" th:object="${identifiedProductNew}" method="post"
+          id="identifiedProductNew">
+        <label for="identifiedProductNewNameId">Name</label>
+        <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
         <button type="submit" class="btn btn-primary">New <span class="badge badge-light">ProductWithId</span>
         </button>
     </form>
