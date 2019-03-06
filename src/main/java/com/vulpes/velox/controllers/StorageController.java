@@ -78,6 +78,7 @@ public class StorageController {
 
     shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
     shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
+
     shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
     shipmentService.save(shipment);
     return "redirect:/storage/add";
