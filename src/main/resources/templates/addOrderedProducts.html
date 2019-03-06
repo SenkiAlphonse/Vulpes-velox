@@ -10,10 +10,11 @@
 </head>
 <body>
 <div class="container">
+    <h1>Add ordered product for <div th:text="${orderName}"></div></h1>
 
     <!-----------------------Add ordered product------------------------------------->
-    <form action="#" th:action="@{/orderedProduct/new}" th:object="${orderedProductNew}" method="post">
-        <label for="product">Product</label>
+    <form action="#" th:action="@{|/ordered-product/${orderName}/add|}" th:object="${orderedProductNew}" method="post">
+        <label for="product">Product name</label>
         <input type="text" name="product" id="product" th:field="*{productName}">
         <label for="quantity">Quantity</label>
         <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
@@ -22,6 +23,7 @@
     </form>
     <br>
     <br>
+
 </div>
 <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>

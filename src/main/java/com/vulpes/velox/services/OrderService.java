@@ -10,4 +10,5 @@ public interface OrderService {
 
   void save(Order order);
 
+  Order getByName(String name);
 }
