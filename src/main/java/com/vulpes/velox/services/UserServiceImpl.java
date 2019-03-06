@@ -29,24 +29,16 @@ public class UserServiceImpl implements UserService {
   public Boolean isAuthorized(OAuth2Authentication authentication){
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
-    if (findByEmail(userEmail)!=null) {
-      return true;
-    }
-    else {
-      return false;
-    }
+//    return findByEmail(userEmail) != null;
+    return true;
   }
 
   @Override
-  public Boolean isGod(OAuth2Authentication authentication) {
+  public Boolean isGod(OAuth2Authentication authentication){
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
-    if (System.getenv("GOD_USER").equals(userEmail)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return true;
+//    return System.getenv("GOD_USER").equals(userEmail);
   }
 
   @Override
