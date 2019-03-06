@@ -6,10 +6,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
 </head>
 <body>
-<section class="container">
+<div class="container">
     <!-----------------------New bulk product-------------------------------->
-    <section class="col-2 ss-style-triangles">
-        <div class="column text">
             <h1>Add new item</h1>
             <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
                   id="bulkProductNew">
@@ -18,31 +16,26 @@
                 <button type="submit">New bulk product</button>
             </form>
             <br>
-        </div>
     <!---------------------New identified product-------------------------------->
+        <div class="column">
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
             <label for="identifiedProductNewNameId">Name</label>
             <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
             <button type="submit">New identified product</button>
         </form>
-    </section>
+        </div>
     <br>
     <br>
-    <div class="separator">
-        <svg class="separator__svg" width="100%" height="400" viewBox="0 0 100 100" preserveAspectRatio="none" fill="#44A36F" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 100 100 V 10 L 0 100"/>
-            <path d="M 30 73 L 100 18 V 10 Z" fill="#308355" stroke-width="0"/>
-        </svg>
-    </div>
     <!-----------------------Delete all products----------------------------------->
+        <div class="column">
         <form action="#" th:action="@{/deleteAll}" method="post">
             <button type="submit" class="delete">Delete all products</button>
         </form>
+        </div>
     <br>
     <br>
     <!-----------------------Add item------------------------------------->
-    <div class="section-two">
         <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
             <label for="number">Product number</label>
             <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
@@ -59,9 +52,6 @@
             </select>
             <button type="submit">Add item</button>
         </form>
-    </div>
-    <br>
-    <br>
     <!----------------------Add shipment--------------------------------------->
         <h1 class="section-two__title">Add shipment</h1>
         <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
