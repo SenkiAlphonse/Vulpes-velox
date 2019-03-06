@@ -3,6 +3,8 @@ package com.vulpes.velox.repositories;
 import com.vulpes.velox.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -10,7 +12,8 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
   User getByEmail(String email);
   List<User> findAll();
-  void deleteUserByEmail(User user);
+  @Transactional
+  void deleteUserById(Long id);
 }
 
 

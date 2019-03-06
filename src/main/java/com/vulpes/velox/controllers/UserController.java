@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
@@ -41,7 +42,7 @@ public class UserController {
     return "users";
   }
 
-  @PostMapping("users")
+  @PostMapping("/users")
   public String addUser(@ModelAttribute(name = "newuser") User newUser){
     if (newUser!=null){
       userService.addUser(newUser);
@@ -49,9 +50,9 @@ public class UserController {
     return "redirect:/users";
   }
 
-  @PostMapping("users/delete/{email}")
-  public String deleteUser(@PathParam(value = "email")String email){
-    userService.deleteUserByEmail(email);
+  @PostMapping("/users/delete/{id}")
+  public String deleteUser(@PathVariable(value = "id")Long id){
+    userService.deleteUserById(id);
     return "redirect:/users";
   }
 

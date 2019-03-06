@@ -9,7 +9,7 @@ public interface UserService {
   User findByEmail(String email);
   List<User>getAll();
   void addUser(User user);
-  void deleteUserByEmail(String email);
+  void deleteUserById(Long id);
   Boolean isAuthorized(OAuth2Authentication authentication);
   Boolean isGod(OAuth2Authentication authentication);
   String getGoogleUserName(OAuth2Authentication authentication);
