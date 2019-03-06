@@ -37,7 +37,7 @@ CREATE TABLE orders (
   date                VARCHAR(255)
 );
 
-CREATE TABLE product_for_order (
+CREATE TABLE ordered_products (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   product_name            VARCHAR(255),
   quantity                BIGINT,

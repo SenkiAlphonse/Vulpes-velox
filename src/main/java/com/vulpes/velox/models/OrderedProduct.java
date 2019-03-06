@@ -3,8 +3,8 @@ package com.vulpes.velox.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products_for_order")
-public class ProductForOrder {
+@Table(name = "ordered_products")
+public class OrderedProduct {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

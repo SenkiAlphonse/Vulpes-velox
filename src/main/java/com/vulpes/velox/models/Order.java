@@ -16,7 +16,7 @@ public class Order {
   private Date date;
 
   @OneToMany(mappedBy = "order")
-  private List<ProductForOrder> productForOrders;
+  private List<OrderedProduct> orderedProducts;
 
   public Long getId() {
     return id;
@@ -42,11 +42,11 @@ public class Order {
     this.date = date;
   }
 
-  public List<ProductForOrder> getProductForOrders() {
-    return productForOrders;
+  public List<OrderedProduct> getOrderedProducts() {
+    return orderedProducts;
   }
 
-  public void setProductForOrders(List<ProductForOrder> productForOrders) {
-    this.productForOrders = productForOrders;
+  public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
+    this.orderedProducts = orderedProducts;
   }
 }
