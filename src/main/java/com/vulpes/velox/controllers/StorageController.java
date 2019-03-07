@@ -81,7 +81,8 @@ public class StorageController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
-    if(arrivalDate.length() < 10 || bestBeforeDate.length() < 10) {
+    if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
+        shipmentService.isAllowedDateFormat(bestBeforeDate)) {
       return "redirect:/storage/add";
     }
 

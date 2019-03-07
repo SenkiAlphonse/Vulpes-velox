@@ -16,4 +16,6 @@ public interface ShipmentService {
 
   List<Shipment> getAllByBulkProduct(BulkProduct bulkProduct);
 
+  boolean isAllowedDateFormat(String date);
+
 }
