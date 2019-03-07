@@ -81,6 +81,10 @@ public class StorageController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
+    if(arrivalDate.length() < 10 || bestBeforeDate.length() < 10) {
+      return "redirect:/storage/add";
+    }
+
     shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
     shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
 
