@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.repositories.IdentifiedProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,14 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   @Override
   public List<IdentifiedProduct> getAll() {
     return identifiedProductRepository.findAll();
+  }
+
+  @Override
+  public IdentifiedProduct getEntityFromDto(ProductDto productDto) {
+    IdentifiedProduct identifiedProduct = new IdentifiedProduct();
+    identifiedProduct.setName(productDto.name);
+    identifiedProduct.setQuantity(productDto.quantity);
+    return identifiedProduct;
   }
 
 }

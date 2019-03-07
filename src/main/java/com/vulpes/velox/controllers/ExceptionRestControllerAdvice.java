@@ -90,7 +90,6 @@ public class ExceptionRestControllerAdvice extends ResponseEntityExceptionHandle
     for (ObjectError objectError : errors.getAllErrors()) {
       errorsFound.add(objectError.getDefaultMessage());
     }
-    validationErrorDto.status = "error";
     validationErrorDto.message = errorsFound;
     return validationErrorDto;
   }

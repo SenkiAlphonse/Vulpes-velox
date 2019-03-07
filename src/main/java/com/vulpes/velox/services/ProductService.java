@@ -19,6 +19,9 @@ public interface ProductService {
 
   ProductDto getDtoFromEntity(Product product);
 
+  List<Product> getAll();
+
+
 
 }
 

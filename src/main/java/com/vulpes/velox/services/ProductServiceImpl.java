@@ -1,6 +1,8 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.BulkProduct;
+import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +60,17 @@ public class ProductServiceImpl implements ProductService{
   @Override
   public ProductDto getDtoFromEntity(Product product) {
     ProductDto productDto = new ProductDto();
-    productDto.id = product.getId();
     productDto.name = product.getName();
     productDto.quantity = product.getQuantity();
     return productDto;
   }
+
+  @Override
+  public List<Product> getAll() {
+    return productRepository.findAll();
+  }
+
+
 
 
 }
