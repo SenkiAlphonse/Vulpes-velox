@@ -102,7 +102,7 @@ public class StorageController {
       itemService.save(item);
 
       identifiedProduct.setQuantity((long) itemService.getAllByIdentifiedProduct(identifiedProduct).size());
-      productService.save(identifiedProduct);
+      productService.update(identifiedProduct);
       return "redirect:/storage/add";
     }
     else {
@@ -128,8 +128,8 @@ public class StorageController {
       shipment.setBulkProduct(bulkProduct);
       shipmentService.save(shipment);
 
-      bulkProduct.setQuantity((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
-      productService.save(bulkProduct);
+      bulkProduct.setQuantity(bulkProduct.getQuantity()+shipment.getQuantity());
+      productService.update(bulkProduct);
       return "redirect:/storage/add";
     }
     throw new UnauthorizedException("You have no power here, puny human being");
