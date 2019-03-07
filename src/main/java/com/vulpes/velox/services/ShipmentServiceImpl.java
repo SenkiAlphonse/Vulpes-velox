@@ -42,7 +42,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 
   @Override
   public boolean isAllowedDateFormat(String date) {
-    return date.length() != 10;
+    return date.length() == 10;
   }
 
 

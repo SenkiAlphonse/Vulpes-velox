@@ -82,7 +82,7 @@ public class StorageController {
                             @ModelAttribute(value = "shipmentNew") Shipment shipment) {
 
     if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
-        shipmentService.isAllowedDateFormat(bestBeforeDate)) {
+        !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
       return "redirect:/storage/add";
     }
 
