@@ -59,16 +59,25 @@ public class StorageController {
   }
 
   @PostMapping("/bulkProduct/new")
-  public String bulkProductNew(@ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct) {
-    productService.save(bulkProduct);
-    return "redirect:/storage/add";
+  public String bulkProductNew(
+      @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
+      OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication)){
+      productService.save(bulkProduct);
+      return "redirect:/storage/add";
+    }
+    throw new UnauthorizedException("You can't do that here :(");
   }
 
   @PostMapping("/identifiedProduct/new")
   public String identifiedProductNew(
-      @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct) {
-    productService.save(identifiedProduct);
-    return "redirect:/storage/add";
+      @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
+      OAuth2Authentication authentication){
+    if (userService.isAuthorized(authentication)) {
+      productService.save(identifiedProduct);
+      return "redirect:/storage/add";
+    }
+    throw new UnauthorizedException("We don't even know you...");
   }
 
   @PostMapping("/deleteAll")
@@ -123,6 +132,6 @@ public class StorageController {
       productService.save(bulkProduct);
       return "redirect:/storage/add";
     }
-    throw new UnauthorizedException("YOu have no power here, puny human being");
+    throw new UnauthorizedException("You have no power here, puny human being");
   }
 }
