@@ -36,7 +36,7 @@ public class UserController {
                           OAuth2Authentication authentication,
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
-    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+    if (userService.isGod(authentication)) {
       List<User> myPage = userService.getAll(pageId);
       List<User> peekPage = userService.getAll(pageId + 1);
 
@@ -50,7 +50,7 @@ public class UserController {
 
   @PostMapping("/users")
   public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+    if (userService.isGod(authentication)) {
       userService.addUser(newUser);
       return "redirect:/users";
     }
@@ -59,7 +59,7 @@ public class UserController {
 
   @PostMapping("/users/delete/{id}")
   public String deleteUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+    if (userService.isGod(authentication)) {
       userService.deleteUserById(id);
       return "redirect:/users";
     }

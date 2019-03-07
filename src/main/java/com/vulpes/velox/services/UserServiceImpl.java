@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.exceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isGod(OAuth2Authentication authentication){
+
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
-    return System.getenv("GOD_USER").equals(userEmail);
+    User user = userRepo.getByEmail(userEmail);
+    if(user!=null) {
+      return user.getGod();
+    }
+    throw new UnauthorizedException("What are you even doing here...");
   }
 
   @Override

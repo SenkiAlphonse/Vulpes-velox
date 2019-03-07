@@ -74,7 +74,7 @@ public class StorageController {
 
   @PostMapping("/deleteAll")
   public String deleteAll(OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isGod(authentication)){
+    if (userService.isGod(authentication)){
     productService.deleteAll();
     return "redirect:/storage/add";
     }
@@ -106,18 +106,22 @@ public class StorageController {
   public String shipmentNew(@RequestParam(value = "bulkProductToSet") String bulkProductName,
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
-                            @ModelAttribute(value = "shipmentNew") Shipment shipment) {
+                            @ModelAttribute(value = "shipmentNew") Shipment shipment,
+                            OAuth2Authentication authentication) {
 
-    shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
-    shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
+    if (userService.isAuthorized(authentication)) {
+      shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
+      shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
 
-    BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
+      BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
 
-    shipment.setBulkProduct(bulkProduct);
-    shipmentService.save(shipment);
+      shipment.setBulkProduct(bulkProduct);
+      shipmentService.save(shipment);
 
-    bulkProduct.setQuantity((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
-    productService.save(bulkProduct);
-    return "redirect:/storage/add";
+      bulkProduct.setQuantity((long) shipmentService.getAllByBulkProduct(bulkProduct).size());
+      productService.save(bulkProduct);
+      return "redirect:/storage/add";
+    }
+    throw new UnauthorizedException("YOu have no power here, puny human being");
   }
 }
