@@ -7,11 +7,18 @@
 </head>
 <body>
 <header>
-    <nav>
-        <a th:href="@{/storage/add}">Add item</a>
-        <a th:href="@{/shipments}">Shipments</a>
-        <a th:href="@{/shipments}">Logout</a>
-    </nav>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/storage/add}">Add item</a></li>
+                <li><a th:href="@{/shipments}">Shipments</a></li>
+                <li><a th:href="@{/order}">Add order</a></li>
+                <li><a th:href="@{/items}">Items</a></li>
+                <li><a th:href="@{/shipments}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 <h1>Welcome to your Warehouse Manager!</h1>
 </body>
