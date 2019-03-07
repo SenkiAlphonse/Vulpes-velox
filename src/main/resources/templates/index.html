@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <meta charset="UTF-8">
-    <title>Order</title>
+    <title>Your local storage</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
 </head>
 <body>
 <header>
@@ -21,14 +21,8 @@
     </div>
 </header>
 <div class="container">
-    <div class="add-item">
-    <!-----------------------New order-------------------------------->
-    <form action="#" th:action="@{/order/new}" th:object="${orderNew}" method="post"
-          id="orderNew">
-        <label for="orderNameId">Name</label>
-        <input type="text" name="orderName" id="orderNameId" th:field="*{name}">
-        <button type="submit">New order</button>
-    </form>
+    <div class="welcome">
+        <h1>Welcome Foreign!</h1>
     </div>
 </div>
 </body>

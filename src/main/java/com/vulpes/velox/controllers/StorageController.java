@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+
 @Controller
 public class StorageController {
 
@@ -33,7 +35,7 @@ public class StorageController {
 
 
   @GetMapping("/storage/add")
-  public String addProducts(Model model,
+  public String addProducts(@Valid Model model,
                             @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,

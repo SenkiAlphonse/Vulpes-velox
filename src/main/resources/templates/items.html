@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link th:href="@{/styles.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <meta charset="UTF-8">
     <title>Items</title>
 </head>
 <body>
+<header>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/storage/add}">Add item</a></li>
+                <li><a th:href="@{/shipments}">Shipments</a></li>
+                <li><a th:href="@{/order}">Add order</a></li>
+                <li><a th:href="@{/items}">Items</a></li>
+                <li><a th:href="@{/shipments}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="container">
 
     <!----------------------Items table------------------------------------->
-    <table class="table table-borderless">
+    <table>
         <tr>
-            <th class="badge badge-warning"><h3>Item Name</h3></th>
+            <th><h3>Item Name</h3></th>
             <th><h3>Product number</h3></th>
         </tr>
         <div th:each="item : ${items}">
-            <tr class="bg-light mb-3">
+            <tr>
                 <td>
                     <h2>
-                        <button th:text="${item.getIdentifiedProduct().getName()}" class="badge badge-warning"
-                                disabled></button>
+                        <p th:text="${item.getIdentifiedProduct().getName()}"></p>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${item.getProductNumber()}" class="badge badge-light" disabled></button>
+                        <p th:text="${item.getProductNumber()}"></p>
                     </h2>
                 </td>
             </tr>
@@ -35,7 +45,5 @@
     </table>
 
 </div>
-<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
-<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
