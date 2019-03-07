@@ -20,9 +20,17 @@ public class UserController {
     this.userService = userService;
   }
 
+  @ModelAttribute(value = "username")
+  public String welcomeUser(){
+    return "Stranger";
+  }
+
   @GetMapping("/")
-  public String enterApp(OAuth2Authentication authentication) {
-    return "index";
+  public String enterApp(Model model, OAuth2Authentication authentication) {
+    if (authentication!=null && userService.isAuthorized(authentication)) {
+      model.addAttribute("username", userService.getGoogleUserName(authentication));
+    }
+      return "index";
   }
 
   @GetMapping("/logout")
