@@ -56,16 +56,15 @@
         <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
             <label for="number">Product number</label>
             <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
-
+            <div class="dropdown-menu">
             <select name="identifiedProductToSet">
                 <div th:each="identifiedProduct : ${identifiedProducts}">
-                    <div class="dropdown-menu">
-                        <option class="dropdown-item" th:value="${identifiedProduct.getName()}">
+                        <option th:value="${identifiedProduct.getName()}">
                             <p th:text="${identifiedProduct.getName()}"></p>
                         </option>
-                    </div>
                 </div>
             </select>
+            </div>
             <button type="submit">Add item</button>
         </form>
     </div>
@@ -79,11 +78,11 @@
             <label for="arrivalToSet">Arrival</label>
             <input type="text" name="arrivalToSet" id="arrivalToSet"
                    pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-                   title="Arrival date DD-MM-YYYY">
+                   title="Arrival date DD-MM-YYYY" placeholder="YYYY-MM-DD">
             <label for="bestBeforeToSet">Best before</label>
             <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
                    pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-                   title="Arrival date DD-MM-YYYY">
+                   title="Best before date YYYY-MM-DD" placeholder="YYYY-MM-DD">
             <select name="bulkProductToSet">
                 <div th:each="bulkProduct : ${bulkProducts}">
                     <div class="dropdown-menu">

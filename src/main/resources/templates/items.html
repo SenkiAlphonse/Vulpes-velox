@@ -32,13 +32,12 @@
             <tr>
                 <td>
                     <h2>
-                        <button th:text="${item.getIdentifiedProduct().getName()}" class="badge badge-warning"
-                                disabled></button>
+                        <p th:text="${item.getIdentifiedProduct().getName()}"></p>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${item.getProductNumber()}"></button>
+                        <p th:text="${item.getProductNumber()}"></p>
                     </h2>
                 </td>
             </tr>

@@ -7,7 +7,7 @@ html {
     margin: 0;
     font-size: 1rem;
     text-decoration: none;
-    color: black;
+    color: #000;
 }
 
 .container {
@@ -166,10 +166,11 @@ input[type=text],
     border: 1px solid #999;
 }
 
-select {
+.dropdown-menu {
     padding: 5px;
     border-radius: 10px;
     margin-top: 5px;
+    color: #000;
 }
 
 .add-product,
@@ -199,14 +200,31 @@ select {
     left: 70%;
 }
 
-table {
-    width: auto;
+.welcome {
+    width: 600px;
     height: auto;
+    padding: 30px 40px;
+    border: 1px solid white;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    margin: 20px auto;
+}
+
+table {
     top: 30%;
     left: 30%;
-    padding: 30px 40px;
     box-sizing: border-box;
     background: rgba(0,0,0,.5);
     text-transform: uppercase;
     position: fixed;
+    border-style: hidden;
+    margin: 50px auto;
+    width: 600px;
+    padding: 15px;
+    text-align: left;
+}
+
+h3, p {
+    color: #fff !important;
 }
