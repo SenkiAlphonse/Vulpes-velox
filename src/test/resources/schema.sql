@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS identified_products;
+DROP TABLE IF EXISTS bulk_products;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS shipments;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS ordered_products;
+
 CREATE TABLE identified_products (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name                VARCHAR(255)
