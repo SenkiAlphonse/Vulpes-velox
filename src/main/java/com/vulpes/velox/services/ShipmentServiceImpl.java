@@ -39,4 +39,11 @@ public class ShipmentServiceImpl implements ShipmentService {
   public List<Shipment> getAllByBulkProduct(BulkProduct bulkProduct) {
     return shipmentRepository.findAllByBulkProduct(bulkProduct);
   }
+
+  @Override
+  public boolean isAllowedDateFormat(String date) {
+    return date.length() == 10;
+  }
+
+
 }

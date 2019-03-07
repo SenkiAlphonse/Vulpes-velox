@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link th:href="@{/styles.css}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <meta charset="UTF-8">
     <title>Order</title>
 </head>
 <body>
+<header>
+    <div class="nav-container">
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/storage/add}">Add item</a></li>
+                <li><a th:href="@{/shipments}">Shipments</a></li>
+                <li><a th:href="@{/order}">Add order</a></li>
+                <li><a th:href="@{/items}">Items</a></li>
+                <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="container">
-    <h1>Add ordered product for <div th:text="${orderName}"></div></h1>
+    <div class="orders">
+    <h2>Add ordered product for <div th:text="${orderName}"></div></h2>
 
     <!-----------------------Add ordered product------------------------------------->
     <form action="#" th:action="@{|/ordered-product/${orderName}/add|}" th:object="${orderedProductNew}" method="post">
@@ -18,36 +30,33 @@
         <input type="text" name="product" id="product" th:field="*{productName}">
         <label for="quantity">Quantity</label>
         <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
-        <button type="submit" class="btn btn-primary">Add <span class="badge badge-light">ordered product</span>
-        </button>
+        <button type="submit">Add ordered product</button>
     </form>
+    </div>
     <br>
     <br>
 
     <!----------------------Ordered products table------------------------------------->
-    <table class="table table-borderless">
+    <table class="ord">
         <tr>
             <th><h3>Product Name</h3></th>
             <th><h3>Quantity</h3></th>
         </tr>
         <div th:each="orderedProduct : ${orderedProducts}">
-            <tr class="bg-light mb-3">
+            <tr>
                 <td>
                     <h2>
-                        <button th:text="${orderedProduct.getProductName()}" class="badge badge-warning"
-                                disabled></button>
+                        <p th:text="${orderedProduct.getProductName()}"></p>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${orderedProduct.getQuantity()}" class="badge badge-light" disabled></button>
+                        <p th:text="${orderedProduct.getQuantity()}"></p>
                     </h2>
                 </td>
             </tr>
         </div>
     </table>
 </div>
-<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
-<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

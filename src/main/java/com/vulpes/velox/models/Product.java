@@ -1,5 +1,7 @@
 package com.vulpes.velox.models;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,8 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @NotNull
   private String name;
   private Long quantity;
 

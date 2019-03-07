@@ -7,7 +7,6 @@ import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.LinkedHashMap;
+import javax.validation.Valid;
 
 @Controller
 public class StorageController {
@@ -44,7 +43,7 @@ public class StorageController {
   }
 
   @GetMapping("/storage/add")
-  public String addProducts(Model model,
+  public String addProducts(@Valid Model model,
                             @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,
@@ -108,11 +107,13 @@ public class StorageController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication) {
-
     if (userService.isAuthorized(authentication)) {
+      if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
+          !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
+        return "redirect:/storage/add";
+      }
       shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
       shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
-
       BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
 
       shipment.setBulkProduct(bulkProduct);

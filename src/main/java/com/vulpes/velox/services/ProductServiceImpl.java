@@ -1,9 +1,16 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.BulkProduct;
+import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -36,4 +43,34 @@ public class ProductServiceImpl implements ProductService{
   public Product getByName(String name) {
     return productRepository.findByName(name);
   }
+
+  @Override
+  public List<ProductDto> getDtosFromEntities(List<Product> products) {
+    if (products == null || products.isEmpty()) {
+      return Collections.emptyList();
+    }
+    List<ProductDto> productDtos = new ArrayList<>();
+
+    for (Product product : products) {
+      productDtos.add(getDtoFromEntity(product));
+    }
+    return productDtos;
+  }
+
+  @Override
+  public ProductDto getDtoFromEntity(Product product) {
+    ProductDto productDto = new ProductDto();
+    productDto.name = product.getName();
+    productDto.quantity = product.getQuantity();
+    return productDto;
+  }
+
+  @Override
+  public List<Product> getAll() {
+    return productRepository.findAll();
+  }
+
+
+
+
 }

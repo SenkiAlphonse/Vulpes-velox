@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.BulkProduct;
 import com.vulpes.velox.repositories.BulkProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,13 @@ public class BulkProductServiceImpl implements BulkProductService {
   public List<BulkProduct> getAll() {
     return bulkProductRepository.findAll();
   }
+
+  @Override
+  public BulkProduct getEntityFromDto(ProductDto productDto) {
+    BulkProduct bulkProduct = new BulkProduct();
+    bulkProduct.setName(productDto.name);
+    bulkProduct.setQuantity(productDto.quantity);
+    return bulkProduct;
+  }
+
 }
