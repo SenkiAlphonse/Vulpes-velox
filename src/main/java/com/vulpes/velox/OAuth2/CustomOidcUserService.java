@@ -20,7 +20,7 @@ public class CustomOidcUserService extends OidcUserService {
   private UserRepository userRepository;
 
   @Autowired
-  public CustomOidcUserService(UserRepository userRepository){
+  public CustomOidcUserService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
@@ -37,19 +37,18 @@ public class CustomOidcUserService extends OidcUserService {
     return oidcUser;
   }
 
-  private void updateUser(GoogleOAuth2UserInfo userInfo) {
+  protected void updateUser(GoogleOAuth2UserInfo userInfo) {
     User user = userRepository.findByEmail(userInfo.getEmail());
-    if(user == null) {
+    if (user == null) {
       user = new User();
     }
     user.setEmail(userInfo.getEmail());
     user.setImageUrl(userInfo.getImageUrl());
     user.setName(userInfo.getName());
 
-    if (System.getenv("GOD_USER").equals(user.getEmail())){
-    user.setUserRole(UserRole.admin);
-    }
-    else{
+    if (System.getenv("GOD_USER").equals(user.getEmail())) {
+      user.setUserRole(UserRole.admin);
+    } else {
       user.setUserRole(UserRole.user);
     }
     userRepository.save(user);

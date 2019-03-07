@@ -21,7 +21,6 @@ dependencies {
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile('org.flywaydb:flyway-core')
     compile('org.springframework.boot:spring-boot-starter-test')
     compile 'com.h2database:h2:1.4.197'
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'

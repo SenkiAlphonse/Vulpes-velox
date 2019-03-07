@@ -17,8 +17,6 @@ import org.springframework.security.oauth2.client.web.HttpSessionOAuth2Authoriza
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
   private OidcUserService oidcUserService;
 
   @Autowired

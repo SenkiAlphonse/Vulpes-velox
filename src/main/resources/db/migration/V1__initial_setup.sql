@@ -34,4 +34,4 @@ CREATE TABLE users (
   email               VARCHAR(255),
   image_url           VARCHAR(255),
   user_role           VARCHAR(255)
-)
+);
