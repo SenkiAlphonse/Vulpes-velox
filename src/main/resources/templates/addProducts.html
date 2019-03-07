@@ -66,11 +66,11 @@
         <label for="arrivalToSet">Arrival</label>
         <input type="text" name="arrivalToSet" id="arrivalToSet"
                pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-               title="Arrival date DD-MM-YYYY">
+               title="Arrival date YYYY-MM-DD" placeholder="YYYY-MM-DD">
         <label for="bestBeforeToSet">Best before</label>
         <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
                pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-               title="Arrival date DD-MM-YYYY">
+               title="Best before date YYYY-MM-DD" placeholder="YYYY-MM-DD">
         <select class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false" name="bulkProductToSet">
             <div th:each="bulkProduct : ${bulkProducts}">
