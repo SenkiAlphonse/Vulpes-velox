@@ -1,6 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.services.BulkProductService;
 import com.vulpes.velox.services.ItemService;
 import com.vulpes.velox.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;

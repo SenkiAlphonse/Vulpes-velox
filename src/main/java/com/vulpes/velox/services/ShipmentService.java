@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.models.BulkProduct;
 import com.vulpes.velox.models.Shipment;
 
 import java.time.LocalDate;
@@ -12,5 +13,7 @@ public interface ShipmentService {
   LocalDate getLocalDateFromDateString(String date);
 
   List<Shipment> getAll();
+
+  List<Shipment> getAllByBulkProduct(BulkProduct bulkProduct);
 
 }
