@@ -187,17 +187,17 @@ input[type=text],
 
 .add-product {
     top: 30%;
-    left: 10%;
+    left: 8%;
 }
 
 .add-item {
     top: 30%;
-    left: 40%;
+    left: 38%;
 }
 
 .add-shipment {
     top: 30%;
-    left: 70%;
+    left: 68%;
 }
 
 .welcome {
@@ -212,7 +212,7 @@ input[type=text],
 }
 
 table {
-    top: 30%;
+    top: 15%;
     left: 30%;
     box-sizing: border-box;
     background: rgba(0,0,0,.5);
@@ -227,4 +227,30 @@ table {
 
 h3, p {
     color: #fff !important;
+}
+
+.orders {
+    width: 400px;
+    height: auto;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    position: absolute;
+    top: 15%;
+    left: 35%;
+}
+
+.ord {
+    top: 50%;
+    left: 30%;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    position: fixed;
+    border-style: hidden;
+    margin: 50px auto;
+    width: 600px;
+    padding: 15px;
+    text-align: left !important;
 }

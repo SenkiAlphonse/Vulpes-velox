@@ -21,7 +21,8 @@
     </div>
 </header>
 <div class="container">
-    <h1>Add ordered product for <div th:text="${orderName}"></div></h1>
+    <div class="orders">
+    <h2>Add ordered product for <div th:text="${orderName}"></div></h2>
 
     <!-----------------------Add ordered product------------------------------------->
     <form action="#" th:action="@{|/ordered-product/${orderName}/add|}" th:object="${orderedProductNew}" method="post">
@@ -31,11 +32,12 @@
         <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
         <button type="submit">Add ordered product</button>
     </form>
+    </div>
     <br>
     <br>
 
     <!----------------------Ordered products table------------------------------------->
-    <table>
+    <table class="ord">
         <tr>
             <th><h3>Product Name</h3></th>
             <th><h3>Quantity</h3></th>
@@ -44,12 +46,12 @@
             <tr>
                 <td>
                     <h2>
-                        <button th:text="${orderedProduct.getProductName()}"></button>
+                        <p th:text="${orderedProduct.getProductName()}"></p>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${orderedProduct.getQuantity()}"></button>
+                        <p th:text="${orderedProduct.getQuantity()}"></p>
                     </h2>
                 </td>
             </tr>
