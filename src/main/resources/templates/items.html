@@ -6,40 +6,28 @@
           integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link th:href="@{/styles.css}" rel="stylesheet" type="text/css" media="all"/>
     <meta charset="UTF-8">
-    <title>Shipments</title>
+    <title>Items</title>
 </head>
 <body>
 <div class="container">
 
-    <!----------------------Shipments table------------------------------------->
+    <!----------------------Items table------------------------------------->
     <table class="table table-borderless">
         <tr>
-            <th class="badge badge-warning"><h3>Shipment Name</h3></th>
-            <th><h3>Quantity</h3></th>
-            <th><h3>Arrival</h3></th>
-            <th><h3>Best before</h3></th>
+            <th class="badge badge-warning"><h3>Item Name</h3></th>
+            <th><h3>Product number</h3></th>
         </tr>
-        <div th:each="shipment : ${shipments}">
+        <div th:each="item : ${items}">
             <tr class="bg-light mb-3">
                 <td>
                     <h2>
-                        <button th:text="${shipment.getBulkProduct().getName()}" class="badge badge-warning"
+                        <button th:text="${item.getIdentifiedProduct().getName()}" class="badge badge-warning"
                                 disabled></button>
                     </h2>
                 </td>
                 <td>
                     <h2>
-                        <button th:text="${shipment.getQuantity()}" class="badge badge-light" disabled></button>
-                    </h2>
-                </td>
-                <td>
-                    <h2>
-                        <div th:text="${shipment.getArrival()}" class="font-weight-bold"></div>
-                    </h2>
-                </td>
-                <td>
-                    <h2>
-                        <div th:text="${shipment.getBestBefore()}" class="font-weight-bold"></div>
+                        <button th:text="${item.getProductNumber()}" class="badge badge-light" disabled></button>
                     </h2>
                 </td>
             </tr>
