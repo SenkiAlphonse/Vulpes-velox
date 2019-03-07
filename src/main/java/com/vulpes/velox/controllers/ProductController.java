@@ -3,6 +3,7 @@ package com.vulpes.velox.controllers;
 import com.vulpes.velox.services.ItemService;
 import com.vulpes.velox.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,4 @@ public class ProductController {
     model.addAttribute("items", itemService.getAll());
     return "items";
   }
-
-
 }

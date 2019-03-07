@@ -44,3 +44,9 @@ CREATE TABLE ordered_products (
   order_id            BIGINT,
   FOREIGN KEY (order_id) REFERENCES orders(id)
 );
+
+CREATE TABLE users (
+                         id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                         email               VARCHAR(255),
+                         is_god              BOOL
+);

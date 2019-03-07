@@ -9,6 +9,8 @@ public interface ProductService {
 
   void save(Product product);
 
+  void update(Product product);
+
   void deleteAll();
 
   boolean existsByName(String name);
