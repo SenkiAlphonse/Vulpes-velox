@@ -63,6 +63,7 @@ public class StorageController {
       @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
       OAuth2Authentication authentication){
     if (userService.isAuthorized(authentication)){
+      bulkProduct.setQuantity((long)0);
       productService.save(bulkProduct);
       return "redirect:/storage/add";
     }
@@ -74,6 +75,7 @@ public class StorageController {
       @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
       OAuth2Authentication authentication){
     if (userService.isAuthorized(authentication)) {
+      identifiedProduct.setQuantity((long)0);
       productService.save(identifiedProduct);
       return "redirect:/storage/add";
     }
