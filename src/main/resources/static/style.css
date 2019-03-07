@@ -142,12 +142,14 @@ form {
     border: none;
     border-radius: 5px;
     color: #fff;
-    padding: 5px 5px;
-    margin-left: 10px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
+    margin-top: 500px;
+    margin-left: 20px;
+
 }
 
 label {
@@ -186,17 +188,17 @@ input[type=text],
 }
 
 .add-product {
-    top: 30%;
+    top: 20%;
     left: 8%;
 }
 
 .add-item {
-    top: 30%;
+    top: 20%;
     left: 38%;
 }
 
 .add-shipment {
-    top: 30%;
+    top: 20%;
     left: 68%;
 }
 
@@ -208,7 +210,7 @@ input[type=text],
     box-sizing: border-box;
     background: rgba(0,0,0,.5);
     text-transform: uppercase;
-    margin: 20px auto;
+    margin: 100px auto;
 }
 
 table {
