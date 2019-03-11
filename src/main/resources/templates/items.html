@@ -32,9 +32,11 @@
         <div th:each="item : ${items}">
             <tr>
                 <td>
-                    <h2>
-                        <p th:text="${item.getIdentifiedProduct().getName()}"></p>
-                    </h2>
+                    <div th:if="${item.getIdentifiedProduct() != null}">
+                        <h2>
+                            <p th:text="${item.getIdentifiedProduct().getName()}"></p>
+                        </h2>
+                    </div>
                 </td>
                 <td>
                     <h2>
