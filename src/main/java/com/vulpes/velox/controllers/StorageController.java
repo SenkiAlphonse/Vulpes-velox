@@ -1,3 +1,4 @@
+/*
 package com.vulpes.velox.controllers;
 
 import com.vulpes.velox.exceptions.UnauthorizedException;
@@ -137,3 +138,4 @@ public class StorageController {
     throw new UnauthorizedException("You have no power here, puny human being");
   }
 }
+*/
