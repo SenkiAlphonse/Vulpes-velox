@@ -39,7 +39,23 @@ public class UserController {
     return "redirect:/";
   }
 
-  @GetMapping("/users")
+  @GetMapping("/users") //EXTERMINATE!!!
+  public String showUsers(Model model,
+                          @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
+                          @ModelAttribute(name = "newuser") User newUser) {
+    if (userService.isGod()) {
+      List<User> myPage = userService.getAll(pageId);
+      List<User> peekPage = userService.getAll(pageId + 1);
+
+      model.addAttribute("users", myPage);
+      model.addAttribute("pageid", pageId);
+      model.addAttribute("islastpage", peekPage.size() == 0);
+      return "users";
+    }
+    throw new UnauthorizedException("Only Gods can tamper with users");
+  }
+
+/*  @GetMapping("/users")
   public String showUsers(Model model,
                           OAuth2Authentication authentication,
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
@@ -83,6 +99,6 @@ public class UserController {
       return "redirect:/users";
     }
     throw new UnauthorizedException("Only Gods can tamper with users");
-  }
+  }*/
 
 }

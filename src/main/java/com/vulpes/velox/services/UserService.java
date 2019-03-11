@@ -12,7 +12,8 @@ public interface UserService {
   void addUser(User user);
   void deleteUserById(Long id);
   Boolean isAuthorized(OAuth2Authentication authentication);
-  Boolean isGod(OAuth2Authentication authentication);
+  //Boolean isGod(OAuth2Authentication authentication);
+  Boolean isGod(); //EXTEMINATE!!!
   String getGoogleUserName(OAuth2Authentication authentication);
 
 }
