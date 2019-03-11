@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     return findByEmail(userEmail) != null;
   }
 
-/*  @Override
+  @Override
   public Boolean isGod(OAuth2Authentication authentication){
 
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
@@ -43,11 +43,6 @@ public class UserServiceImpl implements UserService {
       return user.getGod();
     }
     throw new UnauthorizedException("What are you even doing here...");
-  }*/
-
-  @Override //EXTERMINATE!!!
-  public Boolean isGod() {
-    return true;
   }
 
   @Override
