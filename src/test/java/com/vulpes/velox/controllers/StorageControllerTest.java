@@ -12,11 +12,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.apache.commons.lang3.StringUtils.contains;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = StorageController.class, secure = false)
@@ -44,10 +46,12 @@ public class StorageControllerTest {
   ShipmentService shipmentService;
 
   private IdentifiedProduct identifiedProduct;
+  private Item itemNew;
 
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
+    itemNew = new Item();
   }
 
   @Test
@@ -57,10 +61,12 @@ public class StorageControllerTest {
 
     mockMvc.perform(post("/item/new")
         .param("identifiedProductToSet", "IdentifiedProductName")
-        .flashAttr("itemNew", new Item())
     )
         .andDo(print())
-        .andExpect(status().isFound());
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/storage/add"));
+//        .andExpect(model().attributeExists("itemNew"));
+//        .andExpect(model().attribute("itemNew", is(itemNew)));
   }
 
 
