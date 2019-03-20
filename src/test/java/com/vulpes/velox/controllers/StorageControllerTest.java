@@ -19,6 +19,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = StorageController.class, secure = false)
@@ -64,7 +66,9 @@ public class StorageControllerTest {
     )
         .andDo(print())
         .andExpect(status().isFound())
-        .andExpect(redirectedUrl("/storage/add"));
+        .andExpect(redirectedUrl("/storage/add"))
+        .andExpect(view().name("redirect:/storage/add"));
+//        .andExpect(model().attribute("itemNew", hasProperty("id", nullValue())));
 //        .andExpect(model().attributeExists("itemNew"));
 //        .andExpect(model().attribute("itemNew", is(itemNew)));
   }
