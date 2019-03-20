@@ -82,6 +82,7 @@ public class StorageControllerTest {
     Item itemArgumentValue = itemArgument.getValue();
     assertThat(itemArgumentValue.getIdentifiedProduct(), is(identifiedProduct));
 
+    verify(productService, times(1)).getByName("IdentifiedProductName");
     verify(productService, times(1)).update(identifiedProduct);
     verifyNoMoreInteractions(productService);
   }
