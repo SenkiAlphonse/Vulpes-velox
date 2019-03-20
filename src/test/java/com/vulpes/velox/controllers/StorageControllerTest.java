@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.mockito.ArgumentCaptor;
 
-import static org.apache.commons.lang3.StringUtils.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,8 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.nullValue;
-
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = StorageController.class, secure = false)
@@ -84,6 +81,9 @@ public class StorageControllerTest {
 
     Item itemArgumentValue = itemArgument.getValue();
     assertThat(itemArgumentValue.getIdentifiedProduct(), is(identifiedProduct));
+
+    verify(productService, times(1)).update(identifiedProduct);
+    verifyNoMoreInteractions(productService);
   }
 
 
