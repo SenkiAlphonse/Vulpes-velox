@@ -7,19 +7,12 @@ import org.springframework.stereotype.Service;
 public class SuperService {
 
   public BulkProductService bulkProductService;
-
   public IdentifiedProductService identifiedProductService;
-
   public ItemService itemService;
-
   public ProductService productService;
-
   public ShipmentService shipmentService;
-
   public OrderService orderService;
-
   public OrderedProductService orderedProductService;
-
   public UserService userService;
 
   @Autowired

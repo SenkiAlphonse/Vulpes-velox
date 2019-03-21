@@ -9,11 +9,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.mockito.ArgumentCaptor;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -21,8 +22,6 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = StorageController.class, secure = false)
@@ -64,12 +63,16 @@ public class StorageControllerTest {
     when(productService.getByName("IdentifiedProductName")).thenReturn(identifiedProduct);
 
     mockMvc.perform(post("/item/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("identifiedProductToSet", "IdentifiedProductName")
+//        .param("productNumber", "2")
+//        .sessionAttr("itemNew", itemNew)
     )
         .andDo(print())
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/storage/add"))
         .andExpect(view().name("redirect:/storage/add"));
+//        .andExpect(model().size(1));
 //        .andExpect(model().attribute("itemNew", hasProperty("id", nullValue())));
 //        .andExpect(model().attributeExists("itemNew"));
 //        .andExpect(model().attribute("itemNew", is(itemNew)));
