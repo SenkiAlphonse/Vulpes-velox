@@ -64,9 +64,9 @@ public class StorageControllerTest {
 
     mockMvc.perform(post("/item/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("productNumber", "2")
         .param("identifiedProductToSet", "IdentifiedProductName")
-//        .param("productNumber", "2")
-//        .sessionAttr("itemNew", itemNew)
     )
         .andDo(print())
         .andExpect(status().isFound())
@@ -83,6 +83,8 @@ public class StorageControllerTest {
     verifyNoMoreInteractions(itemService);
 
     Item itemArgumentValue = itemArgument.getValue();
+    assertThat(itemArgumentValue.getId(), is((long) 1));
+    assertThat(itemArgumentValue.getProductNumber(), is((long) 2));
     assertThat(itemArgumentValue.getIdentifiedProduct(), is(identifiedProduct));
 
     verify(productService, times(1)).getByName("IdentifiedProductName");

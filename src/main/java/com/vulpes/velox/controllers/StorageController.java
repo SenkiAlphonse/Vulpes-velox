@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -97,7 +96,11 @@ public class StorageController {
   @PostMapping("/item/new")
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item,
-                        OAuth2Authentication authentication) {
+                        OAuth2Authentication authentication,
+                        Model model) {
+
+    model.addAttribute("itemNew", item);
+
     if (userService.isAuthorized(authentication)) {
       IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
 
