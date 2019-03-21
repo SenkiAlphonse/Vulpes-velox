@@ -16,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
   private UserRepository userRepo;
 
+  public UserServiceImpl() {
+  }
+
   @Autowired
   public UserServiceImpl(UserRepository userRepository){
     this.userRepo = userRepository;

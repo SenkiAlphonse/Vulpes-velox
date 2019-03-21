@@ -20,4 +20,5 @@ public class IdentifiedProduct extends Product {
   public void setItems(List<Item> items) {
     this.items = items;
   }
+
 }
