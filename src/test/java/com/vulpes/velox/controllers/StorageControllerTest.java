@@ -72,10 +72,9 @@ public class StorageControllerTest {
         .andExpect(status().isFound())
         .andExpect(redirectedUrl("/storage/add"))
         .andExpect(view().name("redirect:/storage/add"));
-//        .andExpect(model().size(1));
-//        .andExpect(model().attribute("itemNew", hasProperty("id", nullValue())));
-//        .andExpect(model().attributeExists("itemNew"));
-//        .andExpect(model().attribute("itemNew", is(itemNew)));
+
+    verify(userService, times(1)).isAuthorized(any());
+    verifyNoMoreInteractions(userService);
 
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);
     verify(itemService, times(1)).save(itemArgument.capture());

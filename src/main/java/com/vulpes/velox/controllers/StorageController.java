@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -41,6 +43,11 @@ public class StorageController {
     this.shipmentService = shipmentService;
     this.userService = userService;
   }
+
+//  @ModelAttribute("savedEntity")
+//  public boolean savedEntity() {
+//    return false;
+//  }
 
   @GetMapping("/storage/add")
   public String addProducts(@Valid Model model,
@@ -96,11 +103,7 @@ public class StorageController {
   @PostMapping("/item/new")
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item,
-                        OAuth2Authentication authentication,
-                        Model model) {
-
-    model.addAttribute("itemNew", item);
-
+                        OAuth2Authentication authentication) {
     if (userService.isAuthorized(authentication)) {
       IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
 
@@ -121,7 +124,9 @@ public class StorageController {
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
-                            OAuth2Authentication authentication) {
+                            OAuth2Authentication authentication,
+                            Model model,
+                            RedirectAttributes redirectAttributes) {
     if (userService.isAuthorized(authentication)) {
       if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
           !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
@@ -133,6 +138,12 @@ public class StorageController {
 
       shipment.setBulkProduct(bulkProduct);
       shipmentService.save(shipment);
+
+      redirectAttributes.addFlashAttribute("savedEntity", true);
+      redirectAttributes.addFlashAttribute("quantity", shipment.getQuantity());
+      redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
+      redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());
+      redirectAttributes.addFlashAttribute("bulkProductName", shipment.getBulkProduct().getName());
 
       bulkProduct.setQuantity(bulkProduct.getQuantity()+shipment.getQuantity());
       productService.update(bulkProduct);

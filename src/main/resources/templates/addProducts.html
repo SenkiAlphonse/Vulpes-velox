@@ -25,15 +25,15 @@
     <!-----------------------New bulk product-------------------------------->
     <div class="add-product">
         <div class="full-height"></div>
-            <h2>Add new item</h2>
-            <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
-                  id="bulkProductNew">
-                <label for="bulkProductNewNameId">Name</label>
-                <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
-                <button type="submit">New bulk product</button>
-            </form>
-            <br>
-    <!---------------------New identified product-------------------------------->
+        <h2>Add new item</h2>
+        <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
+              id="bulkProductNew">
+            <label for="bulkProductNewNameId">Name</label>
+            <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
+            <button type="submit">New bulk product</button>
+        </form>
+        <br>
+        <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
             <label for="identifiedProductNewNameId">Name</label>
@@ -44,9 +44,9 @@
     <br>
     <br>
     <!-----------------------Delete all products----------------------------------->
-        <form action="#" th:action="@{/deleteAll}" method="post">
-            <button type="submit" class="delete">Delete all products</button>
-        </form>
+    <form action="#" th:action="@{/deleteAll}" method="post">
+        <button type="submit" class="delete">Delete all products</button>
+    </form>
     <br>
     <br>
     <!-----------------------Add item------------------------------------->
@@ -56,22 +56,36 @@
             <label for="number">Product number</label>
             <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
             <div class="dropdown-menu">
-            <select name="identifiedProductToSet">
-                <div th:each="identifiedProduct : ${identifiedProducts}">
+                <select name="identifiedProductToSet">
+                    <div th:each="identifiedProduct : ${identifiedProducts}">
                         <option th:value="${identifiedProduct.getName()}">
                             <p th:text="${identifiedProduct.getName()}"></p>
                         </option>
-                </div>
-            </select>
+                    </div>
+                </select>
             </div>
             <button type="submit">Add item</button>
         </form>
     </div>
+
     <!----------------------Add shipment--------------------------------------->
     <div class="add-shipment">
         <div class="full-height"></div>
-    <h2>Add shipment</h2>
+        <h2>Add shipment</h2>
         <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
+            <!----------------------Added shipment--------------------------------------->
+            <div th:switch="${savedEntity}">
+                <div th:case="${savedEntity == true}" class="alert alert-primary">
+                    <span th:text="'Shipment saved with '"></span>
+                    <b th:text="${quantity}"></b>
+                    <span th:text="'quantity, '"></span>
+                    <b th:text="${arrival}"></b>
+                    <span th:text="' arrival date and '"></span>
+                    <b th:text="${bestBefore} "></b>
+                    <span th:text="'best before date.'"></span>
+                </div>
+            </div>
+
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
             <label for="arrivalToSet">Arrival</label>
@@ -95,6 +109,6 @@
             </button>
         </form>
     </div>
-    </div>
+</div>
 </body>
 </html>

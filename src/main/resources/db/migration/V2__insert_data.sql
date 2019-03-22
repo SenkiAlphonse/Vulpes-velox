@@ -6,11 +6,11 @@ INSERT INTO users
        ('nilcsi@gmail.com', true);
 
 INSERT INTO products
-       (name, dtype) VALUES
-       ('name', 'IdentifiedProduct'),
-       ('name2', 'IdentifiedProduct'),
-       ('nameBulk', 'BulkProduct'),
-       ('nameBulk2', 'BulkProduct');
+       (name, quantity, dtype) VALUES
+       ('name', 0, 'IdentifiedProduct'),
+       ('name2', 0, 'IdentifiedProduct'),
+       ('nameBulk', 0, 'BulkProduct'),
+       ('nameBulk2', 0, 'BulkProduct');
 
 INSERT INTO items
        (product_number) VALUES
