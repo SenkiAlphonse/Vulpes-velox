@@ -13,6 +13,6 @@ INSERT INTO products
        ('nameBulk2', 0, 'BulkProduct');
 
 INSERT INTO items
-       (product_number) VALUES
-       (23424),
-       (324324);
+       (product_number, identified_product_id) VALUES
+       (23424, (SELECT id FROM products WHERE name = 'name')),
+       (324324, (SELECT id FROM products WHERE name = 'name2'));
