@@ -43,11 +43,6 @@ public class StorageController {
     this.userService = userService;
   }
 
-//  @ModelAttribute("savedEntity")
-//  public boolean savedEntity() {
-//    return false;
-//  }
-
   @GetMapping("/storage/add")
   public String addProducts(@Valid Model model,
                             @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
