@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="nav"></div>
+    <div class="topnav" id="myTopnav">
+        <a th:href="@{/}" class="active">Home</a>
+        <a th:href="@{/shipments}">Shipments</a>
+        <a th:href="@{/items}">Items</a>
+        <a th:href="@{/storage/add}">Add product</a>
+        <a th:href="@{/order}">Add order</a>
+        <a th:href="@{/users}">Users</a>
+        <a th:href="@{/logout}">Logout</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <script>
+    function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+    x.className += " responsive";
+    } else {
+    x.className = "topnav";
+    }
+    }
+    </script>
+
+</body>
+</html>
