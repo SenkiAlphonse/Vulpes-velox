@@ -2,18 +2,22 @@
       margin-top: 0;
     }
 
+#number {
+width: 100%;
+}
+
     input[type=text], select, textarea {
       width: 100%;
       }
 
     .col-label {
-      float: left;
       width: 25%;
-      margin-top: 6px;
     }
 
     .col-input {
-      float: left;
       width: 60%;
-      margin-top: 6px;
+    }
+
+    label {
+      font-size:25px;
     }

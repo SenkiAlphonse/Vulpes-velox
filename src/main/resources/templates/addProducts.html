@@ -31,11 +31,11 @@
           id="identifiedProductNew">
         <div class="row">
             <div class="col-label">
-            <label for="identifiedProductNewNameId">Name</label>
+                <label for="identifiedProductNewNameId">Name</label>
             </div>
             <div class="col-input">
-            <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
-        </div>
+                <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
+            </div>
         </div>
         <div class="row">
             <div class="col-label"></div>
@@ -55,18 +55,30 @@
     <!-----------------------Add item------------------------------------->
     <h2>Add new item</h2>
     <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
-        <div class="row"><label for="number">Product number</label>
-            <input type="number" name="productNumber" id="number" th:field="*{productNumber}"></div>
-        <div class="dropdown-menu">
-            <select name="identifiedProductToSet">
-                <div th:each="identifiedProduct : ${identifiedProducts}">
-                    <option th:value="${identifiedProduct.getName()}">
-                        <p th:text="${identifiedProduct.getName()}"></p>
-                    </option>
-                </div>
-            </select>
+        <div class="row">
+            <div class="col-label">
+                <label for="number">Serial</label>
+            </div>
+            <div class="col-input">
+                <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
+            </div>
         </div>
         <div class="row">
+            <div class="col-label"><label for="type">Type</label></div>
+            <div class="col-input">
+                <div class="dropdown-menu">
+                    <select name="identifiedProductToSet" id="type">
+                        <div th:each="identifiedProduct : ${identifiedProducts}">
+                            <option th:value="${identifiedProduct.getName()}">
+                                <p th:text="${identifiedProduct.getName()}"></p>
+                            </option>
+                        </div>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
             <button type="submit">Add item</button>
         </div>
     </form>
@@ -87,74 +99,52 @@
                 <span th:text="'best before date.'"></span>
             </div>
         </div>
-
-        <label for="quantity">Quantity</label>
-        <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
-        <div class="row"><label for="arrivalToSet">Arrival</label>
+        <div class="row">
+            <div class="col-label">
+                <label for="quantity">Quantity</label>
+            </div><div class="col-input">
+            <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="arrivalToSet">Arrival</label>
+            </div><div class="col-input">
             <input type="text" name="arrivalToSet" id="arrivalToSet"
                    pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-                   title="Arrival date DD-MM-YYYY" placeholder="YYYY-MM-DD"></div>
-        <label for="bestBeforeToSet">Best before</label>
-        <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
-               pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-               title="Best before date YYYY-MM-DD" placeholder="YYYY-MM-DD">
-        <select name="bulkProductToSet">
-            <div th:each="bulkProduct : ${bulkProducts}">
-                <div class="dropdown-menu">
-                    <option class="dropdown-item" th:value="${bulkProduct.getName()}">
-                        <p th:text="${bulkProduct.getName()}"></p>
-                    </option>
-                </div>
-            </div>
-        </select>
-        <div class="row">
-            <button type="submit">Add shipment</button>
+                   title="Arrival date DD-MM-YYYY" placeholder="YYYY-MM-DD">
         </div>
-    </form>
-
-    <form action="/action_page.php">
-        <div class="row">
-            <div class="col-label">
-                <label for="fname">First Name</label>
-            </div>
-            <div class="col-input">
-                <input type="text" id="fname" name="firstname" placeholder="Your name..">
-            </div>
         </div>
         <div class="row">
             <div class="col-label">
-                <label for="lname">Last Name</label>
+                <label for="bestBeforeToSet">Best before</label>
             </div>
             <div class="col-input">
-                <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-            </div>
+            <input type="text" name="bestBeforeToSet" id="bestBeforeToSet"
+                   pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
+                   title="Best before date YYYY-MM-DD" placeholder="YYYY-MM-DD">
+        </div>
         </div>
         <div class="row">
             <div class="col-label">
-                <label for="country">Country</label>
+                <label for="typeBulk">Type</label>
             </div>
             <div class="col-input">
-                <select id="country" name="country">
-                    <option value="australia">Australia</option>
-                    <option value="canada">Canada</option>
-                    <option value="usa">USA</option>
+                <select name="bulkProductToSet" id="typeBulk">
+                    <div th:each="bulkProduct : ${bulkProducts}">
+                        <div class="dropdown-menu">
+                            <option class="dropdown-item" th:value="${bulkProduct.getName()}">
+                                <p th:text="${bulkProduct.getName()}"></p>
+                            </option>
+                        </div>
+                    </div>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-label">
-                <label for="subject">Subject</label>
             </div>
-            <div class="col-input">
-                <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+            <div class="row"><div class="col-label"></div>
+                <button type="submit">Add shipment</button>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-label"></div>
-            <button type="submit" value="Submit">Submit</button>
-        </div>
     </form>
-
 </div>
 </body>
 </html>
