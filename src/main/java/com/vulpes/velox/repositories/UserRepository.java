@@ -6,8 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import javax.persistence.Id;
 import java.util.List;
 
 @Repository

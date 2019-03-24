@@ -1,8 +1,6 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.dtos.ProductDto;
-import com.vulpes.velox.models.BulkProduct;
-import com.vulpes.velox.models.IdentifiedProduct;
 import com.vulpes.velox.models.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
