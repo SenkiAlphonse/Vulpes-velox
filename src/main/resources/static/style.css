@@ -1,3 +1,5 @@
+
+/* -------------------------- nav ------------------------ */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -142,9 +144,53 @@ h2 {
   font-size: 50px;
 }
 
+/* -------------------------- table ------------------------ */
 
-
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.25;
 }
+
+#td {
+  color: black;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  font-size: 20px;
+}
+
+table caption {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  color: black;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: 25px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
 
 
 

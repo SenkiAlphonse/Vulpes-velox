@@ -41,25 +41,30 @@
     <br>
 
     <!----------------------Ordered products table------------------------------------->
-    <table class="ord">
+    <table class="table">
+        <caption>Ordered products</caption>
+        <thead>
         <tr>
-            <th><h3>Product Name</h3></th>
-            <th><h3>Quantity</h3></th>
+            <th scope="col"><h3>Product Name</h3></th>
+            <th scope="col"><h3>Quantity</h3></th>
         </tr>
+        </thead>
+        <tbody>
         <div th:each="orderedProduct : ${orderedProducts}">
             <tr>
-                <td>
-                    <h2>
+                <td data-label="ProductName">
+                    <div class="td">
                         <p th:text="${orderedProduct.getProductName()}"></p>
-                    </h2>
+                    </div>
                 </td>
-                <td>
-                    <h2>
+                <td data-label="Quantity">
+                    <div class="td">
                         <p th:text="${orderedProduct.getQuantity()}"></p>
-                    </h2>
+                    </div>
                 </td>
             </tr>
         </div>
+        </tbody>
     </table>
 </div>
 </body>
