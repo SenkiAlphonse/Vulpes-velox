@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
-    <meta charset="UTF-8">
-    <title>Order</title>
+    <div th:include="fragments/head :: head"></div>
+    <title id="title">Add ordered product</title>
 </head>
 <body>
-<header>
-    <div class="nav-container">
-        <nav>
-            <ul>
-                <li><a th:href="@{/}">Home</a></li>
-                <li><a th:href="@{/shipments}">Shipments</a></li>
-                <li><a th:href="@{/items}">Items</a></li>
-                <li><a th:href="@{/storage/add}">Add product</a></li>
-                <li><a th:href="@{/order}">Add order</a></li>
-                <li><a th:href="@{/users}">Users</a></li>
-                <li><a th:href="@{/logout}">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<div th:replace="fragments/nav-bar :: nav"></div>
 <div class="container">
-    <div class="orders">
-    <h2>Add ordered product for <div th:text="${orderName}"></div></h2>
 
-    <!-----------------------Add ordered product------------------------------------->
-    <form action="#" th:action="@{|/ordered-product/${orderName}/add|}" th:object="${orderedProductNew}" method="post">
-        <label for="product">Product name</label>
-        <input type="text" name="product" id="product" th:field="*{productName}">
-        <label for="quantity">Quantity</label>
-        <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
-        <button type="submit">Add ordered product</button>
-    </form>
+    <div class="orders">
+        <h2>Add ordered product for
+            <div th:text="${orderName}"></div>
+        </h2>
+        <!-----------------------Add ordered product------------------------------------->
+        <form action="#" th:action="@{|/ordered-product/${orderName}/add|}" th:object="${orderedProductNew}"
+              method="post">
+            <div class="row">
+                <div class="col-label">
+                    <label for="product">Product name</label>
+                </div>
+                <div class="col-input">
+                    <input type="text" name="product" id="product" th:field="*{productName}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-label">
+                    <label for="quantity">Quantity</label>
+                </div>
+                <div class="col-input">
+                    <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-label"></div>
+                <button type="submit">Add ordered product</button>
+            </div>
+        </form>
     </div>
     <br>
     <br>
