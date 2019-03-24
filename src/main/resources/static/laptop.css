@@ -1,7 +1,5 @@
     button[type=submit] {
-      width: 20%;
       margin-top: 0;
-      float: right;
     }
 
     input[type=text], select, textarea {

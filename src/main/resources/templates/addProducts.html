@@ -11,19 +11,34 @@
     <!-----------------------New bulk product-------------------------------->
     <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
           id="bulkProductNew">
-        <div class="row"><label for="bulkProductNewNameId">Name</label>
-            <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}"></div>
         <div class="row">
+            <div class="col-label">
+                <label for="bulkProductNewNameId">Name</label>
+            </div>
+            <div class="col-input">
+                <input type="text" name="bulkProductNewName" id="bulkProductNewNameId" th:field="*{name}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
             <button type="submit">New bulk product</button>
         </div>
+
     </form>
     <br>
     <!---------------------New identified product-------------------------------->
     <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
           id="identifiedProductNew">
-        <div class="row"><label for="identifiedProductNewNameId">Name</label>
-            <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}"></div>
         <div class="row">
+            <div class="col-label">
+            <label for="identifiedProductNewNameId">Name</label>
+            </div>
+            <div class="col-input">
+            <input type="text" name="identifiedProductNewName" id="identifiedProductNewNameId" th:field="*{name}">
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
             <button type="submit">New identified product</button>
         </div>
     </form>
@@ -32,7 +47,7 @@
     <!-----------------------Delete all products----------------------------------->
     <form action="#" th:action="@{/deleteAll}" method="post">
         <div class="row">
-            <button type="submit" class="delete">Delete all products</button>
+            <button type="submit" class="delete" id="delete">Delete all products</button>
         </div>
     </form>
     <br>
@@ -135,6 +150,7 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-label"></div>
             <button type="submit" value="Submit">Submit</button>
         </div>
     </form>
