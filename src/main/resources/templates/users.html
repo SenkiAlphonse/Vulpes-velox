@@ -35,18 +35,18 @@
                 <td data-label="Delete">
                     <div class="td">
                         <form th:action="@{'/users/delete/' + ${user.getId()}}" method="post">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit">Delete</button>
                         </form>
                     </div>
                 </td>
                 <td data-label="Id">
                     <div class="td">
-                        <div th:text="${user.getId()}" class="font-weight-bold"></div>
+                        <div th:text="${user.getId()}"></div>
                     </div>
                 </td>
                 <td data-label="Email">
                     <div class="td">
-                        <div th:text="${user.getEmail()}" class="font-weight-bold"></div>
+                        <div th:text="${user.getEmail()}"></div>
                     </div>
                 </td>
                 <td data-label="Dethrone" th:if="${user.getGod()}">
@@ -73,7 +73,7 @@
           id="userNew">
         <label for="newUserName">Name</label>
         <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
-        <button type="submit" class="btn btn-primary">New <span class="badge badge-light">Save user</span>
+        <button type="submit">New <span>Save user</span>
         </button>
     </form>
 
