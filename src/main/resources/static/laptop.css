@@ -1,27 +1,27 @@
-    button[type=submit] {
-      margin-top: 0;
-    }
-
-#number {
-width: 100%;
+button[type=submit] {
+    margin-top: 0;
 }
 
-    input[type=text], select, textarea {
-      width: 100%;
-      }
+#number {
+    width: 100%;
+}
 
-    .col-label {
-      width: 25%;
-    }
+input[type=text], select, textarea {
+    width: 100%;
+}
 
-    .col-input {
-      width: 60%;
-    }
+.col-label {
+    width: 25%;
+}
 
-    label {
-      font-size:25px;
-    }
+.col-input {
+    width: 60%;
+}
 
-    h2 {
-      font-size: 40px;
-    }
+label {
+    font-size: 25px;
+}
+
+h2 {
+    font-size: 40px;
+}

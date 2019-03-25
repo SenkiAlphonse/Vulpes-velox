@@ -1,59 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link th:href="@{/style.css}" rel="stylesheet" type="text/css" media="all"/>
-    <meta charset="UTF-8">
-    <title>Shipments</title>
+    <div th:include="fragments/head :: head"></div>
+    <title id="title">Shipments</title>
 </head>
 <body>
-<header>
-    <div class="nav-container">
-        <nav>
-            <ul>
-                <li><a th:href="@{/}">Home</a></li>
-                <li><a th:href="@{/shipments}">Shipments</a></li>
-                <li><a th:href="@{/items}">Items</a></li>
-                <li><a th:href="@{/storage/add}">Add product</a></li>
-                <li><a th:href="@{/order}">Add order</a></li>
-                <li><a th:href="@{/users}">Users</a></li>
-                <li><a th:href="@{/logout}">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<div th:replace="fragments/nav-bar :: nav"></div>
 <div class="container">
-    <!----------------------Bulk products table------------------------------------->
-    <table>
-        <tr>
-            <th><h3>Bulk Product Name</h3></th>
     <!----------------------Shipments table------------------------------------->
-            <th><h3>Quantity</h3></th>
-            <th><h3>Arrival</h3></th>
-            <th><h3>Best before</h3></th>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col"><h3>Bulk Product Name</h3></th>
+            <th scope="col"><h3>Quantity</h3></th>
+            <th scope="col"><h3>Arrival</h3></th>
+            <th scope="col"><h3>Best before</h3></th>
         </tr>
+        </thead>
         <div th:each="shipment : ${shipments}">
+            <tbody>
             <tr>
-                <td>
-                    <h2>
+                <td data-label="Product Name">
+                    <div class="td">
                         <p th:text="${shipment.getBulkProduct().getName()}"></p>
-                    </h2>
+                    </div>
                 </td>
-                <td>
-                    <h2>
+                <td data-label="Quantity">
+                    <div class="td">
                         <p th:text="${shipment.getQuantity()}"></p>
-                    </h2>
+                    </div>
                 </td>
-                <td>
-                    <h2>
+                <td data-label="Arrival">
+                    <div class="td">
                         <p th:text="${shipment.getArrival()}"></p>
-                    </h2>
+                    </div>
                 </td>
-                <td>
-                    <h2>
+                <td data-label="Best before">
+                    <div class="td">
                         <p th:text="${shipment.getBestBefore()}"></p>
-                    </h2>
+                    </div>
                 </td>
             </tr>
+            </tbody>
         </div>
     </table>
 </div>
