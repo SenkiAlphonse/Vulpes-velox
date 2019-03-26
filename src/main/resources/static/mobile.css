@@ -24,7 +24,6 @@
 }
 
 button[type=submit] {
-    width: 100%;
     margin-top: 0;
 }
 
@@ -36,7 +35,7 @@ input[type=text], select, textarea {
     width: 100%;
 }
 
-.col-label, .col-input, button[type=submit] {
+.col-label, .col-input {
     width: 100%;
     margin-top: 0;
 }
@@ -62,7 +61,6 @@ table caption {
 table thead {
     border: none;
     clip: rect(0 0 0 0);
-    height: 1px;
     margin: -1px;
     overflow: hidden;
     padding: 0;
