@@ -87,6 +87,7 @@ label {
     color: #f2f2f2;
     font-size: 30px;
 }
+
 button[type=submit] {
     background-color: blue;
     color: white;
@@ -211,7 +212,9 @@ td[data-label] div, p {
     text-overflow: ellipsis;
 }
 
-
+.page {
+    color: white;
+}
 
 
 
