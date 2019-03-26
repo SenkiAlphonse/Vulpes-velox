@@ -21,9 +21,7 @@
             <tbody>
             <tr>
                 <td data-label="Product Name">
-                    <div class="td">
-                        <p th:text="${shipment.getBulkProduct().getName()}"></p>
-                    </div>
+                    <p th:text="${shipment.getBulkProduct().getName()}"></p>
                 </td>
                 <td data-label="Quantity">
                     <div class="td">
@@ -31,14 +29,10 @@
                     </div>
                 </td>
                 <td data-label="Arrival">
-                    <div class="td">
-                        <p th:text="${shipment.getArrival()}"></p>
-                    </div>
+                    <p th:text="${shipment.getArrival()}"></p>
                 </td>
                 <td data-label="Best before">
-                    <div class="td">
-                        <p th:text="${shipment.getBestBefore()}"></p>
-                    </div>
+                    <p th:text="${shipment.getBestBefore()}"></p>
                 </td>
             </tr>
             </tbody>

@@ -33,35 +33,25 @@
             <tbody>
             <tr>
                 <td data-label="Delete">
-                    <div class="td">
-                        <form th:action="@{'/users/delete/' + ${user.getId()}}" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
+                    <form th:action="@{'/users/delete/' + ${user.getId()}}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
                 </td>
                 <td data-label="Id">
-                    <div class="td">
-                        <div th:text="${user.getId()}"></div>
-                    </div>
+                    <div th:text="${user.getId()}"></div>
                 </td>
                 <td data-label="Email">
-                    <div class="td">
-                        <div th:text="${user.getEmail()}"></div>
-                    </div>
+                    <div th:text="${user.getEmail()}"></div>
                 </td>
                 <td data-label="Dethrone" th:if="${user.getGod()}">
-                    <div class="td">
-                        <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                            <button type="submit">Dethrone</button>
-                        </form>
-                    </div>
+                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                        <button type="submit">Dethrone</button>
+                    </form>
                 </td>
                 <td data-label="Make God" th:unless="${user.getGod()}">
-                    <div class="td">
-                        <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                            <button type="submit">Make God</button>
-                        </form>
-                    </div>
+                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                        <button type="submit">Make God</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

@@ -53,14 +53,10 @@
         <div th:each="orderedProduct : ${orderedProducts}">
             <tr>
                 <td data-label="Product Name">
-                    <div class="td">
-                        <p th:text="${orderedProduct.getProductName()}"></p>
-                    </div>
+                    <p th:text="${orderedProduct.getProductName()}"></p>
                 </td>
                 <td data-label="Quantity">
-                    <div class="td">
-                        <p th:text="${orderedProduct.getQuantity()}"></p>
-                    </div>
+                    <p th:text="${orderedProduct.getQuantity()}"></p>
                 </td>
             </tr>
         </div>
