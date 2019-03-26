@@ -1,5 +1,7 @@
 package com.vulpes.velox.models;
 
+import com.vulpes.velox.models.products.IdentifiedProduct;
+
 import javax.persistence.*;
 
 @Entity

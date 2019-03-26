@@ -1,8 +1,13 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.models.IdentifiedProduct;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
-import com.vulpes.velox.services.*;
+import com.vulpes.velox.services.bulkproductservice.BulkProductService;
+import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
+import com.vulpes.velox.services.itemservice.ItemService;
+import com.vulpes.velox.services.productservice.ProductService;
+import com.vulpes.velox.services.shipmentservice.ShipmentService;
+import com.vulpes.velox.services.userservice.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
