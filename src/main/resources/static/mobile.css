@@ -24,6 +24,12 @@
 }
 
 button[type=submit] {
+    width: 100%;
+    margin-top: 0;
+}
+
+td form button[type=submit] {
+    width: auto;
     margin-top: 0;
 }
 
