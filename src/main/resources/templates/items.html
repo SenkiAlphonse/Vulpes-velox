@@ -19,7 +19,7 @@
         </thead>
         <div th:each="item : ${items}">
             <tbody>
-            <tr>
+            <tr class="tablerow-with-productname">
                 <td data-label="Product Name">
                     <p th:text="${item.getIdentifiedProduct().getName()}"></p>
                 </td>

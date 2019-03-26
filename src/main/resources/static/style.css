@@ -89,44 +89,32 @@ label {
 }
 
 button[type=submit] {
-    background-color: blue;
-    color: white;
+    background-color: mediumblue;
+    color: whitesmoke;
     font-weight: bold;
     padding: 12px 20px;
     border-style: outset;
-    border-color: black;
+    border-color: blue;
     border-radius: 15px;
     cursor: pointer;
-    /*box-shadow: 3px 3px #333;*/
-    /*width: fit-content;*/
-    /*height: fit-content;*/
-}
-
-/*button[type=submit] {*/
-    /*background-color: blue;*/
-    /*color: white;*/
-    /*font-weight: bold;*/
-    /*padding: 12px 20px;*/
-    /*border-color: black;*/
-    /*border-style: outset;*/
-    /*border-radius: 15px;*/
-    /*cursor: pointer;*/
-    /**/
-/*}*/
-
-#delete {
-    background-color: #4B0082;
-    color: white;
 }
 
 button[type=submit]:hover {
-    background-color: #000080;
+    background-color: darkblue;
+    border-color: mediumblue;
 }
 
-/*button[type=submit]:active {*/
-    /*box-shadow: 0 0 #666;*/
-    /*transform: translate(3px, 3px);*/
-/*}*/
+#delete {
+    background-color: whitesmoke;
+    border-color: aliceblue;
+    color: #333333;
+}
+
+#delete:hover {
+    background-color: red;
+    border-color: #FF5A5A;
+}
+
 
 .container {
     border-radius: 5px;
@@ -158,11 +146,27 @@ h2 {
     font-size: 50px;
 }
 
+.pagetop-including-ordername {
+    word-break: break-all;
+}
+
 /* -------------------------- table ------------------------ */
 
 body {
     font-family: "Open Sans", sans-serif;
     line-height: 1.25;
+}
+
+.nav-arrow {
+    color: whitesmoke;
+}
+
+.nav-arrow:active {
+    color: goldenrod;
+}
+
+.text-muted {
+    color: lightslategrey;
 }
 
 table {
@@ -197,7 +201,7 @@ table th,
 table td {
     text-align: center;
     width: 100% ;
-    height: 3em;
+    height: auto;
 }
 
 table th {
@@ -206,10 +210,16 @@ table th {
     text-transform: uppercase;
 }
 
-td[data-label] div, p {
+td[data-label] p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+td[data-label] p:hover{
+    overflow: visible;
+    white-space: normal;
+    word-break: break-all
 }
 
 .page {

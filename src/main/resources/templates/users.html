@@ -11,12 +11,19 @@
 <div class="container my-3">
     <div class="row">
         <div class="page">
-        <a th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}"><i class="fas fa-arrow-left"></i></a>
-        <span class="text-muted" th:if="${pageid == 0}"><i class="fas fa-arrow-left"></i></span>
+        <a class="nav-arrow" th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <span class="text-muted" th:if="${pageid == 0}">
+            <i class="fas fa-arrow-left"></i>
+        </span>
         <div class="px-2" th:text="'page ' + ${pageid +1}"></div>
-        <a th:unless="${islastpage}" th:href="|/users?pageId=${pageid + 1}|"><i
-                class="fas fa-arrow-right text-info"></i></a>
-        <span class="text-muted" th:if="${islastpage}"><i class="fas fa-arrow-right"></i></span>
+        <a class="nav-arrow" th:unless="${islastpage}" th:href="|/users?pageId=${pageid + 1}|">
+            <i class="fas fa-arrow-right text-info"></i>
+        </a>
+        <span class="text-muted" th:if="${islastpage}">
+            <i class="fas fa-arrow-right"></i>
+        </span>
     </div>
 </div>
 <div class="container">
@@ -28,7 +35,7 @@
             <th scope="col"><h3>Delete</h3></th>
             <th scope="col"><h3>ID</h3></th>
             <th scope="col"><h3>E-mail</h3></th>
-            <th scope="col"><h3>God mode</h3></th>
+            <th scope="col"><h3>Admin</h3></th>
         </tr>
         </thead>
         <div th:each="user : ${users}">
@@ -40,19 +47,19 @@
                     </form>
                 </td>
                 <td data-label="Id">
-                    <div th:text="${user.getId()}"></div>
+                    <p th:text="${user.getId()}"></p>
                 </td>
                 <td data-label="Email">
-                    <div th:text="${user.getEmail()}"></div>
+                    <p th:text="${user.getEmail()}"></p>
                 </td>
-                <td data-label="Dethrone" th:if="${user.getGod()}">
+                <td data-label="Admin" th:if="${user.getGod()}">
                     <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                        <button type="submit">Dethrone</button>
+                        <button type="submit">Demote</button>
                     </form>
                 </td>
-                <td data-label="Make God" th:unless="${user.getGod()}">
+                <td data-label="Admin" th:unless="${user.getGod()}">
                     <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                        <button type="submit">Make God</button>
+                        <button type="submit">Promote</button>
                     </form>
                 </td>
             </tr>
@@ -65,8 +72,7 @@
           id="userNew">
         <label for="newUserName">Name</label>
         <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
-        <button type="submit">New <span>Save user</span>
-        </button>
+        <button type="submit">Save user</button>
     </form>
 
 </div>
