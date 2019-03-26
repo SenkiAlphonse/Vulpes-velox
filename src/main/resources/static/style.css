@@ -96,6 +96,7 @@ button[type=submit] {
     border-color: black;
     border-radius: 15px;
     cursor: pointer;
+    /*box-shadow: 3px 3px #333;*/
     /*width: fit-content;*/
     /*height: fit-content;*/
 }
@@ -113,13 +114,18 @@ button[type=submit] {
 /*}*/
 
 #delete {
-    background-color: red;
+    background-color: #4B0082;
     color: white;
 }
 
 button[type=submit]:hover {
     background-color: #000080;
 }
+
+/*button[type=submit]:active {*/
+    /*box-shadow: 0 0 #666;*/
+    /*transform: translate(3px, 3px);*/
+/*}*/
 
 .container {
     border-radius: 5px;
