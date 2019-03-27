@@ -12,15 +12,15 @@ body:before {
     right: -5%;
     z-index: -1;
 
-    display: block;
-    background-image: url(background.jpg);
-    background-size: cover;
-    width: 110%;
-    height: 110%;
+display: block;
+background-image: url(background.jpg);
+background-size: cover;
+width: 110%;
+height: 110%;
 
-    -webkit-filter: blur(10px);
-    -ms-filter: blur(10px);
-    filter: blur(10px);
+-webkit-filter: blur(10px);
+-ms-filter: blur(10px);
+filter: blur(10px);
 }
 
 .topnav {
@@ -116,7 +116,8 @@ button[type=submit]:hover {
 
 #delete:hover {
     background-color: red;
-    border-color: #FF5A5A;
+    border-color: #ff2415;
+    color: white;
 }
 
 
