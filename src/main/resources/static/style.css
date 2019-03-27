@@ -241,14 +241,14 @@ td[data-label] p:hover{
 
 .alert-done {
     padding: 20px;
-    background-color: green;
-    color: white;
+    background-color: #4CAF50;
+    color: ghostwhite;
     width: 60%;
 }
 
 .closebtn {
     margin-left: 15px;
-    color: white;
+    color: ghostwhite;
     font-weight: bold;
     float: right;
     font-size: 22px;
@@ -264,6 +264,6 @@ td[data-label] p:hover{
 .alert-error {
     padding: 20px;
     background-color: #f44336;
-    color: white;
+    color: ghostwhite;
 }
 

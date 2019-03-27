@@ -1,5 +1,6 @@
 package com.vulpes.velox.services.userservice;
 
+import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,23 +31,21 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isAuthorized(OAuth2Authentication authentication){
-//    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-//    String userEmail = properties.get("email").toString();
-//    return findByEmail(userEmail) != null;
-    return true;
+    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    String userEmail = properties.get("email").toString();
+    return findByEmail(userEmail) != null;
   }
 
   @Override
   public Boolean isGod(OAuth2Authentication authentication){
 
-//    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-//    String userEmail = properties.get("email").toString();
-//    User user = userRepo.getByEmail(userEmail);
-//    if(user!=null) {
-//      return user.getGod();
-//    }
-//    throw new UnauthorizedException("What are you even doing here...");
-    return true;
+    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    String userEmail = properties.get("email").toString();
+    User user = userRepo.getByEmail(userEmail);
+    if(user!=null) {
+      return user.getGod();
+    }
+    throw new UnauthorizedException("What are you even doing here...");
   }
 
   @Override
