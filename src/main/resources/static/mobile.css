@@ -101,3 +101,7 @@ table td::before {
 table td:last-child {
     border-bottom: 0;
 }
+
+.alert-done {
+    width: 100%;
+}

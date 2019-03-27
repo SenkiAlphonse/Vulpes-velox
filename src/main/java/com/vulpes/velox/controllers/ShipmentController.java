@@ -39,15 +39,14 @@ public class ShipmentController {
   }
 
   @PostMapping("/shipment/new")
-  public String shipmentNew(@RequestParam(value = "bulkProductToSet") String bulkProductName,
+  public String shipmentNew(@RequestParam(value = "bulkProductToSet", required = false) String bulkProductName,
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication,
                             RedirectAttributes redirectAttributes) {
     if (userService.isAuthorized(authentication)) {
-      if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
-          !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
+      if(!shipmentService.isShipmentAllowed(bulkProductName, arrivalDate, bestBeforeDate, shipment)) {
         return "redirect:/storage/add";
       }
       shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
@@ -69,4 +68,5 @@ public class ShipmentController {
     }
     throw new UnauthorizedException("You have no power here, puny human being");
   }
+
 }

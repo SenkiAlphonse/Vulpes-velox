@@ -18,4 +18,5 @@ public interface ShipmentService {
 
   boolean isAllowedDateFormat(String date);
 
+  boolean isShipmentAllowed(String bulkProductName, String arrival, String bestBefore, Shipment shipment);
 }
