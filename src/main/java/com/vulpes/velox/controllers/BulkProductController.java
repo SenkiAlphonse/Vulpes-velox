@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BulkProductController {
@@ -26,10 +27,15 @@ public class BulkProductController {
   @PostMapping("/bulkProduct/new")
   public String bulkProductNew(
       @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
-      OAuth2Authentication authentication){
+      OAuth2Authentication authentication,
+      RedirectAttributes redirectAttributes){
     if (userService.isAuthorized(authentication)){
-      bulkProduct.setQuantity((long)0);
+      bulkProduct.setQuantity((long) 0);
       productService.save(bulkProduct);
+
+      redirectAttributes.addFlashAttribute("savedBulkProduct", true);
+      redirectAttributes.addFlashAttribute("bulkProductName", bulkProduct.getName());
+
       return "redirect:/storage/add";
     }
     throw new UnauthorizedException("You can't do that here :(");

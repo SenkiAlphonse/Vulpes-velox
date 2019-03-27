@@ -56,7 +56,7 @@ public class ShipmentController {
       shipment.setBulkProduct(bulkProduct);
       shipmentService.save(shipment);
 
-      redirectAttributes.addFlashAttribute("savedEntity", true);
+      redirectAttributes.addFlashAttribute("savedShipment", true);
       redirectAttributes.addFlashAttribute("quantity", shipment.getQuantity());
       redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
       redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());

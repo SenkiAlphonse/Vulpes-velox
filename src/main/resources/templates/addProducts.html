@@ -11,6 +11,17 @@
     <!-----------------------New bulk product-------------------------------->
     <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
           id="bulkProductNew">
+        <div th:switch="${savedBulkProduct}">
+            <div th:case="${savedBulkProduct == true}">
+                <div class="alert-done">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="'Saved '"></span>
+                    <b th:text="${bulkProductName}"></b>
+                    <span th:text="' bulk product.'"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-label">
                 <label for="bulkProductNewNameId">Name</label>
@@ -88,11 +99,12 @@
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
         <!----------------------Added shipment--------------------------------------->
-        <div th:switch="${savedEntity}">
-            <div th:case="${savedEntity == true}">
+        <div th:switch="${savedShipment}">
+            <div th:case="${savedShipment == true}">
                 <div class="alert-done">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                    <span th:text="'Shipment saved with '"></span>
+                    <b th:text="${bulkProductName}"></b>
+                    <span th:text="' shipment saved with '"></span>
                     <b th:text="${quantity}"></b>
                     <span th:text="'quantity, '"></span>
                     <b th:text="${arrival}"></b>
