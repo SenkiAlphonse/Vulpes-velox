@@ -1,6 +1,7 @@
 /* -------------------------- nav ------------------------ */
 body {
-    margin: 0;
+    margin-top: 40px;
+    margin-left: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -25,6 +26,9 @@ body:before {
 .topnav {
     overflow: hidden;
     background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .topnav a {
