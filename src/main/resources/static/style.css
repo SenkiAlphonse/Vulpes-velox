@@ -34,7 +34,7 @@ filter: blur(10px);
 .topnav a {
     float: left;
     display: block;
-    color: #f2f2f2;
+    color: ghostwhite;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -48,7 +48,7 @@ filter: blur(10px);
 
 .active {
     background-color: #4CAF50;
-    color: white;
+    color: ghostwhite;
 }
 
 .topnav .icon {
@@ -88,13 +88,13 @@ label {
     display: inline-block;
     font-weight: bold;
     border-radius: 5px;
-    color: #f2f2f2;
+    color: ghostwhite;
     font-size: 30px;
 }
 
 button[type=submit] {
     background-color: mediumblue;
-    color: whitesmoke;
+    color: ghostwhite;
     font-weight: bold;
     padding: 12px 20px;
     border-style: outset;
@@ -109,7 +109,7 @@ button[type=submit]:hover {
 }
 
 #delete {
-    background-color: whitesmoke;
+    background-color: ghostwhite;
     border-color: aliceblue;
     color: #333333;
 }
@@ -117,7 +117,7 @@ button[type=submit]:hover {
 #delete:hover {
     background-color: red;
     border-color: #ff2415;
-    color: white;
+    color: ghostwhite;
 }
 
 
@@ -147,7 +147,7 @@ button[type=submit]:hover {
 
 h2 {
     font-weight: bold;
-    color: white;
+    color: ghostwhite;
     font-size: 50px;
 }
 
@@ -163,7 +163,7 @@ body {
 }
 
 .nav-arrow {
-    color: whitesmoke;
+    color: ghostwhite;
 }
 
 .nav-arrow:active {
@@ -185,7 +185,7 @@ table {
 }
 
 table caption {
-    color: white;
+    color: ghostwhite;
     font-weight: bold;
     font-size: 1.5em;
     margin: .5em 0 .75em;
@@ -197,7 +197,7 @@ table thead {
 
 table tr {
     color: black;
-    background-color: #f8f8f8;
+    background-color: ghostwhite;
     border: 1px solid #ddd;
     padding: .35em;
 }
@@ -228,7 +228,7 @@ td[data-label] p:hover{
 }
 
 .page {
-    color: white;
+    color: ghostwhite;
 }
 
 /* -------------------------- alert ------------------------ */
