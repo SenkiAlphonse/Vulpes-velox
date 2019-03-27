@@ -145,6 +145,12 @@ button[type=submit]:hover {
     clear: both;
 }
 
+h1 {
+    font-weight: bold;
+    color: ghostwhite;
+    font-size: 60px;
+}
+
 h2 {
     font-weight: bold;
     color: ghostwhite;
