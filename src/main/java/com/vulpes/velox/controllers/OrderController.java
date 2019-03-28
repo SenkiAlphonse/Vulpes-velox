@@ -35,6 +35,9 @@ public class OrderController {
   @PostMapping("/order/new")
   public String saveOrder(@ModelAttribute(value = "orderNew") Order order,
                           RedirectAttributes redirectAttributes) {
+    if(!orderService.getErrorFlashAttributes(order, redirectAttributes).isEmpty()) {
+      return "redirect:/order";
+    }
     order.setDate(new Date());
     orderService.save(order);
 

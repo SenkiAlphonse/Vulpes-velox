@@ -39,7 +39,8 @@ public class ItemController {
   }
 
   @PostMapping("/item/new")
-  public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
+  public String newItem(@RequestParam(
+      value = "identifiedProductToSet", required = false) String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item,
                         OAuth2Authentication authentication,
                         RedirectAttributes redirectAttributes) {
