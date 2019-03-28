@@ -1,8 +1,8 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.UnauthorizedException;
+import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
-import com.vulpes.velox.services.UserService;
+import com.vulpes.velox.services.userservice.UserService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +21,16 @@ public class UserController {
   }
 
   @ModelAttribute(value = "username")
-  public String welcomeUser(){
+  public String welcomeUser() {
     return "Stranger";
   }
 
   @GetMapping("/")
   public String enterApp(Model model, OAuth2Authentication authentication) {
-    if (authentication!=null && userService.isAuthorized(authentication)) {
+    if (authentication != null && userService.isAuthorized(authentication)) {
       model.addAttribute("username", userService.getGoogleUserName(authentication));
     }
-      return "index";
+    return "index";
   }
 
   @GetMapping("/logout")
@@ -44,7 +44,7 @@ public class UserController {
                           OAuth2Authentication authentication,
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
-    if (userService.isGod(authentication)) {
+    if (userService.isAdmin(authentication)) {
       List<User> myPage = userService.getAll(pageId);
       List<User> peekPage = userService.getAll(pageId + 1);
 
@@ -58,7 +58,7 @@ public class UserController {
 
   @PostMapping("/users")
   public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication) {
-    if (userService.isGod(authentication)) {
+    if (userService.isAdmin(authentication)) {
       userService.addUser(newUser);
       return "redirect:/users";
     }
@@ -67,7 +67,7 @@ public class UserController {
 
   @PostMapping("/users/delete/{id}")
   public String deleteUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
-    if (userService.isGod(authentication)) {
+    if (userService.isAdmin(authentication)) {
       userService.deleteUserById(id);
       return "redirect:/users";
     }
@@ -76,7 +76,7 @@ public class UserController {
 
   @PostMapping("/users/update/{id}")
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isGod(authentication)) {
+    if (userService.isAuthorized(authentication) && userService.isAdmin(authentication)) {
       User updateUser = userService.findById(id);
       updateUser.setGod(!updateUser.getGod());
       userService.addUser(updateUser);

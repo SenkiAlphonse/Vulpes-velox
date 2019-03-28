@@ -1,6 +1,6 @@
 package com.vulpes.velox.repositories;
 
-import com.vulpes.velox.models.BulkProduct;
+import com.vulpes.velox.models.products.BulkProduct;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,7 @@
 package com.vulpes.velox.models;
 
+import com.vulpes.velox.models.products.BulkProduct;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 

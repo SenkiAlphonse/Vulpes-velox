@@ -46,7 +46,7 @@ CREATE TABLE ordered_products (
 );
 
 CREATE TABLE users (
-                         id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-                         email               VARCHAR(255),
-                         is_god              BOOL
+  id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  email               VARCHAR(255),
+  is_admin              BOOL
 );

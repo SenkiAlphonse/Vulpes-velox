@@ -15,7 +15,8 @@ public class User {
   @Column(name = "email")
   private String email;
 
-  private Boolean isGod = false;
+  @Column(name = "is_admin")
+  private Boolean isAdmin = false;
 
   public long getId() {
     return id;
@@ -34,10 +35,10 @@ public class User {
   }
 
   public Boolean getGod() {
-    return isGod;
+    return isAdmin;
   }
 
   public void setGod(Boolean god) {
-    isGod = god;
+    isAdmin = god;
   }
 }
