@@ -43,19 +43,20 @@ public class StorageController {
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
-                            @RequestParam(value = "filterBulkProduct", required = false) String filter,
+                            @RequestParam(value = "filterProducts", required = false) String filter,
                             OAuth2Authentication authentication) {
     if (userService.isUser(authentication)) {
-      model.addAttribute("identifiedProducts", identifiedProductService.getAll());
-      model.addAttribute("bulkProducts", bulkProductService.getAll());
-
-      if (filter != null) {
-        model.addAttribute("identifiedProductsFiltered", bulkProductService.getAllFilteredBy(filter));
-        model.addAttribute("bulkProductsFiltered", bulkProductService.getAllFilteredBy(filter));
+      if (filter != null && !filter.isEmpty()) {
+        model.addAttribute(
+            "identifiedProductsFiltered",
+            identifiedProductService.getAllFilteredBy(filter));
+        model.addAttribute(
+            "bulkProductsFiltered",
+            bulkProductService.getAllFilteredBy(filter));
       } else {
+        model.addAttribute("identifiedProductsFiltered", identifiedProductService.getAll());
         model.addAttribute("bulkProductsFiltered", bulkProductService.getAll());
       }
-
       return "addProducts";
     } else {
       throw new UnauthorizedException("Unauthorized");

@@ -133,7 +133,7 @@
             </div>
             <div class="col-input">
                 <select name="identifiedProductToSet" id="Type">
-                    <div th:each="identifiedProduct : ${identifiedProducts}">
+                    <div th:each="identifiedProduct : ${identifiedProductsFiltered}">
                         <option th:value="${identifiedProduct.getName()}">
                             <p th:text="${identifiedProduct.getName()}"></p>
                         </option>
@@ -226,7 +226,7 @@
                 <label for="filter">Filter types</label>
             </div>
             <div class="col-input">
-                <input type="text" name="filterBulkProduct" id="filter">
+                <input type="text" name="filterProducts" id="filter">
             </div>
         </div>
         <div class="row">
