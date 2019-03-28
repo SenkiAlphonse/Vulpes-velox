@@ -19,6 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')
@@ -30,8 +31,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     compile group: 'org.webjars', name: 'bootstrap', version: '4.1.3'
     compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
-    
-    
+
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.2.RELEASE'
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-security', version: '2.1.1.RELEASE'
@@ -39,7 +39,10 @@ dependencies {
 
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.1.4.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.1.4.RELEASE'
-    
+
+    compile group: 'org.hibernate', name: 'hibernate-envers', version: '5.4.2.Final'
+    compile('javax.xml.bind:jaxb-api:2.3.0')
+
 }
 
 jacoco {
