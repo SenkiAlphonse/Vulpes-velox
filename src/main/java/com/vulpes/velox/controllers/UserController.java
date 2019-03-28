@@ -66,7 +66,7 @@ public class UserController {
     if (userService.isAdmin(authentication)) {
       if(!userService.getErrorFlashAttributes(redirectAttributes, newUser).isEmpty()) {
 
-        return "redirect:/users";
+        return "redirect:/users#adduser";
       }
       userService.addUser(newUser);
       return "redirect:/users";
