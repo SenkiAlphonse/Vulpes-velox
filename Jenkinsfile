@@ -1,9 +1,12 @@
-pipleine {
+pipeline {
     agent any
+
     stages {
-        stage(test) {
-            sh 'chmod +x gradlew'
-            sh './gradlew --stacktrace test'
+        stage('Test') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh './gradlew --stacktrace test'
+            }
         }
     }
 }
