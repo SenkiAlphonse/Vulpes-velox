@@ -50,6 +50,25 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
+            <!----------------------Added bulk product--------------------------------------->
+            <div th:switch="${savedIdentifiedProduct}">
+                <div th:case="${savedIdentifiedProduct == true}">
+                    <div class="alert-done">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <span th:text="'Saved '"></span>
+                        <b th:text="${identifiedProductName}"></b>
+                        <span th:text="' bulk product.'"></span>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Bulk product error--------------------------------------->
+            <div th:if="${identifiedProductError}">
+                <div class="alert-error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label">
                     <label for="identifiedProductNewNameId">Name</label>

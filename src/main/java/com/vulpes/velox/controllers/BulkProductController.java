@@ -32,7 +32,8 @@ public class BulkProductController {
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes) {
     if (userService.isAuthorized(authentication)) {
-      if (!bulkProductService.getErrorFlashAttributes(bulkProduct, redirectAttributes).isEmpty()) {
+      if (!bulkProductService.getErrorFlashAttributes(
+          bulkProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";
       }
 
