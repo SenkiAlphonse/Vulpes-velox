@@ -14,6 +14,25 @@
         <h2>Add new item</h2>
         <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
               id="bulkProductNew">
+            <!----------------------Added bulk product--------------------------------------->
+            <div th:switch="${savedBulkProduct}">
+                <div th:case="${savedBulkProduct == true}">
+                    <div class="alert-done">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <span th:text="'Saved '"></span>
+                        <b th:text="${bulkProductName}"></b>
+                        <span th:text="' bulk product.'"></span>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Bulk product error--------------------------------------->
+            <div th:if="${bulkProductError}">
+                <div class="alert-error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label">
                     <label for="bulkProductNewNameId">Name</label>
@@ -31,6 +50,25 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
+            <!----------------------Added bulk product--------------------------------------->
+            <div th:switch="${savedIdentifiedProduct}">
+                <div th:case="${savedIdentifiedProduct == true}">
+                    <div class="alert-done">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <span th:text="'Saved '"></span>
+                        <b th:text="${identifiedProductName}"></b>
+                        <span th:text="' bulk product.'"></span>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Bulk product error--------------------------------------->
+            <div th:if="${identifiedProductError}">
+                <div class="alert-error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label">
                     <label for="identifiedProductNewNameId">Name</label>

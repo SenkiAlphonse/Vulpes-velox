@@ -45,7 +45,8 @@ public class ShipmentController {
                             OAuth2Authentication authentication,
                             RedirectAttributes redirectAttributes) {
     if (userService.isAuthorized(authentication)) {
-      if (!shipmentService.getErrorFlashAttributes(bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
+      if (!shipmentService.getErrorFlashAttributes(
+          bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#shipment";
       }
       shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
