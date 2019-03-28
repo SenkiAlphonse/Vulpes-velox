@@ -27,7 +27,7 @@ public class UserController {
 
   @GetMapping("/")
   public String enterApp(Model model, OAuth2Authentication authentication) {
-    if (authentication != null && userService.isAuthorized(authentication)) {
+    if (authentication != null && userService.isUser(authentication)) {
       model.addAttribute("username", userService.getGoogleUserName(authentication));
     }
     return "index";
@@ -76,7 +76,7 @@ public class UserController {
 
   @PostMapping("/users/update/{id}")
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isAdmin(authentication)) {
+    if (userService.isUser(authentication) && userService.isAdmin(authentication)) {
       User updateUser = userService.findById(id);
       updateUser.setIsAdmin(!updateUser.getIsAdmin());
       userService.addUser(updateUser);

@@ -11,7 +11,7 @@
     <!-----------------------New bulk product-------------------------------->
     <div class="add-product">
         <div class="full-height"></div>
-        <h2>Add new item</h2>
+        <h2>Add product</h2>
         <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
               id="bulkProductNew">
             <!----------------------Added bulk product--------------------------------------->
@@ -95,36 +95,35 @@
     <br>
     <br>
     <!-----------------------Add item------------------------------------->
-    <div>
-        <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
-            <div class="row">
-                <div class="col-label">
-                    <label for="number">Product number</label>
-                </div>
-                <div class="col-input">
-                    <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
-                </div>
+    <h2>Add item</h2>
+    <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
+        <div class="row">
+            <div class="col-label">
+                <label for="number">Product number</label>
             </div>
-            <div class="row">
-                <div class="col-label">
-                    <label for="Type">Type</label>
-                </div>
-                <div class="col-input">
-                    <select name="identifiedProductToSet" id="Type">
-                        <div th:each="identifiedProduct : ${identifiedProducts}">
-                            <option th:value="${identifiedProduct.getName()}">
-                                <p th:text="${identifiedProduct.getName()}"></p>
-                            </option>
-                        </div>
-                    </select>
-                </div>
+            <div class="col-input">
+                <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
             </div>
-            <div class="row">
-                <div class="col-label"></div>
-                <button type="submit">Add item</button>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="Type">Type</label>
             </div>
-        </form>
-    </div>
+            <div class="col-input">
+                <select name="identifiedProductToSet" id="Type">
+                    <div th:each="identifiedProduct : ${identifiedProducts}">
+                        <option th:value="${identifiedProduct.getName()}">
+                            <p th:text="${identifiedProduct.getName()}"></p>
+                        </option>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
+            <button type="submit">Add item</button>
+        </div>
+    </form>
     <!----------------------Add shipment--------------------------------------->
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">

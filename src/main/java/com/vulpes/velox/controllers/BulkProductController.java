@@ -31,7 +31,7 @@ public class BulkProductController {
       @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       if (!bulkProductService.getErrorFlashAttributes(
           bulkProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";

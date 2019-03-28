@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepo;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository){
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepo = userRepository;
   }
 
@@ -27,18 +27,18 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Boolean isAuthorized(OAuth2Authentication authentication){
+  public Boolean isUser(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
     return findByEmail(userEmail) != null;
   }
 
   @Override
-  public Boolean isAdmin(OAuth2Authentication authentication){
+  public Boolean isAdmin(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
     User user = userRepo.getByEmail(userEmail);
-    if(user!=null) {
+    if (user != null) {
       return user.getIsAdmin();
     }
     throw new UnauthorizedException("What are you even doing here...");
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void deleteUserById(Long id) {
-    if(id!=null){
+    if (id != null) {
       userRepo.deleteUserById(id);
     }
   }

@@ -32,7 +32,7 @@ public class IdentifiedProductController {
       @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       if (!identifiedProductService.getErrorFlashAttributes(
           identifiedProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";

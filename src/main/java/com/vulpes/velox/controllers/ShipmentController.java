@@ -44,7 +44,7 @@ public class ShipmentController {
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication,
                             RedirectAttributes redirectAttributes) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       if (!shipmentService.getErrorFlashAttributes(
           bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#shipment";

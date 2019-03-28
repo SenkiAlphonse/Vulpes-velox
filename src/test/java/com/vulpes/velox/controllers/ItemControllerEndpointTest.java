@@ -49,7 +49,7 @@ public class ItemControllerEndpointTest {
 
   @Test
   public void itemNew() throws Exception {
-    when(userService.isAuthorized(any())).thenReturn(true);
+    when(userService.isUser(any())).thenReturn(true);
     when(productService.getByName("IdentifiedProductName")).thenReturn(identifiedProduct);
 
     mockMvc.perform(post("/item/new")
@@ -63,7 +63,7 @@ public class ItemControllerEndpointTest {
         .andExpect(redirectedUrl("/storage/add"))
         .andExpect(view().name("redirect:/storage/add"));
 
-    verify(userService, times(1)).isAuthorized(any());
+    verify(userService, times(1)).isUser(any());
     verifyNoMoreInteractions(userService);
 
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);

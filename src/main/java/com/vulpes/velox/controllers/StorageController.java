@@ -52,7 +52,7 @@ public class StorageController {
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       model.addAttribute("identifiedProducts", identifiedProductService.getAll());
       model.addAttribute("bulkProducts", bulkProductService.getAll());
       return "addProducts";
