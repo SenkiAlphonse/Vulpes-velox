@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="fragments/head :: head"></div>
-    <title id="title">Add user</title>
+    <title id="title">User</title>
 </head>
 <body>
 <div th:replace="fragments/nav-bar :: nav"></div>
@@ -11,6 +11,7 @@
 <div class="container my-3">
     <div class="row">
         <div class="page">
+<<<<<<< HEAD
             <a class="nav-arrow" th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}">
                 <i class="fas fa-arrow-left"></i>
             </a>
@@ -82,5 +83,7 @@
 </form>
 
 </div>
+</div>
 </body>
 </html>
+
