@@ -4,8 +4,10 @@ import com.vulpes.velox.models.Order;
 import com.vulpes.velox.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -38,4 +40,26 @@ public class OrderServiceImpl implements OrderService {
   public boolean existsByName(String name) {
     return orderRepository.existsByName(name);
   }
+
+  @Override
+  public Map<String, ?> getErrorFlashAttributes(Order order, RedirectAttributes redirectAttributes) {
+    if(order.getName() == null) {
+      return getErrorMessageFlashAttributes("Enter order name.", redirectAttributes);
+    }
+    if(order.getName().isEmpty()) {
+      return getErrorMessageFlashAttributes("Empty order name.", redirectAttributes);
+    }
+    if(orderRepository.existsByName(order.getName())) {
+      return getErrorMessageFlashAttributes("Order name already exists.", redirectAttributes);
+    }
+    return redirectAttributes.getFlashAttributes();
+  }
+
+  private Map<String, ?> getErrorMessageFlashAttributes(String message,
+                                                        RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("orderError", true);
+    redirectAttributes.addFlashAttribute("errorMessage", message);
+    return redirectAttributes.getFlashAttributes();
+  }
+
 }

@@ -221,7 +221,8 @@
     </form>
     <br>
     <br>
-    <form action="#" th:action="@{/storage/add}" method="get">
+    <a name="filterForm"></a>
+    <form action="#" th:action="@{/storage/add#filterForm}" method="get">
         <div class="row">
             <div class="col-label">
                 <label for="filter">Filter types</label>

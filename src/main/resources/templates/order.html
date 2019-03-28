@@ -10,6 +10,13 @@
     <!-----------------------New order-------------------------------->
     <form action="#" th:action="@{/order/new}" th:object="${orderNew}" method="post"
           id="orderNew">
+        <!----------------------Order error--------------------------------------->
+        <div th:if="${orderError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-label">
                 <label for="orderNameId">Name</label>
