@@ -27,6 +27,11 @@ public class BulkProductController {
       @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
       OAuth2Authentication authentication) {
     if (userService.isAuthorized(authentication)) {
+      if(!productService.getErrorFlashAttributes(bulkProduct).isEmpty()) {
+        return "redirect:/storage/add";
+      }
+
+
       bulkProduct.setQuantity((long) 0);
       productService.save(bulkProduct);
       return "redirect:/storage/add";
