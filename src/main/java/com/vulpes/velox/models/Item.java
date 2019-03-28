@@ -1,11 +1,15 @@
 package com.vulpes.velox.models;
 
 import com.vulpes.velox.models.products.IdentifiedProduct;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "items")
+@Audited
+@AuditTable("items_AUD")
 public class Item {
 
   @Id

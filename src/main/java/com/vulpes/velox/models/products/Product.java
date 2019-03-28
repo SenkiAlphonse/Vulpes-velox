@@ -1,12 +1,15 @@
 package com.vulpes.velox.models.products;
 
 import com.sun.istack.NotNull;
+import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
+@Audited
+@AuditTable("products_AUD")
 public abstract class Product {
 
   @Id
