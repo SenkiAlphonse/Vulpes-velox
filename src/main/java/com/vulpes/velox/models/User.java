@@ -34,11 +34,11 @@ public class User {
     this.email = email;
   }
 
-  public Boolean getGod() {
+  public Boolean getIsAdmin() {
     return isAdmin;
   }
 
-  public void setGod(Boolean god) {
+  public void setIsAdmin(Boolean god) {
     isAdmin = god;
   }
 }

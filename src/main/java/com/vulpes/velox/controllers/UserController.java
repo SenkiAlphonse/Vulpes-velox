@@ -78,7 +78,7 @@ public class UserController {
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
     if (userService.isAuthorized(authentication) && userService.isAdmin(authentication)) {
       User updateUser = userService.findById(id);
-      updateUser.setGod(!updateUser.getGod());
+      updateUser.setIsAdmin(!updateUser.getIsAdmin());
       userService.addUser(updateUser);
       return "redirect:/users";
     }
