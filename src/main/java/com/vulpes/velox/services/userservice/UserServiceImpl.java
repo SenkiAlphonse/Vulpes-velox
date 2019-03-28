@@ -104,4 +104,10 @@ public class UserServiceImpl implements UserService {
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
   }
+
+  @Override
+  public String getUserEmail(OAuth2Authentication authentication) {
+    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    return properties.get("email").toString();
+  }
 }

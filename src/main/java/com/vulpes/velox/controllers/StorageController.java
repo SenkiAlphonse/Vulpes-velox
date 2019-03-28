@@ -59,7 +59,8 @@ public class StorageController {
       }
       return "addProducts";
     } else {
-      throw new UnauthorizedException("Unauthorized");
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "redirect:/unauthorized";
     }
   }
 
