@@ -9,14 +9,23 @@ import java.util.Map;
 
 public interface UserService {
   User findByEmail(String email);
+
   User findById(Long id);
-  List<User>getAll(int pageId);
+
+  List<User> getAll(int pageId);
+
   void addUser(User user);
+
   void deleteUserById(Long id);
+
   Boolean isUser(OAuth2Authentication authentication);
+
   Boolean isAdmin(OAuth2Authentication authentication);
+
   String getGoogleUserName(OAuth2Authentication authentication);
+
   boolean userExistsByEmail(String email);
+
   Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user);
 
 }

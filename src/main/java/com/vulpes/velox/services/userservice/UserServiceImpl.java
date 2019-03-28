@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepo;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository){
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepo = userRepository;
   }
 
@@ -32,22 +32,22 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean userExistsByEmail(String email) {
-    return userRepo.getByEmail(email)!=null;
+    return userRepo.getByEmail(email) != null;
   }
 
   @Override
-  public Boolean isUser(OAuth2Authentication authentication){
+  public Boolean isUser(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
     return findByEmail(userEmail) != null;
   }
 
   @Override
-  public Boolean isAdmin(OAuth2Authentication authentication){
+  public Boolean isAdmin(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
     User user = userRepo.getByEmail(userEmail);
-    if(user!=null) {
+    if (user != null) {
       return user.getIsAdmin();
     }
     throw new UnauthorizedException("Access denied, this account is not an admin");
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addUser(User user) {
-    if(user==null){
+    if (user == null) {
       throw new BadRequestException("Error creating user");
     }
     userRepo.save(user);
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void deleteUserById(Long id) {
-    if(id!=null){
+    if (id != null) {
       userRepo.deleteUserById(id);
     }
   }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
     if (userExistsByEmail(user.getEmail())) {
       return getErrorMessageFlashAttributes("This e-mail address already exists in the database.", redirectAttributes);
     }
-    if (user==null) {
+    if (user == null) {
       return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
     }
     return redirectAttributes.getFlashAttributes();

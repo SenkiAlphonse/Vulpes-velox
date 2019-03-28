@@ -14,6 +14,25 @@
         <h2>Add new item</h2>
         <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
               id="bulkProductNew">
+            <!----------------------Added bulk product--------------------------------------->
+            <div th:switch="${savedBulkProduct}">
+                <div th:case="${savedBulkProduct == true}">
+                    <div class="alert-done">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <span th:text="'Saved '"></span>
+                        <b th:text="${bulkProductName}"></b>
+                        <span th:text="' bulk product.'"></span>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Bulk product error--------------------------------------->
+            <div th:if="${bulkProductError}">
+                <div class="alert-error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label">
                     <label for="bulkProductNewNameId">Name</label>
@@ -31,6 +50,25 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
+            <!----------------------Added bulk product--------------------------------------->
+            <div th:switch="${savedIdentifiedProduct}">
+                <div th:case="${savedIdentifiedProduct == true}">
+                    <div class="alert-done">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <span th:text="'Saved '"></span>
+                        <b th:text="${identifiedProductName}"></b>
+                        <span th:text="' bulk product.'"></span>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Bulk product error--------------------------------------->
+            <div th:if="${identifiedProductError}">
+                <div class="alert-error">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label">
                     <label for="identifiedProductNewNameId">Name</label>
@@ -50,7 +88,9 @@
     <br>
     <!-----------------------Delete all products----------------------------------->
     <form action="#" th:action="@{/deleteAll}" method="post">
-        <button type="submit" class="delete" id="delete">Delete all products</button>
+        <div class="row">
+            <button type="submit" class="delete" id="delete">Delete all products</button>
+        </div>
     </form>
     <br>
     <br>
@@ -88,6 +128,30 @@
     <!----------------------Add shipment--------------------------------------->
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
+        <a name="shipment"></a>
+        <!----------------------Added shipment--------------------------------------->
+        <div th:switch="${savedShipment}">
+            <div th:case="${savedShipment == true}">
+                <div class="alert-done">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <b th:text="${bulkProductName}"></b>
+                    <span th:text="' shipment saved with '"></span>
+                    <b th:text="${quantity}"></b>
+                    <span th:text="'quantity, '"></span>
+                    <b th:text="${arrival}"></b>
+                    <span th:text="' arrival date and '"></span>
+                    <b th:text="${bestBefore} "></b>
+                    <span th:text="'best before date.'"></span>
+                </div>
+            </div>
+        </div>
+        <!----------------------Shipment error--------------------------------------->
+        <div th:if="${shipmentError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-label">
                 <label for="quantity">Quantity</label>

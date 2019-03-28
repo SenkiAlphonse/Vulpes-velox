@@ -4,6 +4,7 @@ import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.products.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
 
