@@ -45,7 +45,7 @@ public class ItemServiceImpl implements ItemService{
     if(item.getProductNumber() == null) {
       return getErrorMessageFlashAttributes("Enter product number.", redirectAttributes);
     }
-    if(item.getProductNumber().toString().length() < 8) {
+    if(item.getProductNumber().toString().length() != 8) {
       return getErrorMessageFlashAttributes("Product number has to be 8 digits.", redirectAttributes);
     }
     if(itemRepository.existsByProductNumber(item.getProductNumber())) {
@@ -70,7 +70,7 @@ public class ItemServiceImpl implements ItemService{
   @Override
   public Map<String, ?> getNewItemFlashAttributes(Item item, RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("savedItem", true);
-    redirectAttributes.addFlashAttribute("itemName", item.getProductNumber());
+    redirectAttributes.addFlashAttribute("productNumber", item.getProductNumber());
     redirectAttributes.addFlashAttribute("identifiedProductName", item.getIdentifiedProduct().getName());
     return redirectAttributes.getFlashAttributes();
   }
