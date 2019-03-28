@@ -1,6 +1,7 @@
 package com.vulpes.velox.controllers;
 
 
+import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.itemservice.ItemService;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -81,4 +82,12 @@ public class ItemControllerEndpointTest {
     verifyNoMoreInteractions(itemService);
   }
 
+  @Test
+  public void identifiedProducts() throws Exception {
+    mockMvc.perform(get("/items"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("items"));
+    
+  }
+  
 }
