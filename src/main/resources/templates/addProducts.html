@@ -121,14 +121,6 @@
         </div>
         <div class="row">
             <div class="col-label">
-                <label for="number">Product number</label>
-            </div>
-            <div class="col-input">
-                <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-label">
                 <label for="Type">Type</label>
             </div>
             <div class="col-input">
@@ -139,6 +131,14 @@
                         </option>
                     </div>
                 </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="number">Product number</label>
+            </div>
+            <div class="col-input">
+                <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
             </div>
         </div>
         <div class="row">
@@ -175,6 +175,20 @@
         </div>
         <div class="row">
             <div class="col-label">
+                <label for="typeBulk">Type</label>
+            </div>
+            <div class="col-input">
+                <select name="bulkProductToSet" id="typeBulk">
+                    <div th:each="bulkProduct : ${bulkProductsFiltered}">
+                        <option class="dropdown-item" th:value="${bulkProduct.getName()}">
+                            <p th:text="${bulkProduct.getName()}"></p>
+                        </option>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
                 <label for="quantity">Quantity</label>
             </div>
             <div class="col-input">
@@ -202,24 +216,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-label">
-                <label for="typeBulk">Type</label>
-            </div>
-            <div class="col-input">
-                <select name="bulkProductToSet" id="typeBulk">
-                    <div th:each="bulkProduct : ${bulkProductsFiltered}">
-                        <option class="dropdown-item" th:value="${bulkProduct.getName()}">
-                            <p th:text="${bulkProduct.getName()}"></p>
-                        </option>
-                    </div>
-                </select>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-label"></div>
             <button type="submit">Add shipment</span></button>
         </div>
     </form>
+    <br>
+    <br>
     <form action="#" th:action="@{/storage/add}" method="get">
         <div class="row">
             <div class="col-label">
