@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     String userEmail = properties.get("email").toString();
     User user = userRepo.getByEmail(userEmail);
     if(user!=null) {
-      return user.getGod();
+      return user.getIsAdmin();
     }
     throw new UnauthorizedException("What are you even doing here...");
   }
