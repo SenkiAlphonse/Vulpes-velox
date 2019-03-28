@@ -17,4 +17,7 @@ public interface BulkProductService {
   boolean existsByName(String name);
 
   Map<String, ?> getErrorFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes);
+
+  Map<String, ?> getNewBulkProductFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes);
+
 }

@@ -62,4 +62,11 @@ public class BulkProductServiceImpl implements BulkProductService {
     return redirectAttributes.getFlashAttributes();
   }
 
+  @Override
+  public Map<String, ?> getNewBulkProductFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("savedBulkProduct", true);
+    redirectAttributes.addFlashAttribute("bulkProductName", bulkProduct.getName());
+    return redirectAttributes.getFlashAttributes();
+  }
+
 }
