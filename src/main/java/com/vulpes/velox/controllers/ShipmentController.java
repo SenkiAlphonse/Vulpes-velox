@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ShipmentController {
@@ -41,16 +42,11 @@ public class ShipmentController {
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
-                            OAuth2Authentication authentication) {
+                            OAuth2Authentication authentication,
+                            RedirectAttributes redirectAttributes) {
     if (userService.isAuthorized(authentication)) {
-      if(!shipmentService.getErrorFlashAttributes(bulkProductName, arrivalDate, bestBeforeDate, shipment).isEmpty()) {
-        return "redirect:/storage/add";
-      }
-
-
-      if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
-          !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
-        return "redirect:/storage/add";
+      if (!shipmentService.getErrorFlashAttributes(bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
+        return "redirect:/storage/add#shipment";
       }
       shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
       shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
@@ -59,9 +55,9 @@ public class ShipmentController {
       shipment.setBulkProduct(bulkProduct);
       shipmentService.save(shipment);
 
-      bulkProduct.setQuantity(bulkProduct.getQuantity()+shipment.getQuantity());
+      bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
       productService.update(bulkProduct);
-      return "redirect:/storage/add";
+      return "redirect:/storage/add#shipment";
     }
     throw new UnauthorizedException("You have no power here, puny human being");
   }

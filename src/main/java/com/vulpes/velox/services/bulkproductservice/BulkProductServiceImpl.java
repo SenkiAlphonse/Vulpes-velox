@@ -31,4 +31,9 @@ public class BulkProductServiceImpl implements BulkProductService {
     return bulkProduct;
   }
 
+  @Override
+  public boolean existsByName(String name) {
+    return bulkProductRepository.existsByName(name);
+  }
+
 }

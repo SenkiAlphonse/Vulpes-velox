@@ -90,6 +90,13 @@
     <!----------------------Add shipment--------------------------------------->
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
+        <a name="shipment"></a>
+        <div th:if="${shipmentError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-label">
                 <label for="quantity">Quantity</label>
