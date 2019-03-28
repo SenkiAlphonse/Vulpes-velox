@@ -57,7 +57,7 @@ public class BulkProductServiceImpl implements BulkProductService {
 
   private Map<String, ?> getErrorMessageFlashAttributes(String message,
                                                         RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("productError", true);
+    redirectAttributes.addFlashAttribute("bulkProductError", true);
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
   }
