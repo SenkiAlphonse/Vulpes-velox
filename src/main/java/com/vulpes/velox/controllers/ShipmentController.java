@@ -57,6 +57,8 @@ public class ShipmentController {
 
       bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
       productService.update(bulkProduct);
+
+      shipmentService.getNewShipmentFlashAttributes(shipment, redirectAttributes);
       return "redirect:/storage/add#shipment";
     }
     throw new UnauthorizedException("You have no power here, puny human being");

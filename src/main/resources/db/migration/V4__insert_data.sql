@@ -11,5 +11,5 @@ INSERT INTO items
 
 INSERT INTO shipments
   (quantity, arrival, best_before, bulk_product_id) VALUES
-  (50, 2019-03-15, 2019-03-30, (SELECT id FROM products WHERE name = 'Orange')),
-  (30, 2019-03-25, 2019-04-10, (SELECT id FROM products WHERE name = 'Orange'));
+  (50, '2019-03-15', '2019-03-30', (SELECT id FROM products WHERE name = 'Orange')),
+  (30, '2019-03-25', '2019-04-10', (SELECT id FROM products WHERE name = 'Orange'));

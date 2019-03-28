@@ -26,4 +26,6 @@ public interface ShipmentService {
                                          Shipment shipment,
                                          RedirectAttributes redirectAttributes);
 
+  Map<String, ?> getNewShipmentFlashAttributes(Shipment shipment, RedirectAttributes redirectAttributes);
+
 }

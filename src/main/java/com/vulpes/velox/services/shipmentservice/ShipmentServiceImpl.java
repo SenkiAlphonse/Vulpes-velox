@@ -78,7 +78,16 @@ public class ShipmentServiceImpl implements ShipmentService {
     redirectAttributes.addFlashAttribute("shipmentError", true);
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
+  }
 
+  @Override
+  public Map<String, ?> getNewShipmentFlashAttributes(Shipment shipment, RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("savedShipment", true);
+    redirectAttributes.addFlashAttribute("bulkProductName", shipment.getBulkProduct().getName());
+    redirectAttributes.addFlashAttribute("quantity", shipment.getQuantity());
+    redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
+    redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());
+    return redirectAttributes.getFlashAttributes();
   }
 
 }
