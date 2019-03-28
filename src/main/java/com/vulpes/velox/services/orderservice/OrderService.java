@@ -18,5 +18,4 @@ public interface OrderService {
 
   Map<String, ?> getErrorFlashAttributes(Order order, RedirectAttributes redirectAttributes);
 
-  Map<String, ?> getNewBulkProductFlashAttributes(Order order, RedirectAttributes redirectAttributes);
 }

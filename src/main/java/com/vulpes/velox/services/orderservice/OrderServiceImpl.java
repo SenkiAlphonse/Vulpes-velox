@@ -44,20 +44,20 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(Order order, RedirectAttributes redirectAttributes) {
     if(order.getName() == null) {
-      return getErrorMessageFlashAttributes("Enter bulk product name.", redirectAttributes);
+      return getErrorMessageFlashAttributes("Enter order name.", redirectAttributes);
     }
     if(order.getName().isEmpty()) {
-      return getErrorMessageFlashAttributes("Empty bulk product name.", redirectAttributes);
+      return getErrorMessageFlashAttributes("Empty order name.", redirectAttributes);
     }
     if(orderRepository.existsByName(order.getName())) {
-      return getErrorMessageFlashAttributes("Product name already exists.", redirectAttributes);
+      return getErrorMessageFlashAttributes("Order name already exists.", redirectAttributes);
     }
     return redirectAttributes.getFlashAttributes();
   }
 
   private Map<String, ?> getErrorMessageFlashAttributes(String message,
                                                         RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("bulkProductError", true);
+    redirectAttributes.addFlashAttribute("orderError", true);
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
   }
