@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,6 +28,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public User findByEmail(String email) {
     return userRepo.getByEmail(email);
+  }
+
+  @Override
+  public boolean userExistsByEmail(String email) {
+    return userRepo.getByEmail(email)!=null;
   }
 
   @Override
@@ -76,5 +83,25 @@ public class UserServiceImpl implements UserService {
   @Override
   public User findById(Long id) {
     return userRepo.getById(id);
+  }
+
+  @Override
+  public Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, String email, User user) {
+    if (email == null) {
+      return getErrorMessageFlashAttributes("Enter e-mail address.", redirectAttributes);
+    }
+    if (userExistsByEmail(email)) {
+      return getErrorMessageFlashAttributes("This e-mail address already exists in the database.", redirectAttributes);
+    }
+    if (user==null) {
+      return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
+    }
+    return redirectAttributes.getFlashAttributes();
+  }
+
+  private Map<String, ?> getErrorMessageFlashAttributes(String message, RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("userError", true);
+    redirectAttributes.addFlashAttribute("errorMessage", message);
+    return redirectAttributes.getFlashAttributes();
   }
 }
