@@ -1,10 +1,10 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
-import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
+
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.userservice.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

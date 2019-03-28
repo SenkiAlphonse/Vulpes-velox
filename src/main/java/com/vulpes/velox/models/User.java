@@ -11,9 +11,15 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  @Column(name = "name")
+  private String name;
+
   @NotNull
   @Column(name = "email")
   private String email;
+
+  @Column(name = "image_url")
+  private String imgUrl;
 
   @Column(name = "is_admin")
   private Boolean isAdmin = false;
@@ -26,12 +32,28 @@ public class User {
     this.id = id;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public String getEmail() {
     return email;
   }
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getImgUrl() {
+    return imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
   }
 
   public Boolean getIsAdmin() {
@@ -41,4 +63,6 @@ public class User {
   public void setIsAdmin(Boolean isAdmin) {
     this.isAdmin = isAdmin;
   }
+
+
 }

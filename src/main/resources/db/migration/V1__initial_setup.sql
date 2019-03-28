@@ -37,6 +37,8 @@ CREATE TABLE ordered_products (
 
 CREATE TABLE users (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  name                varchar(255),
   email               VARCHAR(255),
-  is_admin              BOOL
+  image_url           varchar(255),
+  is_admin            BOOL
 );
