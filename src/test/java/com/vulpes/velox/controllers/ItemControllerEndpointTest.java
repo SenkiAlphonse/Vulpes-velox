@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -46,11 +47,13 @@ public class ItemControllerEndpointTest {
   private UserService userService;
 
   private IdentifiedProduct identifiedProduct;
-  private Map<String, ?> errorFlashAttributes;
+  private Map<String, Boolean> errorFlashAttributes;
 
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
+    errorFlashAttributes = new HashMap<>();
+    errorFlashAttributes.put("itemError", true);
   }
 
 
@@ -99,6 +102,8 @@ public class ItemControllerEndpointTest {
   @Test
   public void itemNewWithoutIdentifiedProduct() throws Exception {
     when(userService.isUser(any())).thenReturn(true);
+    when((Object) itemService.getErrorFlashAttributes(
+        isNull(), notNull(), notNull())).thenReturn(errorFlashAttributes);
 
     mockMvc.perform(post("/item/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -110,14 +115,16 @@ public class ItemControllerEndpointTest {
         .andExpect(redirectedUrl("/storage/add#item"))
         .andExpect(view().name("redirect:/storage/add#item"));
 
+    verify(itemService, times(1)).getErrorFlashAttributes(
+        isNull(), any(Item.class), any(RedirectAttributes.class));
+    verifyNoMoreInteractions(itemService);
   }
 
-    @Test
+  @Test
   public void identifiedProducts() throws Exception {
     mockMvc.perform(get("/items"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("items"));
-    
+        .andExpect(status().isOk())
+        .andExpect(view().name("items"));
   }
-  
+
 }
