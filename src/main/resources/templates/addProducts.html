@@ -98,7 +98,6 @@
     <!-----------------------Add item------------------------------------->
     <h2>Add item</h2>
     <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
-
         <!----------------------Added item--------------------------------------->
         <div th:switch="${savedItem}">
             <div th:case="${savedItem == true}">
