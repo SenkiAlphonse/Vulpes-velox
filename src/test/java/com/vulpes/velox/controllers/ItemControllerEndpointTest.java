@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 
@@ -44,14 +46,16 @@ public class ItemControllerEndpointTest {
   private UserService userService;
 
   private IdentifiedProduct identifiedProduct;
+  private Map<String, ?> errorFlashAttributes;
 
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
   }
 
+
   @Test
-  public void itemNew() throws Exception {
+  public void itemNewIsOk() throws Exception {
     when(userService.isUser(any())).thenReturn(true);
     when(itemService.getErrorFlashAttributes(
         notNull(), notNull(), notNull())).thenReturn(Collections.emptyMap());
@@ -93,6 +97,22 @@ public class ItemControllerEndpointTest {
   }
 
   @Test
+  public void itemNewWithoutIdentifiedProduct() throws Exception {
+    when(userService.isUser(any())).thenReturn(true);
+
+    mockMvc.perform(post("/item/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("productNumber", "2")
+    )
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/storage/add#item"))
+        .andExpect(view().name("redirect:/storage/add#item"));
+
+  }
+
+    @Test
   public void identifiedProducts() throws Exception {
     mockMvc.perform(get("/items"))
             .andExpect(status().isOk())
