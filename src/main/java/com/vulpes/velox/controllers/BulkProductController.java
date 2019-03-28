@@ -36,7 +36,6 @@ public class BulkProductController {
           bulkProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";
       }
-
       bulkProduct.setQuantity((long) 0);
       productService.save(bulkProduct);
       bulkProductService.getNewBulkProductFlashAttributes(bulkProduct, redirectAttributes);
@@ -44,6 +43,4 @@ public class BulkProductController {
     }
     throw new UnauthorizedException("You can't do that here :(");
   }
-
-
 }

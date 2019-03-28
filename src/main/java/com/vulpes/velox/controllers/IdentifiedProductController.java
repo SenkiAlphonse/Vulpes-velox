@@ -30,6 +30,7 @@ public class IdentifiedProductController {
   @PostMapping("/identifiedProduct/new")
   public String identifiedProductNew(
       @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
+
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes) {
     if (userService.isUser(authentication)) {
@@ -37,6 +38,7 @@ public class IdentifiedProductController {
           identifiedProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";
       }
+
       identifiedProduct.setQuantity((long) 0);
       productService.save(identifiedProduct);
       identifiedProductService.getNewIdentifiedProductFlashAttributes(identifiedProduct, redirectAttributes);

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:include="fragments/head :: head"></div>
-    <title id="title">Users</title>
+    <title id="title">User</title>
 </head>
 <body>
 <div th:replace="fragments/nav-bar :: nav"></div>
@@ -11,16 +11,23 @@
 <div class="container my-3">
     <div class="row">
         <div class="page">
-            <a th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}"><i class="fas fa-arrow-left"></i></a>
-            <span class="text-muted" th:if="${pageid == 0}"><i class="fas fa-arrow-left"></i></span>
+            <a class="nav-arrow" th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <span class="text-muted" th:if="${pageid == 0}">
+            <i class="fas fa-arrow-left"></i>
+        </span>
             <div class="px-2" th:text="'page ' + ${pageid +1}"></div>
-            <a th:unless="${islastpage}" th:href="|/users?pageId=${pageid + 1}|"><i
-                    class="fas fa-arrow-right text-info"></i></a>
-            <span class="text-muted" th:if="${islastpage}"><i class="fas fa-arrow-right"></i></span>
+            <a class="nav-arrow" th:unless="${islastpage}" th:href="|/users?pageId=${pageid + 1}|">
+                <i class="fas fa-arrow-right text-info"></i>
+            </a>
+            <span class="text-muted" th:if="${islastpage}">
+            <i class="fas fa-arrow-right"></i>
+        </span>
         </div>
     </div>
+    <!----------------------Users table------------------------------------->
     <div class="container">
-        <!----------------------Users table------------------------------------->
         <table>
             <caption>Users</caption>
             <thead>
@@ -59,25 +66,27 @@
                 </tbody>
             </div>
         </table>
-        <!-----------------------New user-------------------------------->
+    </div>
+<!----------------------User error--------------------------------------->
+    <div><a name="adduser"></a></div>
+    <div class="container">
+        <div th:if="${userError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
+    </div>
+<!-----------------------New user-------------------------------->
+    <div class="container">
         <form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
-              id="userNew">
-            <div class="row">
-                <div class="col-label">
-                    <label for="newUserName">Name</label>
-                </div>
-                <div class="col-input">
-                    <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-label"></div>
-                <button type="submit"><span>Save user</span>
-                </button>
-            </div>
+      id="userNew">
+            <label for="newUserName">Name</label>
+            <input type="email" name="newUserName" id="newUserName" th:field="*{email}" requireda>
+            <button type="submit">Save user</button>
         </form>
     </div>
 </div>
-
 </body>
 </html>
+

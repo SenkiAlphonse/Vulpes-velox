@@ -1,5 +1,7 @@
 package com.vulpes.velox.controllers;
 
+import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
+import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.userservice.UserService;
@@ -7,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -44,7 +47,7 @@ public class UserController {
                           OAuth2Authentication authentication,
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
-    if (userService.isAdmin(authentication)) {
+    if (userService.isUser(authentication)) {
       List<User> myPage = userService.getAll(pageId);
       List<User> peekPage = userService.getAll(pageId + 1);
 
@@ -53,16 +56,22 @@ public class UserController {
       model.addAttribute("islastpage", peekPage.size() == 0);
       return "users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Access denied, user information can only be accessed by existing users.");
   }
 
   @PostMapping("/users")
-  public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication) {
+  public String addUser(@ModelAttribute(name = "newuser") User newUser,
+                        OAuth2Authentication authentication,
+                        RedirectAttributes redirectAttributes) {
     if (userService.isAdmin(authentication)) {
+      if(!userService.getErrorFlashAttributes(redirectAttributes, newUser).isEmpty()) {
+
+        return "redirect:/users#adduser";
+      }
       userService.addUser(newUser);
       return "redirect:/users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to add users.");
   }
 
   @PostMapping("/users/delete/{id}")
@@ -71,7 +80,7 @@ public class UserController {
       userService.deleteUserById(id);
       return "redirect:/users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to delete users.");
   }
 
   @PostMapping("/users/update/{id}")
@@ -82,7 +91,7 @@ public class UserController {
       userService.addUser(updateUser);
       return "redirect:/users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to update user roles.");
   }
 
 }
