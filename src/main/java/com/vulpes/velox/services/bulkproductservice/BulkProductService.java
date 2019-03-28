@@ -11,4 +11,6 @@ public interface BulkProductService {
 
   BulkProduct getEntityFromDto(ProductDto productDto);
 
+  boolean existsByName(String name);
+
 }

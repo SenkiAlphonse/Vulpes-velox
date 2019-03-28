@@ -11,4 +11,6 @@ public interface BulkProductRepository extends CrudRepository<BulkProduct, Long>
 
   List<BulkProduct> findAll();
 
+  boolean existsByName(String name);
+
 }
