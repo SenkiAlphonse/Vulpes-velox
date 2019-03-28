@@ -88,12 +88,18 @@
             </tr>
         </div>
     </table>
-
+    <!----------------------User error--------------------------------------->
+    <div th:if="${userError}">
+        <div class="alert-error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <span th:text="${errorMessage}"></span>
+        </div>
+    </div>
     <!-----------------------New user-------------------------------->
     <form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
           id="userNew">
         <label for="newUserName">Name</label>
-        <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
+        <input type="email" name="newUserName" id="newUserName" th:field="*{email}" required>
         <button type="submit" class="btn btn-primary">New <span class="badge badge-light">Save user</span>
         </button>
     </form>

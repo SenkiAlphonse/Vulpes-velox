@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -59,16 +60,16 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication) {
+  public String addUser(@ModelAttribute(name = "newuser") User newUser,
+                        OAuth2Authentication authentication,
+                        RedirectAttributes redirectAttributes) {
     if (userService.isAdmin(authentication)) {
-      try {userService.addUser(newUser);
-      return "redirect:/users";}
-      catch(BadRequestException ex){
-        throw new BadRequestException(ex.getExceptionMessage());
+      if(!userService.getErrorFlashAttributes(redirectAttributes, newUser).isEmpty()) {
+
+        return "redirect:/users";
       }
-      catch(BadEmailException ex){
-        throw new BadEmailException(ex.getExceptionMessage());
-      }
+      userService.addUser(newUser);
+      return "redirect:/users";
     }
     throw new UnauthorizedException("Request denied, admin role is required to add users.");
   }

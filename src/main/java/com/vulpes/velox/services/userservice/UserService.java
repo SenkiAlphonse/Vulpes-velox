@@ -17,6 +17,6 @@ public interface UserService {
   Boolean isAdmin(OAuth2Authentication authentication);
   String getGoogleUserName(OAuth2Authentication authentication);
   boolean userExistsByEmail(String email);
-  Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, String email, User user);
+  Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user);
 
 }

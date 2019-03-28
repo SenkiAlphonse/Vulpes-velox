@@ -38,7 +38,7 @@ public class User {
     return isAdmin;
   }
 
-  public void setIsAdmin(Boolean isADmin) {
-    isAdmin = isADmin;
+  public void setIsAdmin(Boolean isAdmin) {
+    isAdmin = isAdmin;
   }
 }
