@@ -1,6 +1,7 @@
 package com.vulpes.velox.models.products;
 
 import com.vulpes.velox.models.Shipment;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,5 +20,14 @@ public class BulkProduct extends Product  {
 
   public void setShipments(List<Shipment> shipments) {
     this.shipments = shipments;
+  }
+
+  @Override
+  public String toString() {
+    return "BulkProduct{" +
+        "id=" + super.getId() +
+        ", name='" + super.getName() + '\'' +
+        ", quantity=" + super.getQuantity() +
+        '}';
   }
 }

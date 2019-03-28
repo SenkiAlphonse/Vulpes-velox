@@ -1,10 +1,15 @@
 package com.vulpes.velox.models;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
+@Audited
+@AuditTable("user_AUD")
 public class User {
 
   @Id
