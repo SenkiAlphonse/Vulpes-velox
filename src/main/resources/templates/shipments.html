@@ -11,11 +11,11 @@
     <!----------------------Bulk products table------------------------------------->
     <table>
         <tr>
-            <th><h3>Bulk Product Name</h3></th>
+            <th scope="col"><h3>Bulk Product Name</h3></th>
     <!----------------------Shipments table------------------------------------->
-            <th><h3>Quantity</h3></th>
-            <th><h3>Arrival</h3></th>
-            <th><h3>Best before</h3></th>
+            <th scope="col"><h3>Quantity</h3></th>
+            <th scope="col"><h3>Arrival</h3></th>
+            <th scope="col"><h3>Best before</h3></th>
         </tr>
         <div th:each="shipment : ${shipments}">
             <tr>
