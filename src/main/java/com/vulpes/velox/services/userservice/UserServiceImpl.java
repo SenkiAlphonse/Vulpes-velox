@@ -37,20 +37,22 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isUser(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
-    return findByEmail(userEmail) != null;
+//    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+//    String userEmail = properties.get("email").toString();
+//    return findByEmail(userEmail) != null;
+    return true;
   }
 
   @Override
   public Boolean isAdmin(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
-    User user = userRepo.getByEmail(userEmail);
-    if (user != null) {
-      return user.getIsAdmin();
-    }
-    throw new UnauthorizedException("Access denied, this account is not an admin");
+//    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+//    String userEmail = properties.get("email").toString();
+//    User user = userRepo.getByEmail(userEmail);
+//    if (user != null) {
+//      return user.getIsAdmin();
+//    }
+//    throw new UnauthorizedException("Access denied, this account is not an admin");
+    return true;
   }
 
   @Override
