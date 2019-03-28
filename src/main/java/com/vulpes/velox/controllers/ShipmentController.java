@@ -50,20 +50,12 @@ public class ShipmentController {
           bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#shipment";
       }
-      shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
-      shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
-      BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
-
-      shipment.setBulkProduct(bulkProduct);
-      shipmentService.save(shipment);
-
-      bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
-      productService.update(bulkProduct);
-
+      shipmentService.saveNewShipment(bulkProductName, arrivalDate, bestBeforeDate, shipment);
+      productService.updateBulkProductWithShipment(bulkProductName, shipment);
       shipmentService.getNewShipmentFlashAttributes(shipment, redirectAttributes);
       return "redirect:/storage/add#shipment";
     }
-    throw new UnauthorizedException("You have no power here, puny human being");
+    throw new UnauthorizedException("Unauthorized google account.");
   }
 
 }
