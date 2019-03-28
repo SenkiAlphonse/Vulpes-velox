@@ -55,7 +55,6 @@ pipeline {
             }
             steps {
                 withAWS(credentials: '04dc3c33-f243-4662-a597-20f7e2ddd77b', region: 'eu-west-3') {
-                    sh 'aws s3api get-bucket-acl --bucket kopako-vulpes-bucket --region us-west-3'
                     sh 'aws s3 cp ./Dockerrun.aws.json \
                         s3://$S3_BUCKET/$BUILD_ID/Dockerrun.aws.json'
                     sh 'aws elasticbeanstalk create-application-version \
