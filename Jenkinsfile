@@ -22,7 +22,7 @@ pipeline {
         stage('Build') {
             steps {
                 slackSend(
-                        channel: '#fedexfox',
+                        channel: '#vulpes-velox-builds',
                         message: "${currentBuild.fullDisplayName} has started."
                 )
                 sh './gradlew bootJar'
@@ -43,7 +43,7 @@ pipeline {
                     }
                 }
                 slackSend(
-                        channel: '#fedexfox',
+                        channel: '#vulpes-velox-builds',
                         color: 'good',
                         message: "Docker image built and pushed to dockerhub; <https://hub.docker.com/r/foxyfox/vulpes/tags | Dockerhub>"
                 )
@@ -69,7 +69,7 @@ pipeline {
                        --version-label vulpes-$BUILD_ID'
                 }
                 slackSend(
-                        channel: '#fedexfox',
+                        channel: '#vulpes-velox-builds',
                         color: 'good',
                         message: "EBS updated with new image; <http://kopakop-vulpes-env.vbyegtzz7n.eu-north-1.elasticbeanstalk.com/ | [Link] >"
                 )
@@ -79,14 +79,14 @@ pipeline {
     post {
         success {
             slackSend(
-                    channel: '#fedexfox',
+                    channel: '#vulpes-velox-builds',
                     color: 'good',
                     message: "${currentBuild.fullDisplayName} has succeeded. (<${env.BUILD_URL}|Open>)"
             )
         }
         failure {
             slackSend(
-                    channel: '#fedexfox',
+                    channel: '#vulpes-velox-builds',
                     color: 'danger',
                     message: "${currentBuild.fullDisplayName} has failed. (<${env.BUILD_URL}|Open>)"
             )
