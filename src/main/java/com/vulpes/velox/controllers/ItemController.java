@@ -41,7 +41,7 @@ public class ItemController {
   public String newItem(@RequestParam(value = "identifiedProductToSet") String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item,
                         OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
 
       item.setIdentifiedProduct(identifiedProduct);

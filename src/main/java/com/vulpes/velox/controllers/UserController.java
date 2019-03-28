@@ -1,5 +1,7 @@
 package com.vulpes.velox.controllers;
 
+import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
+import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.userservice.UserService;
@@ -27,7 +29,7 @@ public class UserController {
 
   @GetMapping("/")
   public String enterApp(Model model, OAuth2Authentication authentication) {
-    if (authentication != null && userService.isAuthorized(authentication)) {
+    if (authentication != null && userService.isUser(authentication)) {
       model.addAttribute("username", userService.getGoogleUserName(authentication));
     }
     return "index";
@@ -44,7 +46,7 @@ public class UserController {
                           OAuth2Authentication authentication,
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
-    if (userService.isAdmin(authentication)) {
+    if (userService.isUser(authentication)) {
       List<User> myPage = userService.getAll(pageId);
       List<User> peekPage = userService.getAll(pageId + 1);
 
@@ -53,16 +55,22 @@ public class UserController {
       model.addAttribute("islastpage", peekPage.size() == 0);
       return "users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Access denied, user information can only be accessed by existing users.");
   }
 
   @PostMapping("/users")
   public String addUser(@ModelAttribute(name = "newuser") User newUser, OAuth2Authentication authentication) {
     if (userService.isAdmin(authentication)) {
-      userService.addUser(newUser);
-      return "redirect:/users";
+      try {userService.addUser(newUser);
+      return "redirect:/users";}
+      catch(BadRequestException ex){
+        throw new BadRequestException(ex.getExceptionMessage());
+      }
+      catch(BadEmailException ex){
+        throw new BadEmailException(ex.getExceptionMessage());
+      }
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to add users.");
   }
 
   @PostMapping("/users/delete/{id}")
@@ -71,18 +79,18 @@ public class UserController {
       userService.deleteUserById(id);
       return "redirect:/users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to delete users.");
   }
 
   @PostMapping("/users/update/{id}")
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication) && userService.isAdmin(authentication)) {
+    if (userService.isUser(authentication) && userService.isAdmin(authentication)) {
       User updateUser = userService.findById(id);
-      updateUser.setGod(!updateUser.getGod());
+      updateUser.setIsAdmin(!updateUser.getIsAdmin());
       userService.addUser(updateUser);
       return "redirect:/users";
     }
-    throw new UnauthorizedException("Only Gods can tamper with users");
+    throw new UnauthorizedException("Request denied, admin role is required to update user roles.");
   }
 
 }

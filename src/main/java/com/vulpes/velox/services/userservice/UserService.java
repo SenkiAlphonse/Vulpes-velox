@@ -11,7 +11,7 @@ public interface UserService {
   List<User>getAll(int pageId);
   void addUser(User user);
   void deleteUserById(Long id);
-  Boolean isAuthorized(OAuth2Authentication authentication);
+  Boolean isUser(OAuth2Authentication authentication);
   Boolean isAdmin(OAuth2Authentication authentication);
   String getGoogleUserName(OAuth2Authentication authentication);
 

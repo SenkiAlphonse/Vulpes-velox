@@ -75,12 +75,12 @@
                         <div th:text="${user.getEmail()}" class="font-weight-bold"></div>
                     </h2>
                 </td>
-                <td th:if="${user.getGod()}">
+                <td th:if="${user.getIsAdmin()}">
                     <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
                         <button type="submit" class="btn btn-danger">Dethrone</button>
                     </form>
                 </td>
-                <td th:unless="${user.getGod()}">
+                <td th:unless="${user.getIsAdmin()}">
                     <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
                         <button type="submit" class="btn btn-danger">Make God</button>
                     </form>

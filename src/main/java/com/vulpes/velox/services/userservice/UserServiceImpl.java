@@ -1,5 +1,7 @@
 package com.vulpes.velox.services.userservice;
 
+import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
+import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Boolean isAuthorized(OAuth2Authentication authentication){
+  public Boolean isUser(OAuth2Authentication authentication){
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
     return findByEmail(userEmail) != null;
@@ -39,9 +41,9 @@ public class UserServiceImpl implements UserService {
     String userEmail = properties.get("email").toString();
     User user = userRepo.getByEmail(userEmail);
     if(user!=null) {
-      return user.getGod();
+      return user.getIsAdmin();
     }
-    throw new UnauthorizedException("What are you even doing here...");
+    throw new UnauthorizedException("Access denied, this account is not an admin");
   }
 
   @Override
@@ -57,7 +59,11 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addUser(User user) {
+    if(user==null){
+      throw new BadRequestException("Error creating user");
+    }
     userRepo.save(user);
+
   }
 
   @Override

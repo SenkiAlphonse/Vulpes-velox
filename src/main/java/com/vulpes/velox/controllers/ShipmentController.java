@@ -42,7 +42,7 @@ public class ShipmentController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
           !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
         return "redirect:/storage/add";

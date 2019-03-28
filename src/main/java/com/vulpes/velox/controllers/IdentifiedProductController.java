@@ -27,7 +27,7 @@ public class IdentifiedProductController {
   public String identifiedProductNew(
       @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
       OAuth2Authentication authentication) {
-    if (userService.isAuthorized(authentication)) {
+    if (userService.isUser(authentication)) {
       identifiedProduct.setQuantity((long) 0);
       productService.save(identifiedProduct);
       return "redirect:/storage/add";
