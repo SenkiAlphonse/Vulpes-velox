@@ -207,7 +207,7 @@
             </div>
             <div class="col-input">
                 <select name="bulkProductToSet" id="typeBulk">
-                    <div th:each="bulkProduct : ${bulkProducts}">
+                    <div th:each="bulkProduct : ${bulkProductsFiltered}">
                         <option class="dropdown-item" th:value="${bulkProduct.getName()}">
                             <p th:text="${bulkProduct.getName()}"></p>
                         </option>
@@ -218,6 +218,20 @@
         <div class="row">
             <div class="col-label"></div>
             <button type="submit">Add shipment</span></button>
+        </div>
+    </form>
+    <form action="#" th:action="@{/storage/add}" method="get">
+        <div class="row">
+            <div class="col-label">
+                <label for="filter">Filter types</label>
+            </div>
+            <div class="col-input">
+                <input type="text" name="filterBulkProduct" id="filter">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
+            <button type="submit">Filter</span></button>
         </div>
     </form>
 </div>

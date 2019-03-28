@@ -49,13 +49,18 @@ public class StorageController {
       model.addAttribute("identifiedProducts", identifiedProductService.getAll());
       model.addAttribute("bulkProducts", bulkProductService.getAll());
 
-      model.addAttribute("bulkProductsFiltered", bulkProductService.getAllFilteredBy(filter));
+      if (filter != null) {
+        model.addAttribute("identifiedProductsFiltered", bulkProductService.getAllFilteredBy(filter));
+        model.addAttribute("bulkProductsFiltered", bulkProductService.getAllFilteredBy(filter));
+      } else {
+        model.addAttribute("bulkProductsFiltered", bulkProductService.getAll());
+      }
+
       return "addProducts";
     } else {
       throw new UnauthorizedException("Unauthorized");
     }
   }
-
 
 
 }
