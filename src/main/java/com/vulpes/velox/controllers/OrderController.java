@@ -35,6 +35,8 @@ public class OrderController {
   @PostMapping("/order/new")
   public String saveOrder(@ModelAttribute(value = "orderNew") Order order,
                           RedirectAttributes redirectAttributes) {
+
+
     order.setDate(new Date());
     orderService.save(order);
 
