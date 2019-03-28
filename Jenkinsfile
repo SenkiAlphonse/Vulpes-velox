@@ -4,7 +4,7 @@ pipeline {
         registry = "foxyfox/vulpes"
         registryCredential = 'docker-technical-foxyfox'
         dockerImage = ''
-        ENV_NAME = "kopako-vulpes-env"
+        ENV_NAME = "KopakoVulpes-env"
         S3_BUCKET = "kopako-vulpes-bucket"
         APP_NAME = 'kopako-vulpes'
     }
