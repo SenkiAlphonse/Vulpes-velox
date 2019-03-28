@@ -16,6 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Collections;
+import java.util.Map;
+
 import static org.junit.Assert.assertThat;
 
 import static org.mockito.Mockito.*;
@@ -50,6 +55,8 @@ public class ItemControllerEndpointTest {
   @Test
   public void itemNew() throws Exception {
     when(userService.isUser(any())).thenReturn(true);
+    when(itemService.getErrorFlashAttributes(any(), any(), any())).thenReturn(Collections.EMPTY_MAP);
+    when(itemService.getNewItemFlashAttributes(any(), any())).thenReturn(Collections.EMPTY_MAP);
     when(productService.getByName("IdentifiedProductName")).thenReturn(identifiedProduct);
 
     mockMvc.perform(post("/item/new")
@@ -60,8 +67,8 @@ public class ItemControllerEndpointTest {
     )
         .andDo(print())
         .andExpect(status().isFound())
-        .andExpect(redirectedUrl("/storage/add"))
-        .andExpect(view().name("redirect:/storage/add"));
+        .andExpect(redirectedUrl("/storage/add#item"))
+        .andExpect(view().name("redirect:/storage/add#item"));
 
     verify(userService, times(1)).isUser(any());
     verifyNoMoreInteractions(userService);
@@ -69,6 +76,8 @@ public class ItemControllerEndpointTest {
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);
     verify(itemService, times(1)).save(itemArgument.capture());
     verify(itemService, times(1)).getAllByIdentifiedProduct(identifiedProduct);
+    verify(itemService, times(1)).getErrorFlashAttributes(any(), any(), any());
+    verify(itemService, times(1)).getNewItemFlashAttributes(any(), any());
     verifyNoMoreInteractions(itemService);
 
     Item itemArgumentValue = itemArgument.getValue();
