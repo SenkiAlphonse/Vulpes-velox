@@ -1,6 +1,6 @@
 package com.vulpes.velox.repositories;
 
-import com.vulpes.velox.models.IdentifiedProduct;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
