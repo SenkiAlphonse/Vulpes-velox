@@ -11,7 +11,6 @@
 <div class="container my-3">
     <div class="row">
         <div class="page">
-<<<<<<< HEAD
             <a class="nav-arrow" th:unless="${pageid == 0}" th:href="|/users?pageId=${pageid - 1}">
                 <i class="fas fa-arrow-left"></i>
             </a>
@@ -27,62 +26,66 @@
         </span>
         </div>
     </div>
-    <div class="container">
     <!----------------------Users table------------------------------------->
-    <table>
-        <caption>Users</caption>
-        <thead>
-        <tr>
-            <th scope="col"><h3>Delete</h3></th>
-            <th scope="col"><h3>ID</h3></th>
-            <th scope="col"><h3>E-mail</h3></th>
-            <th scope="col"><h3>Admin</h3></th>
-        </tr>
-        </thead>
-        <div th:each="user : ${users}">
-            <tbody>
+    <div class="container">
+        <table>
+            <caption>Users</caption>
+            <thead>
             <tr>
-                <td data-label="Delete">
-                    <form th:action="@{'/users/delete/' + ${user.getId()}}" method="post">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-                <td data-label="Id">
-                    <p th:text="${user.getId()}"></p>
-                </td>
-                <td data-label="Email">
-                    <p th:text="${user.getEmail()}"></p>
-                </td>
-                <td data-label="Admin" th:if="${user.getIsAdmin()}">
-                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                        <button type="submit">Demote</button>
-                    </form>
-                </td>
-                <td data-label="Admin" th:unless="${user.getIsAdmin()}">
-                    <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
-                        <button type="submit">Promote</button>
-                    </form>
-                </td>
+                <th scope="col"><h3>Delete</h3></th>
+                <th scope="col"><h3>ID</h3></th>
+                <th scope="col"><h3>E-mail</h3></th>
+                <th scope="col"><h3>Admin</h3></th>
             </tr>
-            </tbody>
-        </div>
-    </table>
-<!----------------------User error--------------------------------------->
-<div th:if="${userError}">
-    <div class="alert-error">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <span th:text="${errorMessage}"></span>
+            </thead>
+            <div th:each="user : ${users}">
+                <tbody>
+                <tr>
+                    <td data-label="Delete">
+                        <form th:action="@{'/users/delete/' + ${user.getId()}}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td data-label="Id">
+                        <p th:text="${user.getId()}"></p>
+                    </td>
+                    <td data-label="Email">
+                        <p th:text="${user.getEmail()}"></p>
+                    </td>
+                    <td data-label="Admin" th:if="${user.getIsAdmin()}">
+                        <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                            <button type="submit">Demote</button>
+                        </form>
+                    </td>
+                    <td data-label="Admin" th:unless="${user.getIsAdmin()}">
+                        <form th:action="@{'/users/update/' + ${user.getId()}}" method="post">
+                            <button type="submit">Promote</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
     </div>
-</div>
+<!----------------------User error--------------------------------------->
+    <div><a name="adduser"></a></div>
+    <div class="container">
+        <div th:if="${userError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
+    </div>
 <!-----------------------New user-------------------------------->
-<form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
+    <div class="container">
+        <form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
       id="userNew">
-    <label for="newUserName">Name</label>
-    <input type="text" name="newUserName" id="newUserName" th:field="*{email}">
-    <button type="submit">Save user</button>
-</form>
-
-</div>
+            <label for="newUserName">Name</label>
+            <input type="email" name="newUserName" id="newUserName" th:field="*{email}" requireda>
+            <button type="submit">Save user</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
