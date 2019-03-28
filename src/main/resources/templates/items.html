@@ -11,21 +11,19 @@
 
     <!----------------------Items table------------------------------------->
     <table>
+        <thead>
         <tr>
             <th scope="col"><h3>Item Name</h3></th>
             <th scope="col"><h3>Product number</h3></th>
         </tr>
+        </thead>
         <div th:each="item : ${items}">
             <tr>
-                <td>
-                    <h2>
+                <td data-label="Product Name">
                         <p th:text="${item.getIdentifiedProduct().getName()}"></p>
-                    </h2>
                 </td>
-                <td>
-                    <h2>
+                <td data-label="Product Number">
                         <p th:text="${item.getProductNumber()}"></p>
-                    </h2>
                 </td>
             </tr>
         </div>

@@ -7,15 +7,22 @@
 <body>
 <div th:replace="fragments/nav-bar :: nav"></div>
 <div class="container">
-    <div class="add-item">
     <!-----------------------New order-------------------------------->
     <form action="#" th:action="@{/order/new}" th:object="${orderNew}" method="post"
           id="orderNew">
-        <label for="orderNameId">Name</label>
-        <input type="text" name="orderName" id="orderNameId" th:field="*{name}">
-        <button type="submit">New order</button>
+        <div class="row">
+            <div class="col-label">
+                <label for="orderNameId">Name</label>
+            </div>
+            <div class="col-input">
+                <input type="text" name="orderName" id="orderNameId" th:field="*{name}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
+            <button type="submit">New order</button>
+        </div>
     </form>
-    </div>
 </div>
 </body>
 </html>

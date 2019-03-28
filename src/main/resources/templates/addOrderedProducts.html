@@ -9,7 +9,7 @@
 <div class="container">
     <div class="orders">
         <h2>Add ordered product for
-            <div th:text="${orderName}"></div>
+            <div class="pagetop-including-ordername" th:text="${orderName}"></div>
         </h2>
 
         <!-----------------------Add ordered product------------------------------------->
@@ -41,7 +41,7 @@
     <br>
 
     <!----------------------Ordered products table------------------------------------->
-    <table class="ord">
+    <table>
         <caption>Ordered products</caption>
         <thead>
         <tr>
@@ -49,20 +49,18 @@
             <th scope="col"><h3>Quantity</h3></th>
         </tr>
         </thead>
+        <tbody>
         <div th:each="orderedProduct : ${orderedProducts}">
             <tr>
-                <td>
-                    <h2>
-                        <p th:text="${orderedProduct.getProductName()}"></p>
-                    </h2>
+                <td data-label="Product Name">
+                    <p th:text="${orderedProduct.getProductName()}"></p>
                 </td>
-                <td>
-                    <h2>
-                        <p th:text="${orderedProduct.getQuantity()}"></p>
-                    </h2>
+                <td data-label="Quantity">
+                    <p th:text="${orderedProduct.getQuantity()}"></p>
                 </td>
             </tr>
         </div>
+        </tbody>
     </table>
 </div>
 </body>

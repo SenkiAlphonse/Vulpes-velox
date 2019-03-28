@@ -72,15 +72,13 @@
                     <label for="Type">Type</label>
                 </div>
                 <div class="col-input">
-                    <div class="dropdown-menu">
-                        <select name="identifiedProductToSet" id="Type">
-                            <div th:each="identifiedProduct : ${identifiedProducts}">
-                                <option th:value="${identifiedProduct.getName()}">
-                                    <p th:text="${identifiedProduct.getName()}"></p>
-                                </option>
-                            </div>
-                        </select>
-                    </div>
+                    <select name="identifiedProductToSet" id="Type">
+                        <div th:each="identifiedProduct : ${identifiedProducts}">
+                            <option th:value="${identifiedProduct.getName()}">
+                                <p th:text="${identifiedProduct.getName()}"></p>
+                            </option>
+                        </div>
+                    </select>
                 </div>
             </div>
             <div class="row">
@@ -127,11 +125,9 @@
             <div class="col-input">
                 <select name="bulkProductToSet" id="typeBulk">
                     <div th:each="bulkProduct : ${bulkProducts}">
-                        <div class="dropdown-menu">
-                            <option class="dropdown-item" th:value="${bulkProduct.getName()}">
-                                <p th:text="${bulkProduct.getName()}"></p>
-                            </option>
-                        </div>
+                        <option class="dropdown-item" th:value="${bulkProduct.getName()}">
+                            <p th:text="${bulkProduct.getName()}"></p>
+                        </option>
                     </div>
                 </select>
             </div>
