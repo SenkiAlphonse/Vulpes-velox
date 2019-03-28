@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "users")
 @Audited
-@AuditTable("user_AUD")
+@AuditTable("users_AUD")
 public class User {
 
   @Id
