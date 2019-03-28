@@ -39,6 +39,6 @@ public class User {
   }
 
   public void setIsAdmin(Boolean isAdmin) {
-    isAdmin = isAdmin;
+    this.isAdmin = isAdmin;
   }
 }
