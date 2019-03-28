@@ -1,12 +1,16 @@
 package com.vulpes.velox.models;
 
 import com.vulpes.velox.models.products.BulkProduct;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "shipments")
+@Audited
+@AuditTable("shipments_AUD")
 public class Shipment {
 
   @Id
