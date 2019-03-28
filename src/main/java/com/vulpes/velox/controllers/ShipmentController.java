@@ -43,6 +43,11 @@ public class ShipmentController {
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication) {
     if (userService.isAuthorized(authentication)) {
+      if(!shipmentService.getErrorFlashAttributes(bulkProductName, arrivalDate, bestBeforeDate, shipment).isEmpty()) {
+        return "redirect:/storage/add";
+      }
+
+
       if(!shipmentService.isAllowedDateFormat(arrivalDate) ||
           !shipmentService.isAllowedDateFormat(bestBeforeDate)) {
         return "redirect:/storage/add";

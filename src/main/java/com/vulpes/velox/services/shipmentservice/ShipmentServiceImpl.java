@@ -5,10 +5,12 @@ import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
@@ -45,5 +47,20 @@ public class ShipmentServiceImpl implements ShipmentService {
     return date.length() == 10;
   }
 
+  @Override
+  public Map<String, ?> getErrorFlashAttributes(String bulkProductName, String arrivalDate, String bestBeforeDate, Shipment shipment, RedirectAttributes redirectAttributes) {
+    if(bulkProductName == null) {
+      return getErrorMessageFlashAttributes("Enter bulk product name.", redirectAttributes);
+    }
+    if(bulkProductName.isEmpty()) {
+      return getErrorMessageFlashAttributes("Empty bulk product name.", redirectAttributes);
+    }
+
+  }
+
+  private Map<String, ?> getErrorMessageFlashAttributes(String message,
+                                                        RedirectAttributes redirectAttributes) {
+
+  }
 
 }
