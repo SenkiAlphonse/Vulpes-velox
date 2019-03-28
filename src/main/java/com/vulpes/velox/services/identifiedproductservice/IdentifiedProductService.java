@@ -17,4 +17,6 @@ public interface IdentifiedProductService {
   Map<String, ?> getErrorFlashAttributes(IdentifiedProduct identifiedProduct, RedirectAttributes redirectAttributes);
 
   Map<String, ?> getNewIdentifiedProductFlashAttributes(IdentifiedProduct identifiedProduct, RedirectAttributes redirectAttributes);
+
+  List<IdentifiedProduct> getAllFilteredBy(String filter);
 }

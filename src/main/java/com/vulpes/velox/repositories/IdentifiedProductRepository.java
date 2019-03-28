@@ -9,4 +9,6 @@ public interface IdentifiedProductRepository extends CrudRepository<IdentifiedPr
 
   List<IdentifiedProduct> findAll();
 
+  List<IdentifiedProduct> findAllByNameContaining(String filter);
+
 }

@@ -67,7 +67,7 @@
             </div>
         </table>
     </div>
-<!----------------------User error--------------------------------------->
+    <!----------------------User error--------------------------------------->
     <div><a name="adduser"></a></div>
     <div class="container">
         <div th:if="${userError}">
@@ -77,13 +77,22 @@
             </div>
         </div>
     </div>
-<!-----------------------New user-------------------------------->
+    <!-----------------------New user-------------------------------->
     <div class="container">
         <form action="#" th:action="@{/users}" th:object="${newuser}" method="post"
-      id="userNew">
-            <label for="newUserName">Name</label>
-            <input type="email" name="newUserName" id="newUserName" th:field="*{email}" requireda>
-            <button type="submit">Save user</button>
+              id="userNew">
+            <div class="row">
+                <div class="col-label">
+                    <label for="newUserName">Name</label>
+                </div>
+                <div class="col-input">
+                    <input type="email" name="newUserName" id="newUserName" th:field="*{email}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-label"></div>
+                <button type="submit">Save user</button>
+            </div>
         </form>
     </div>
 </div>
