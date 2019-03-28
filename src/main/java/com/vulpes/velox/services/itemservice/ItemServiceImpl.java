@@ -41,7 +41,7 @@ public class ItemServiceImpl implements ItemService{
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(Item item, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(String identifiedProductName, Item item, RedirectAttributes redirectAttributes) {
     if(item.getProductNumber() == null) {
       return getErrorMessageFlashAttributes("Enter product number.", redirectAttributes);
     }
@@ -51,10 +51,10 @@ public class ItemServiceImpl implements ItemService{
     if(itemRepository.existsByProductNumber(item.getProductNumber())) {
       return getErrorMessageFlashAttributes("Product number already exists.", redirectAttributes);
     }
-    if(item.getIdentifiedProduct() == null) {
+    if(identifiedProductName == null) {
       return getErrorMessageFlashAttributes("Enter identified product.", redirectAttributes);
     }
-    if(item.getIdentifiedProduct().getName().isEmpty()) {
+    if(identifiedProductName.isEmpty()) {
       return getErrorMessageFlashAttributes("Empty identified product name.", redirectAttributes);
     }
     return redirectAttributes.getFlashAttributes();

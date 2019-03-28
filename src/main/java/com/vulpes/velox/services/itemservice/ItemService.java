@@ -17,7 +17,7 @@ public interface ItemService {
 
   boolean existsByProductNumber(Long productNumber);
 
-  Map<String, ?> getErrorFlashAttributes(Item item, RedirectAttributes redirectAttributes);
+  Map<String, ?> getErrorFlashAttributes(String identifiedProductName, Item item, RedirectAttributes redirectAttributes);
 
   Map<String, ?> getNewItemFlashAttributes(Item item, RedirectAttributes redirectAttributes);
 }

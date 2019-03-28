@@ -50,7 +50,7 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
-            <!----------------------Added bulk product--------------------------------------->
+            <!----------------------Added identified product--------------------------------------->
             <div th:switch="${savedIdentifiedProduct}">
                 <div th:case="${savedIdentifiedProduct == true}">
                     <div class="alert-done">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <!----------------------Bulk product error--------------------------------------->
+            <!----------------------Identified product error--------------------------------------->
             <div th:if="${identifiedProductError}">
                 <div class="alert-error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -86,6 +86,7 @@
     </div>
     <br>
     <br>
+    <a name="item"></a>
     <!-----------------------Delete all products----------------------------------->
     <form action="#" th:action="@{/deleteAll}" method="post">
         <div class="row">
@@ -97,6 +98,27 @@
     <!-----------------------Add item------------------------------------->
     <h2>Add item</h2>
     <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
+
+        <!----------------------Added item--------------------------------------->
+        <div th:switch="${savedItem}">
+            <div th:case="${savedItem == true}">
+                <div class="alert-done">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="'Saved '"></span>
+                    <b th:text="${identifiedProductName}"></b>
+                    <span th:text="' item with '"></span>
+                    <b th:text="${productNumber}"></b>
+                    <span th:text="' product number.'"></span>
+                </div>
+            </div>
+        </div>
+        <!----------------------Item error--------------------------------------->
+        <div th:if="${itemError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-label">
                 <label for="number">Product number</label>
