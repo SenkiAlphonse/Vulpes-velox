@@ -16,6 +16,6 @@ VALUES(1, 1111000, 2);
 INSERT INTO shipments (id, quantity, arrival, best_before, bulk_product_id)
 VALUES(1, 10, '2019-03-12', '2020-01-01', 1);
 
-INSERT INTO users (id, email, is_admin)
-VALUES(1, 'user@test.hu', 0),
-      (2, 'admin@test.hu', 1);
+INSERT INTO users (id, email, name, is_admin, image_url, created, last_login, login_type)
+VALUES(1, 'user@test.hu', 'testUser', 0, 'noURL', '1000-01-01 00:00:00', '1000-01-01 00:00:00', NULL),
+      (2, 'admin@test.hu', 'testAdmin', 1, 'noURL', '1000-01-01 00:00:00', '1000-01-01 00:00:00', NULL);
