@@ -38,5 +38,10 @@ CREATE TABLE ordered_products (
 CREATE TABLE users (
   id                  BIGSERIAL PRIMARY KEY NOT NULL,
   email               VARCHAR(255),
-  is_admin            BOOL
+  name                VARCHAR(255),
+  image_url           VARCHAR(255),
+  is_admin            BOOL,
+  created             VARCHAR(255),
+  last_login          VARCHAR(255),
+  login_type          VARCHAR(255)
 );
