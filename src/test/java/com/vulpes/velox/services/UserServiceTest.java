@@ -7,11 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -53,6 +53,7 @@ public class UserServiceTest {
   }
 
   @Test
+  @Transactional
   public void addUser_Test() {
     User testUser = new User();
     testUser.setId(3L);
@@ -88,6 +89,7 @@ public class UserServiceTest {
   }
 
   @Test
+  @Transactional
   public void deleteUserById_Test() {
     userService.deleteUserById(1L);
 

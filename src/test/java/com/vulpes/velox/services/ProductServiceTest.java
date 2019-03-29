@@ -29,6 +29,7 @@ public class ProductServiceTest {
   private ProductService productService;
 
   @Test
+  @Transactional
   public void save_Test() {
     Product addNewProduct = new BulkProduct();
     addNewProduct.setName("updatedProduct22");
@@ -51,6 +52,7 @@ public class ProductServiceTest {
   }
 
   @Test
+  @Transactional
   public void update_Test() {
     Product productUpdate = new BulkProduct();
     productUpdate.setId(1L);
@@ -63,6 +65,7 @@ public class ProductServiceTest {
   }
 
   @Test
+  @Transactional
   public void deleteAll_Test() {
     productService.deleteAll();
     List<Product> testList = productService.getAll();

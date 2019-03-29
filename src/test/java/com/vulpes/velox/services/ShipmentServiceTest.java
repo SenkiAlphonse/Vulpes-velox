@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,6 +33,7 @@ public class ShipmentServiceTest {
   private BulkProductService bulkProductService;
 
   @Test
+  @Transactional
   public void save_Test() {
     Shipment testShipment = new Shipment();
     testShipment.setId(3L);

@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,6 +33,7 @@ public class ItemServiceTest {
   private IdentifiedProductService identifiedProductService;
 
   @Test
+  @Transactional
   public void save_Test() {
     Item testItem = new Item();
     testItem.setId(2L);
@@ -57,7 +59,6 @@ public class ItemServiceTest {
     IdentifiedProduct testIdentifiedProduct = helpList.get(0);
 
     List<Item> testList = itemService.getAllByIdentifiedProduct(testIdentifiedProduct);
-
     int testListSize = testList.size();
 
     assertEquals(testListSize, 1);
