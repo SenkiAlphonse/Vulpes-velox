@@ -50,4 +50,3 @@ CREATE TABLE items_AUD
   PRIMARY KEY (id, rev),
   FOREIGN KEY (rev) REFERENCES revinfo (rev)
 );
-

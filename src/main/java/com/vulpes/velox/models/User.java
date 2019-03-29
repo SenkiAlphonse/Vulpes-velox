@@ -5,6 +5,7 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -20,8 +21,19 @@ public class User {
   @Column(name = "email")
   private String email;
 
+  private String name;
+
+  private String imageUrl;
+
   @Column(name = "is_admin")
   private Boolean isAdmin = false;
+
+  private LocalDateTime created;
+
+  public LocalDateTime lastLogin;
+
+  private String loginType;
+
 
   public long getId() {
     return id;
@@ -39,11 +51,51 @@ public class User {
     this.email = email;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
   public Boolean getIsAdmin() {
     return isAdmin;
   }
 
   public void setIsAdmin(Boolean isAdmin) {
     this.isAdmin = isAdmin;
+  }
+
+  public LocalDateTime getCreated() {
+    return created;
+  }
+
+  public void setCreated(LocalDateTime created) {
+    this.created = created;
+  }
+
+  public LocalDateTime getLastLogin() {
+    return lastLogin;
+  }
+
+  public void setLastLogin(LocalDateTime lastLogin) {
+    this.lastLogin = lastLogin;
+  }
+
+  public String getLoginType() {
+    return loginType;
+  }
+
+  public void setLoginType(String loginType) {
+    this.loginType = loginType;
   }
 }
