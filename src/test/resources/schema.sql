@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS shipments;
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE products (
   id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -40,3 +41,10 @@ CREATE TABLE ordered_products (
   order_id            BIGINT,
   FOREIGN KEY (order_id) REFERENCES orders(id)
 );
+
+CREATE TABLE users (
+  id                  BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  email               VARCHAR(255),
+  is_admin              BOOL
+);
+

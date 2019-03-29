@@ -1,9 +1,9 @@
 package com.vulpes.velox.services;
 
-import com.vulpes.velox.models.Item;
-import com.vulpes.velox.models.products.IdentifiedProduct;
-import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.itemservice.ItemService;
+import com.vulpes.velox.models.Shipment;
+import com.vulpes.velox.models.products.BulkProduct;
+import com.vulpes.velox.services.bulkproductservice.BulkProductService;
+import com.vulpes.velox.services.shipmentservice.ShipmentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,41 +23,29 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
 })
-public class ItemServiceTest {
+public class ShipmentServiceTest {
 
   @Autowired
-  private ItemService itemService;
+  private ShipmentService shipmentService;
 
   @Autowired
-  private IdentifiedProductService identifiedProductService;
+  private BulkProductService bulkProductService;
 
   @Test
   public void save_Test() {
-    Item testItem = new Item();
-    testItem.setId(2L);
-    testItem.setProductNumber(111111L);
-    itemService.save(testItem);
+    Shipment testShipment = new Shipment();
+    testShipment.setId(3L);
+    shipmentService.save(testShipment);
 
-    List<Item> testList = itemService.getAll();
+    List<Shipment> testList = shipmentService.getAll();
     int testListSize = testList.size();
     assertEquals(testListSize, 2);
   }
 
   @Test
-  public void getAll_Test() {
-    List<Item> helpList = itemService.getAll();
-    int helpListSize = helpList.size();
-
-    assertEquals(helpListSize, 1);
-  }
-
-  @Test
-  public void getAllByIdentifiedProduct_Test() {
-    List<IdentifiedProduct> helpList = identifiedProductService.getAll();
-    IdentifiedProduct testIdentifiedProduct = helpList.get(0);
-
-    List<Item> testList = itemService.getAllByIdentifiedProduct(testIdentifiedProduct);
-
+  public void getAllByBulkProduct() {
+    BulkProduct testProduct = bulkProductService.getAll().get(0);
+    List<Shipment> testList = shipmentService.getAllByBulkProduct(testProduct);
     int testListSize = testList.size();
 
     assertEquals(testListSize, 1);
