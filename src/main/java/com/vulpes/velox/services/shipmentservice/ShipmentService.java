@@ -28,4 +28,6 @@ public interface ShipmentService {
 
   Map<String, ?> getNewShipmentFlashAttributes(Shipment shipment, RedirectAttributes redirectAttributes);
 
+  void saveNewShipment(String bulkProductName, String arrival, String bestBefore, Shipment shipment);
+
 }

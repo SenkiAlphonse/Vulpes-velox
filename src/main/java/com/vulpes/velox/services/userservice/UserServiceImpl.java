@@ -1,6 +1,5 @@
 package com.vulpes.velox.services.userservice;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
 import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
@@ -103,5 +102,11 @@ public class UserServiceImpl implements UserService {
     redirectAttributes.addFlashAttribute("userError", true);
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
+  }
+
+  @Override
+  public String getUserEmail(OAuth2Authentication authentication) {
+    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    return properties.get("email").toString();
   }
 }

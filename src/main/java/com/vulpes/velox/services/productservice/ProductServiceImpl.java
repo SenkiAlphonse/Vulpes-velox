@@ -1,6 +1,8 @@
 package com.vulpes.velox.services.productservice;
 
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.Shipment;
+import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +77,12 @@ public class ProductServiceImpl implements ProductService{
     return productRepository.findAll();
   }
 
-
+  @Override
+  public void updateBulkProductWithShipment(String bulkProductName, Shipment shipment) {
+    BulkProduct bulkProduct = (BulkProduct) getByName(bulkProductName);
+    bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
+    update(bulkProduct);
+  }
 
 
 }
