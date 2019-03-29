@@ -26,12 +26,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findByEmail(String email) {
-    return userRepo.getByEmail(email);
+    return userRepo.findByEmail(email);
   }
 
   @Override
   public boolean userExistsByEmail(String email) {
-    return userRepo.getByEmail(email) != null;
+    return userRepo.findByEmail(email) != null;
   }
 
   @Override
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
   public Boolean isAdmin(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
-    User user = userRepo.getByEmail(userEmail);
+    User user = userRepo.findByEmail(userEmail);
     if (user != null) {
       return user.getIsAdmin();
     }
