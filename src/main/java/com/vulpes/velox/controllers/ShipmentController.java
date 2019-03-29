@@ -44,18 +44,29 @@ public class ShipmentController {
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
     if (userService.isUser(authentication)) {
       if (!shipmentService.getErrorFlashAttributes(
           bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#shipment";
       }
-      shipmentService.saveNewShipment(bulkProductName, arrivalDate, bestBeforeDate, shipment);
-      productService.updateBulkProductWithShipment(bulkProductName, shipment);
+      shipment.setArrival(shipmentService.getLocalDateFromDateString(arrivalDate));
+      shipment.setBestBefore(shipmentService.getLocalDateFromDateString(bestBeforeDate));
+      BulkProduct bulkProduct = (BulkProduct) productService.getByName(bulkProductName);
+
+      shipment.setBulkProduct(bulkProduct);
+      shipmentService.save(shipment);
+
+      bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
+      productService.update(bulkProduct);
+
       shipmentService.getNewShipmentFlashAttributes(shipment, redirectAttributes);
       return "redirect:/storage/add#shipment";
+    } else {
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "unauthorized";
     }
-    throw new UnauthorizedException("Unauthorized google account.");
   }
 
 }
