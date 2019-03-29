@@ -34,6 +34,7 @@
         <tr>
             <th scope="col"><h3>Delete</h3></th>
             <th scope="col"><h3>ID</h3></th>
+            <th scope="col"><h3>Name</h3></th>
             <th scope="col"><h3>E-mail</h3></th>
             <th scope="col"><h3>Admin</h3></th>
         </tr>
@@ -48,6 +49,10 @@
                 </td>
                 <td data-label="Id">
                     <p th:text="${user.getId()}"></p>
+                </td>
+                <td data-label="Name">
+                    <p th:if="${user.getName()!=null}" th:text="${user.getName()}"></p>
+                    <p th:unless="${user.getName()!=null}" th:text="Never_Logged_in"></p>
                 </td>
                 <td data-label="Email">
                     <p th:text="${user.getEmail()}"></p>
