@@ -12,6 +12,10 @@
 - GOOGLE_CLIENT_ID
 - GOOGLE_CLIENT_SECRET 
 #### Docker
+./start-docker-compose.sh  
+to start dockerized app with db.  
+Since docker-compose is not controling startup order, it was handled manualy throught bash script. 
+Depricated:
 You can run app with:
 ```sh
 $ docker-compose up -d

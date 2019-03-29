@@ -26,7 +26,7 @@ public class ProductController {
       productService.deleteAll();
       return "redirect:/storage/add";
     } else {
-      throw new UnauthorizedException("Nice try but nope.");
+      throw new UnauthorizedException("Request denied, admin role is required.");
     }
   }
 

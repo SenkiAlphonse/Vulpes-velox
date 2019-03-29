@@ -43,7 +43,8 @@ public class ItemController {
       value = "identifiedProductToSet", required = false) String identifiedProductName,
                         @ModelAttribute(value = "itemNew") Item item,
                         OAuth2Authentication authentication,
-                        RedirectAttributes redirectAttributes) {
+                        RedirectAttributes redirectAttributes,
+                        Model model) {
     if (userService.isUser(authentication)) {
       if(!itemService.getErrorFlashAttributes(identifiedProductName, item, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#item";
@@ -58,8 +59,9 @@ public class ItemController {
       productService.update(identifiedProduct);
       itemService.getNewItemFlashAttributes(item, redirectAttributes);
       return "redirect:/storage/add#item";
-    } else {
-      throw new UnauthorizedException("Unauthorized_request");
+    }  else {
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "unauthorized";
     }
   }
 

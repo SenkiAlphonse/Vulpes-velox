@@ -1,7 +1,5 @@
 package com.vulpes.velox.controllers;
 
-
-import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.itemservice.ItemService;
@@ -20,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertThat;
@@ -37,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ItemControllerEndpointTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @MockBean
   private ProductService productService;
@@ -47,17 +46,23 @@ public class ItemControllerEndpointTest {
   private UserService userService;
 
   private IdentifiedProduct identifiedProduct;
+  private Map<String, Boolean> errorFlashAttributes;
 
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
+    errorFlashAttributes = new HashMap<>();
+    errorFlashAttributes.put("itemError", true);
   }
 
+
   @Test
-  public void itemNew() throws Exception {
+  public void itemNewIsFound() throws Exception {
     when(userService.isUser(any())).thenReturn(true);
-    when(itemService.getErrorFlashAttributes(any(), any(), any())).thenReturn(Collections.EMPTY_MAP);
-    when(itemService.getNewItemFlashAttributes(any(), any())).thenReturn(Collections.EMPTY_MAP);
+    when(itemService.getErrorFlashAttributes(
+        notNull(), notNull(), notNull())).thenReturn(Collections.emptyMap());
+    when(itemService.getNewItemFlashAttributes(
+        notNull(), notNull())).thenReturn(Collections.emptyMap());
     when(productService.getByName("IdentifiedProductName")).thenReturn(identifiedProduct);
 
     mockMvc.perform(post("/item/new")
@@ -77,8 +82,10 @@ public class ItemControllerEndpointTest {
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);
     verify(itemService, times(1)).save(itemArgument.capture());
     verify(itemService, times(1)).getAllByIdentifiedProduct(identifiedProduct);
-    verify(itemService, times(1)).getErrorFlashAttributes(any(), any(), any());
-    verify(itemService, times(1)).getNewItemFlashAttributes(any(), any());
+    verify(itemService, times(1)).getErrorFlashAttributes(
+        anyString(), any(Item.class), any(RedirectAttributes.class));
+    verify(itemService, times(1)).getNewItemFlashAttributes(
+        any(Item.class), any(RedirectAttributes.class));
     verifyNoMoreInteractions(itemService);
 
     Item itemArgumentValue = itemArgument.getValue();
@@ -88,15 +95,57 @@ public class ItemControllerEndpointTest {
 
     verify(productService, times(1)).getByName("IdentifiedProductName");
     verify(productService, times(1)).update(identifiedProduct);
+    verifyNoMoreInteractions(productService);
+  }
+
+  @Test
+  public void itemNewWithoutIdentifiedProduct() throws Exception {
+    when(userService.isUser(any())).thenReturn(true);
+    when((Object) itemService.getErrorFlashAttributes(
+        isNull(), notNull(), notNull())).thenReturn(errorFlashAttributes);
+
+    mockMvc.perform(post("/item/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("productNumber", "2")
+    )
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/storage/add#item"))
+        .andExpect(view().name("redirect:/storage/add#item"));
+
+    verify(itemService, times(1)).getErrorFlashAttributes(
+        isNull(), any(Item.class), any(RedirectAttributes.class));
     verifyNoMoreInteractions(itemService);
   }
 
   @Test
+  public void itemNewWithoutAuthentication() throws Exception {
+    when(userService.isUser(any())).thenReturn(false);
+    when((Object) itemService.getErrorFlashAttributes(
+        isNull(), notNull(), notNull())).thenReturn(errorFlashAttributes);
+
+    mockMvc.perform(post("/item/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("productNumber", "2")
+        .param("identifiedProductToSet", "IdentifiedProductName")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(view().name("unauthorized"));
+
+    verify(userService, times(1)).isUser(isNull());
+    verify(userService, times(1)).getUserEmail(isNull());
+    verifyNoMoreInteractions(userService);
+    verifyNoMoreInteractions(itemService);
+    verifyNoMoreInteractions(productService);
+  }
+  @Test
   public void identifiedProducts() throws Exception {
     mockMvc.perform(get("/items"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("items"));
-    
+        .andExpect(status().isOk())
+        .andExpect(view().name("items"));
   }
-  
+
 }

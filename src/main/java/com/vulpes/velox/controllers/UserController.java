@@ -55,8 +55,10 @@ public class UserController {
       model.addAttribute("pageid", pageId);
       model.addAttribute("islastpage", peekPage.size() == 0);
       return "users";
+    } else {
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "unauthorized";
     }
-    throw new UnauthorizedException("Access denied, user information can only be accessed by existing users.");
   }
 
   @PostMapping("/users")
