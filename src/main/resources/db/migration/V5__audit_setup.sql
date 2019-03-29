@@ -15,7 +15,7 @@ CREATE TABLE users_AUD
   is_admin BOOL,
   created             VARCHAR(255),
   last_login          VARCHAR(255),
-  login_type          VARCHAR(255)
+  login_type          VARCHAR(255),
   PRIMARY KEY (id, rev),
   FOREIGN KEY (rev) REFERENCES revinfo (rev)
 );
