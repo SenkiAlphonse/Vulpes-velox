@@ -20,12 +20,6 @@ import java.time.LocalDateTime;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSecurityConfiguration.class);
-/*  private OidcUserService oidcUserService;
-
-  @Autowired
-  public WebSecurityConfig(OidcUserService oidcUserService){
-    this.oidcUserService = oidcUserService;
-  }*/
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -52,9 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         if (user.getCreated() == null) {
           user.setCreated(LocalDateTime.now());
           user.setLoginType("google");
-          user.setIsAdmin(false);
         }
-
+        if (user.getIsAdmin()==null){
+         user.setIsAdmin(false);
+        }
         if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
           user.setIsAdmin(true);
         }
