@@ -29,24 +29,28 @@ public class UserServiceTest {
   private UserService userService;
 
   @Test
+  @Transactional
   public void findByEmail_Test() {
     User testUser = userService.findByEmail("user@test.hu");
     assertNotNull(testUser);
   }
 
   @Test
+  @Transactional
   public void findByEmail_Test_Fail() {
     User testUser = userService.findByEmail("user@notexist.noo");
     assertNull(testUser);
   }
 
   @Test
+  @Transactional
   public void userExistsByEmail_Test() {
     boolean testExistence = userService.userExistsByEmail("user@test.hu");
     assertTrue(testExistence);
   }
 
   @Test
+  @Transactional
   public void userExistsByEmail_Test_Fail() {
     boolean testExistence = userService.userExistsByEmail("user@notexist.noo");
     assertFalse(testExistence);
@@ -68,12 +72,14 @@ public class UserServiceTest {
   }
 
   @Test(expected = BadRequestException.class)
+  @Transactional
   public void addUser_Test_False() {
     User testUser = null;
     userService.addUser(testUser);
   }
 
   @Test
+  @Transactional
   public void findById_Test() {
     User testUser = userService.findById(1L);
     String testEmail = testUser.getEmail();
@@ -82,6 +88,7 @@ public class UserServiceTest {
   }
 
   @Test
+  @Transactional
   public void findById_Test_False() {
     User testUser = userService.findById(5L);
 
@@ -100,6 +107,7 @@ public class UserServiceTest {
   }
 
   @Test
+  @Transactional
   public void deleteUserById_Test_False() {
     userService.deleteUserById(5L);
 
@@ -108,11 +116,4 @@ public class UserServiceTest {
 
     assertEquals(testListSize, 2);
   }
-
-//  @Test
-//  public void isUser_Test() {
-//    OAuth2Authentication authentication = ;
-//    User testUser = userService.findByEmail("user@test.hu");
-//  }
-
 }
