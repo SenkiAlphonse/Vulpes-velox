@@ -28,4 +28,6 @@ public interface UserService {
 
   Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user);
 
+  String getUserEmail(OAuth2Authentication authentication);
+
 }
