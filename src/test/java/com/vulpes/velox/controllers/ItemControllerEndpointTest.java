@@ -23,7 +23,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -58,7 +57,7 @@ public class ItemControllerEndpointTest {
 
 
   @Test
-  public void itemNewIsOk() throws Exception {
+  public void itemNewIsFound() throws Exception {
     when(userService.isUser(any())).thenReturn(true);
     when(itemService.getErrorFlashAttributes(
         notNull(), notNull(), notNull())).thenReturn(Collections.emptyMap());
@@ -96,7 +95,7 @@ public class ItemControllerEndpointTest {
 
     verify(productService, times(1)).getByName("IdentifiedProductName");
     verify(productService, times(1)).update(identifiedProduct);
-    verifyNoMoreInteractions(itemService);
+    verifyNoMoreInteractions(productService);
   }
 
   @Test
@@ -120,6 +119,28 @@ public class ItemControllerEndpointTest {
     verifyNoMoreInteractions(itemService);
   }
 
+  @Test
+  public void itemNewWithoutAuthentication() throws Exception {
+    when(userService.isUser(any())).thenReturn(false);
+    when((Object) itemService.getErrorFlashAttributes(
+        isNull(), notNull(), notNull())).thenReturn(errorFlashAttributes);
+
+    mockMvc.perform(post("/item/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("productNumber", "2")
+        .param("identifiedProductToSet", "IdentifiedProductName")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(view().name("unauthorized"));
+
+    verify(userService, times(1)).isUser(isNull());
+    verify(userService, times(1)).getUserEmail(isNull());
+    verifyNoMoreInteractions(userService);
+    verifyNoMoreInteractions(itemService);
+    verifyNoMoreInteractions(productService);
+  }
   @Test
   public void identifiedProducts() throws Exception {
     mockMvc.perform(get("/items"))
