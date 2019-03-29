@@ -17,31 +17,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
 @Controller
 public class StorageController {
 
-  private ProductService productService;
   private IdentifiedProductService identifiedProductService;
-  private ItemService itemService;
   private BulkProductService bulkProductService;
-  private ShipmentService shipmentService;
   private UserService userService;
 
   @Autowired
-  public StorageController(ProductService productService,
-                           IdentifiedProductService identifiedProductService,
-                           ItemService itemService,
+  public StorageController(IdentifiedProductService identifiedProductService,
                            BulkProductService bulkProductService,
-                           ShipmentService shipmentService,
                            UserService userService) {
-    this.productService = productService;
     this.identifiedProductService = identifiedProductService;
-    this.itemService = itemService;
     this.bulkProductService = bulkProductService;
-    this.shipmentService = shipmentService;
     this.userService = userService;
   }
 
@@ -51,16 +43,26 @@ public class StorageController {
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
+                            @RequestParam(value = "filterProducts", required = false) String filter,
                             OAuth2Authentication authentication) {
     if (userService.isUser(authentication)) {
-      model.addAttribute("identifiedProducts", identifiedProductService.getAll());
-      model.addAttribute("bulkProducts", bulkProductService.getAll());
+      if (filter != null && !filter.isEmpty()) {
+        model.addAttribute(
+            "identifiedProductsFiltered",
+            identifiedProductService.getAllFilteredBy(filter));
+        model.addAttribute(
+            "bulkProductsFiltered",
+            bulkProductService.getAllFilteredBy(filter));
+      } else {
+        model.addAttribute("identifiedProductsFiltered", identifiedProductService.getAll());
+        model.addAttribute("bulkProductsFiltered", bulkProductService.getAll());
+      }
       return "addProducts";
     } else {
-      throw new UnauthorizedException("Unauthorized");
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "unauthorized";
     }
   }
-
 
 
 }

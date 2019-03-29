@@ -64,4 +64,9 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
     return redirectAttributes.getFlashAttributes();
   }
 
+  @Override
+  public List<IdentifiedProduct> getAllFilteredBy(String filter) {
+    return identifiedProductRepository.findAllByNameContaining(filter);
+  }
+
 }

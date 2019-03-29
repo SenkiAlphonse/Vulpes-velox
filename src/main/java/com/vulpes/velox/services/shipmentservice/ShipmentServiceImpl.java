@@ -4,6 +4,7 @@ import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.repositories.ShipmentRepository;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
+import com.vulpes.velox.services.productservice.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,11 +18,13 @@ import java.util.Map;
 public class ShipmentServiceImpl implements ShipmentService {
   private ShipmentRepository shipmentRepository;
   private BulkProductService bulkProductService;
+  private ProductService productService;
 
   @Autowired
-  public ShipmentServiceImpl(ShipmentRepository shipmentRepository, BulkProductService bulkProductService) {
+  public ShipmentServiceImpl(ShipmentRepository shipmentRepository, BulkProductService bulkProductService, ProductService productService) {
     this.shipmentRepository = shipmentRepository;
     this.bulkProductService = bulkProductService;
+    this.productService = productService;
   }
 
   @Override
@@ -52,22 +55,22 @@ public class ShipmentServiceImpl implements ShipmentService {
 
   @Override
   public Map<String, ?> getErrorFlashAttributes(String bulkProductName, String arrivalDate, String bestBeforeDate, Shipment shipment, RedirectAttributes redirectAttributes) {
-    if(shipment.getQuantity() == null) {
+    if (shipment.getQuantity() == null) {
       return getErrorMessageFlashAttributes("Enter quantity.", redirectAttributes);
     }
-    if(shipment.getQuantity() <= 0) {
+    if (shipment.getQuantity() <= 0) {
       return getErrorMessageFlashAttributes("Quantity not allowed.", redirectAttributes);
     }
-    if(!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
+    if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
       return getErrorMessageFlashAttributes("Date entered not allowed.", redirectAttributes);
     }
-    if(bulkProductName == null) {
+    if (bulkProductName == null) {
       return getErrorMessageFlashAttributes("Enter bulk product name.", redirectAttributes);
     }
-    if(bulkProductName.isEmpty()) {
+    if (bulkProductName.isEmpty()) {
       return getErrorMessageFlashAttributes("Empty bulk product name.", redirectAttributes);
     }
-    if(!bulkProductService.existsByName(bulkProductName)) {
+    if (!bulkProductService.existsByName(bulkProductName)) {
       return getErrorMessageFlashAttributes("Bulk product not found.", redirectAttributes);
     }
     return redirectAttributes.getFlashAttributes();
@@ -88,6 +91,14 @@ public class ShipmentServiceImpl implements ShipmentService {
     redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
     redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());
     return redirectAttributes.getFlashAttributes();
+  }
+
+  @Override
+  public void saveNewShipment(String bulkProductName, String arrival, String bestBefore, Shipment shipment) {
+    shipment.setArrival(getLocalDateFromDateString(arrival));
+    shipment.setBestBefore(getLocalDateFromDateString(bestBefore));
+    shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
+    save(shipment);
   }
 
 }

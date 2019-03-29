@@ -69,4 +69,9 @@ public class BulkProductServiceImpl implements BulkProductService {
     return redirectAttributes.getFlashAttributes();
   }
 
+  @Override
+  public List<BulkProduct> getAllFilteredBy(String filter) {
+    return bulkProductRepository.findAllByNameContaining(filter);
+  }
+
 }

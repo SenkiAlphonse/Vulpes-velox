@@ -1,11 +1,15 @@
 package com.vulpes.velox.models.products;
 
 import com.sun.istack.NotNull;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
+@Audited
+@AuditTable("products_AUD")
 public abstract class Product {
 
   @Id
@@ -38,5 +42,14 @@ public abstract class Product {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return "Product{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", quantity=" + quantity +
+        '}';
   }
 }

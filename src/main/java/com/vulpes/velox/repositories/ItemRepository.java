@@ -13,4 +13,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
   List<Item> findAll();
 
   List<Item> findAllByIdentifiedProduct(IdentifiedProduct identifiedProduct);
+
+  boolean existsByProductNumber(Long productNumber);
 }

@@ -11,7 +11,7 @@
     <!-----------------------New bulk product-------------------------------->
     <div class="add-product">
         <div class="full-height"></div>
-        <h2>Add new item</h2>
+        <h2>Add product</h2>
         <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
               id="bulkProductNew">
             <!----------------------Added bulk product--------------------------------------->
@@ -50,7 +50,7 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
-            <!----------------------Added bulk product--------------------------------------->
+            <!----------------------Added identified product--------------------------------------->
             <div th:switch="${savedIdentifiedProduct}">
                 <div th:case="${savedIdentifiedProduct == true}">
                     <div class="alert-done">
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <!----------------------Bulk product error--------------------------------------->
+            <!----------------------Identified product error--------------------------------------->
             <div th:if="${identifiedProductError}">
                 <div class="alert-error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -86,6 +86,7 @@
     </div>
     <br>
     <br>
+    <a name="item"></a>
     <!-----------------------Delete all products----------------------------------->
     <form action="#" th:action="@{/deleteAll}" method="post">
         <div class="row">
@@ -95,36 +96,55 @@
     <br>
     <br>
     <!-----------------------Add item------------------------------------->
-    <div>
-        <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
-            <div class="row">
-                <div class="col-label">
-                    <label for="number">Product number</label>
-                </div>
-                <div class="col-input">
-                    <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-label">
-                    <label for="Type">Type</label>
-                </div>
-                <div class="col-input">
-                    <select name="identifiedProductToSet" id="Type">
-                        <div th:each="identifiedProduct : ${identifiedProducts}">
-                            <option th:value="${identifiedProduct.getName()}">
-                                <p th:text="${identifiedProduct.getName()}"></p>
-                            </option>
-                        </div>
-                    </select>
+    <h2>Add item</h2>
+    <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
+        <!----------------------Added item--------------------------------------->
+        <div th:switch="${savedItem}">
+            <div th:case="${savedItem == true}">
+                <div class="alert-done">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span th:text="'Saved '"></span>
+                    <b th:text="${identifiedProductName}"></b>
+                    <span th:text="' item with '"></span>
+                    <b th:text="${productNumber}"></b>
+                    <span th:text="' product number.'"></span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-label"></div>
-                <button type="submit">Add item</button>
+        </div>
+        <!----------------------Item error--------------------------------------->
+        <div th:if="${itemError}">
+            <div class="alert-error">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <span th:text="${errorMessage}"></span>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="Type">Type</label>
+            </div>
+            <div class="col-input">
+                <select name="identifiedProductToSet" id="Type">
+                    <div th:each="identifiedProduct : ${identifiedProductsFiltered}">
+                        <option th:value="${identifiedProduct.getName()}">
+                            <p th:text="${identifiedProduct.getName()}"></p>
+                        </option>
+                    </div>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="number">Product number</label>
+            </div>
+            <div class="col-input">
+                <input type="number" name="productNumber" id="number" th:field="*{productNumber}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label"></div>
+            <button type="submit">Add item</button>
+        </div>
+    </form>
     <!----------------------Add shipment--------------------------------------->
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
@@ -150,6 +170,20 @@
             <div class="alert-error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="typeBulk">Type</label>
+            </div>
+            <div class="col-input">
+                <select name="bulkProductToSet" id="typeBulk">
+                    <div th:each="bulkProduct : ${bulkProductsFiltered}">
+                        <option class="dropdown-item" th:value="${bulkProduct.getName()}">
+                            <p th:text="${bulkProduct.getName()}"></p>
+                        </option>
+                    </div>
+                </select>
             </div>
         </div>
         <div class="row">
@@ -181,22 +215,25 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-label"></div>
+            <button type="submit">Add shipment</span></button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <a name="filterForm"></a>
+    <form action="#" th:action="@{/storage/add#filterForm}" method="get">
+        <div class="row">
             <div class="col-label">
-                <label for="typeBulk">Type</label>
+                <label for="filter">Filter types</label>
             </div>
             <div class="col-input">
-                <select name="bulkProductToSet" id="typeBulk">
-                    <div th:each="bulkProduct : ${bulkProducts}">
-                        <option class="dropdown-item" th:value="${bulkProduct.getName()}">
-                            <p th:text="${bulkProduct.getName()}"></p>
-                        </option>
-                    </div>
-                </select>
+                <input type="text" name="filterProducts" id="filter">
             </div>
         </div>
         <div class="row">
             <div class="col-label"></div>
-            <button type="submit">Add shipment</span></button>
+            <button type="submit">Filter</span></button>
         </div>
     </form>
 </div>

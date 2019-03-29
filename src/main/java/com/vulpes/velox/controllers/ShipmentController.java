@@ -38,12 +38,14 @@ public class ShipmentController {
   }
 
   @PostMapping("/shipment/new")
-  public String shipmentNew(@RequestParam(value = "bulkProductToSet") String bulkProductName,
+  public String shipmentNew(@RequestParam(
+      value = "bulkProductToSet", required = false) String bulkProductName,
                             @RequestParam(value = "arrivalToSet") String arrivalDate,
                             @RequestParam(value = "bestBeforeToSet") String bestBeforeDate,
                             @ModelAttribute(value = "shipmentNew") Shipment shipment,
                             OAuth2Authentication authentication,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
     if (userService.isUser(authentication)) {
       if (!shipmentService.getErrorFlashAttributes(
           bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty()) {
@@ -61,8 +63,10 @@ public class ShipmentController {
 
       shipmentService.getNewShipmentFlashAttributes(shipment, redirectAttributes);
       return "redirect:/storage/add#shipment";
+    } else {
+      model.addAttribute("unauthorizedEmail", userService.getUserEmail(authentication));
+      return "unauthorized";
     }
-    throw new UnauthorizedException("You have no power here, puny human being");
   }
 
 }
