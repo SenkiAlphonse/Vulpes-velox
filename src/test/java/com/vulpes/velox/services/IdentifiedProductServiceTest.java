@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
 import org.junit.Test;
@@ -13,14 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
-})
+@SpringBootTest(classes = VeloxApplication.class, webEnvironment = RANDOM_PORT)
 public class IdentifiedProductServiceTest {
 
   @Autowired

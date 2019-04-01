@@ -1,5 +1,6 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
@@ -16,14 +17,10 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
-})
+@SpringBootTest(classes = VeloxApplication.class, webEnvironment = RANDOM_PORT)
 public class ShipmentServiceTest {
 
   @Autowired
