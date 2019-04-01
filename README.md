@@ -1,8 +1,8 @@
 # Vulpes-velox
 
 ### Set these environment variables for VeloxApplication:
-DB_TYPE=mysql
-DB_HOSTNAME=localhost
+>DB_TYPE=mysql
+>DB_HOSTNAME=localhost
 DB_PORT=3306
 DB_NAME=storage
 DB_USERNAME=username
