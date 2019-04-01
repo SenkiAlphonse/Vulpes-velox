@@ -2,9 +2,9 @@
 
 ### Set these environment variables for VeloxApplication:
 >DB_TYPE=mysql
->DB_HOSTNAME=localhost
-DB_PORT=3306
-DB_NAME=storage
+>>DB_HOSTNAME=localhost
+>>DB_PORT=3306
+  >DB_NAME=storage
 DB_USERNAME=username
 DB_PASSWORD=password
 DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
@@ -13,15 +13,15 @@ GOOGLE_CLIENT_ID=583881474030-15c3u6bjad65scfinp29etvp74te5gl5.apps.googleuserco
 GOOGLE_CLIENT_SECRET=bLIhdXZ2INK1cG9ieO58W9ku
 
 ### Technologies, traits of project
-- Oauth2, users table has to contain current google email to have access.
+- Oauth2, have to add google email to users table to have authorize or to make admin.
 - Responsive css for mobile.
-- Validation and alerts for /storage/add
-Empty fields
-Products with same name
-Other than 8 digit product numbers
-0 or less quantities
-Assigning to products that don't exist
-Aren't allowed
+- Validation and alerts for /storage/add and /order
+  - Empty fields
+  - Products with same name
+  - Other than 8 digit product numbers
+  - 0 or less quantities
+  - Assigning to products that don't exist etc
+  - Aren't allowed, handled on backend and frontend as well.
 -
 -
 
