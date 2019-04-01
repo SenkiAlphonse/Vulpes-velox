@@ -17,7 +17,7 @@ INSERT INTO ordered_products
 
 INSERT INTO items
   (product_number, identified_product_id)VALUES
-  (11111111, (SELECT id FROM products WHERE name = 'NameTaken2'));
+  (11111111, (SELECT id FROM products WHERE name = 'NameTaken3'));
 
 INSERT INTO shipments
   (quantity, arrival, best_before, bulk_product_id) VALUES

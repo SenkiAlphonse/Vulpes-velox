@@ -7,12 +7,10 @@ import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -33,7 +31,9 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void update(Product product) {
-    productRepository.save(product);
+    if(existsByName(product.getName())) {
+      productRepository.save(product);
+    }
   }
 
   @Override
