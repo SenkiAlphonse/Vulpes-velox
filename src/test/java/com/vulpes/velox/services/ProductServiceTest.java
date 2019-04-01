@@ -105,7 +105,7 @@ public class ProductServiceTest {
 //  public void getAll() {
 //    List<Product> productsAll = productService.getAll();
 //    List<Product> products2 = Arrays.asList(new BulkProduct(), new IdentifiedProduct());
-////    assertEquals(productsAll, products);
+//    assertEquals(productsAll, products);
 //    assertNotSame(productsAll, products);
 //    assertNotEquals(productsAll, products2);
 //  }
@@ -117,5 +117,3 @@ public class ProductServiceTest {
   }
 
 }
-//expected: java.util.ArrayList<[BulkProduct{id=1, name='NameTaken', quantity=3}, BulkProduct{id=2, name='NameTaken2', quantity=3}, Product{id=3, name='NameTaken3', quantity=4}, Product{id=4, name='NameTaken4', quantity=4}]>
-// but was: java.util.ArrayList<[BulkProduct{id=1, name='NameTaken', quantity=3}, BulkProduct{id=2, name='NameTaken2', quantity=3}, Product{id=3, name='NameTaken3', quantity=4}, Product{id=4, name='NameTaken4', quantity=4}]>
