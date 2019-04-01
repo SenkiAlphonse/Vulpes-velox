@@ -14,14 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
 })
 public class ProductServiceTest {
 
@@ -29,26 +29,14 @@ public class ProductServiceTest {
   private ProductService productService;
 
   @Test
-  @Transactional
   public void save_Test() {
-    Product addNewProduct = new BulkProduct();
-    addNewProduct.setName("updatedProduct22");
-    productService.save(addNewProduct);
-
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 3);
+    assertEquals((long) productService.getByName("testProduct1").getId(), (long) 1);
   }
 
   @Test
   public void save_Test_Fail() {
-    Product addNewProduct = new BulkProduct();
-    addNewProduct.setName("testProduct1");
-    productService.save(addNewProduct);
+    assertThat(productService.getByName("testProduct1"), is(notNullValue()));
 
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 2);
   }
 
   @Test

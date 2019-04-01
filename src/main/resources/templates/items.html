@@ -18,11 +18,13 @@
         </thead>
         <div th:each="item : ${items}">
             <tr>
-                <td data-label="Product Name">
+                <div th:if="${item.getIdentifiedProduct() != null}">
+                    <td data-label="Product Name">
                         <p th:text="${item.getIdentifiedProduct().getName()}"></p>
-                </td>
+                    </td>
+                </div>
                 <td data-label="Product Number">
-                        <p th:text="${item.getProductNumber()}"></p>
+                    <p th:text="${item.getProductNumber()}"></p>
                 </td>
             </tr>
         </div>
