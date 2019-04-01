@@ -1,7 +1,6 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
-import com.vulpes.velox.models.Order;
 import com.vulpes.velox.models.OrderedProduct;
 import com.vulpes.velox.services.orderedproductservice.OrderedProductService;
 import com.vulpes.velox.services.orderservice.OrderService;
@@ -28,45 +27,37 @@ public class OrderedProductServiceTest {
   @Autowired
   private OrderService orderService;
 
-  private OrderedProduct orderedProduct;
   private int countAllStart;
-  private Order order;
 
   @Before
   public void setup() {
-    orderedProduct = new OrderedProduct();
-    orderedProduct.setProductName("ProductName");
-    order = new Order();
-    orderService.save(order);
-    orderedProduct.setOrder(order);
     countAllStart = orderedProductService.getAll().size();
   }
 
   @Test
   public void save() {
     assertThat(orderedProductService.getAll().size(), is(countAllStart));
-    orderedProductService.save(orderedProduct);
+    orderedProductService.save(new OrderedProduct());
     assertThat(orderedProductService.getAll().size(), is(countAllStart + 1));
   }
 
   @Test
   public void getAllByOrder() {
-    orderedProductService.save(orderedProduct);
-    List<OrderedProduct> allByOrder = orderedProductService.getAllByOrder(order);
-    assertThat(allByOrder.size(), is(1));
-    assertThat(allByOrder.get(0).getProductName(), is("ProductName"));
+    List<OrderedProduct> allByOrder = orderedProductService.getAllByOrder(orderService.getByName("NameTaken"));
+    assertThat(allByOrder.size(), is(2));
+    assertThat(allByOrder.get(0).getProductName(), is("NameTaken"));
+    assertThat(allByOrder.get(1).getProductName(), is("NameTaken2"));
   }
 
   @Test
   public void getAllByProductName() {
-    orderedProductService.save(orderedProduct);
-    List<OrderedProduct> allByProductName = orderedProductService.getAllByProductName("ProductName");
+    List<OrderedProduct> allByProductName = orderedProductService.getAllByProductName("NameTaken");
     assertThat(allByProductName.size(), is(1));
-    assertThat(allByProductName.get(0).getProductName(), is("ProductName"));
+    assertThat(allByProductName.get(0).getProductName(), is("NameTaken"));
 
-    List<OrderedProduct> allByProductNameH2 = orderedProductService.getAllByProductName("NameTaken");
+    List<OrderedProduct> allByProductNameH2 = orderedProductService.getAllByProductName("NameTaken2");
     assertThat(allByProductName.size(), is(1));
-    assertThat(allByProductNameH2.get(0).getProductName(), is("NameTaken"));
+    assertThat(allByProductNameH2.get(0).getProductName(), is("NameTaken2"));
   }
 
 }
