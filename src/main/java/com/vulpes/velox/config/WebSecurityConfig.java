@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import java.time.LocalDateTime;
 import java.util.Map;
 
-
 @Configuration
 @EnableOAuth2Sso
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -41,37 +40,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return map -> {
       String principalEmail = (String) map.get("email");
       userByEmail = userRepository.findByEmail(principalEmail);
+
       if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
-        authorizeUserToAdmin(userByEmail, principalEmail);
+        authorizeUserByEmailToAdmin(principalEmail);
       }
       if (userByEmail == null) {
         LOGGER.info("No user found, access denied");
         return null;
       }
-      setUserFields(userByEmail, map, userRepository);
+      updateUserByEmail(map, userRepository);
       return userByEmail;
     };
   }
 
-  private void authorizeUserToAdmin(User user, String principalEmail) {
-    if (user == null){
-      user = new User();
-      user.setEmail(principalEmail);
+  private void authorizeUserByEmailToAdmin(String principalEmail) {
+    if (userByEmail == null) {
+      userByEmail = new User();
+      userByEmail.setEmail(principalEmail);
     }
-    user.setIsAdmin(true);
+    userByEmail.setIsAdmin(true);
   }
 
-  private void setUserFields(User user, Map<String, Object> map, UserRepository userRepository) {
-    if (user.getCreated() == null) {
-      user.setCreated(LocalDateTime.now());
-      user.setLoginType("google");
+  private void updateUserByEmail(Map<String, Object> map, UserRepository userRepository) {
+    if (userByEmail.getCreated() == null) {
+      userByEmail.setCreated(LocalDateTime.now());
+      userByEmail.setLoginType("google");
     }
-    if (user.getIsAdmin() == null){
-      user.setIsAdmin(false);
+    if (userByEmail.getIsAdmin() == null) {
+      userByEmail.setIsAdmin(false);
     }
-    user.setName((String) map.get("name"));
-    user.setImageUrl((String) map.get("picture"));
-    user.setLastLogin(LocalDateTime.now());
+    userByEmail.setName((String) map.get("name"));
+    userByEmail.setImageUrl((String) map.get("picture"));
+    userByEmail.setLastLogin(LocalDateTime.now());
     userRepository.save(userByEmail);
   }
 
