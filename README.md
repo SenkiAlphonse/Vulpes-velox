@@ -5,13 +5,15 @@
 > - DB_TYPE=mysql
 > - DB_HOSTNAME=localhost
 > - DB_PORT=3306
-> - DB_NAME=storage
-> - DB_USERNAME=username
-> - DB_PASSWORD=password
+> - DB_NAME=databaseName
+> - DB_USERNAME=mysqlUserName
+> - DB_PASSWORD=mysqlPassword
 > - DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
 > - HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5Dialect
 > - GOOGLE_CLIENT_ID=583881474030-15c3u6bjad65scfinp29etvp74te5gl5.apps.googleusercontent.com
 > - GOOGLE_CLIENT_SECRET=bLIhdXZ2INK1cG9ieO58W9ku
+> - ADMIN_PRESET=yourGoogleEmail@gmail.com //to have access to all endpoints
+
 
 Environment variables in _.env_ file
 
