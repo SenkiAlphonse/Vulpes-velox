@@ -1,7 +1,7 @@
 # Vulpes-velox java SpringBoot storage management application
 2 days project
 
-### Set these environment variables for VeloxApplication:
+## Set these environment variables for VeloxApplication:
 > - DB_TYPE=mysql
 > - DB_HOSTNAME=localhost
 > - DB_PORT=3306
@@ -15,7 +15,7 @@
 
 Environment variables in _.env_ file
 
-### Technologies and traits of project
+## Technologies and traits of project
 - Java SpringBoot
 - Oauth2, have to add google email to users table to authorize or to make admin. Excluded /order endpoints.
 - Responsive css for mobile.
@@ -38,9 +38,7 @@ Environment variables in _.env_ file
 - Custom exceptions
 - @Valid annotation implemented for ApiController @RequestBody dto
 
-
-
-#### Docker
+### Docker
 ./start-docker-compose.sh  
 to start dockerized app with db.  
 Since docker-compose is not controlling startup order, it was handled manually throughout bash script.
@@ -49,3 +47,39 @@ You can run app with:
 ```sh
 $ docker-compose up -d
 ```
+
+## Input:
+
+### Balázs Kelemen  (Java Backend)
+- Validation
+- Css, Html
+- Controllers, Services, Repositories
+- General Mass Java Implementation
+- Package Structure
+- Flyway
+- Controller testing
+
+### Krisztina Nagy (Java Backend, Heroku)
+- Google OAuth2
+- @EnableOauth2Sso
+- PrincipalExtractor
+- Endpoint security
+- @Audited (Hybernate Envers)
+- Entity mapping design
+- Pagination (users.html)
+- Flyway
+- Heroku with PostgreSql
+- Css magic
+
+### Gábor Molnár
+- Integration testing for all services and database connection
+- H2 database for testing
+
+### Kopan Dmytro (DevOps)
+- Containerization (Docker compose and
+startup order)
+- Continuous Integration (Jenkins multipipe 
+with github plugin)
+- Code coverage      (JaCoCo plugin)
+- Continuous Delivery (Jenkins with AWS CLI)
+- AWS elastic beanstalk delivery
