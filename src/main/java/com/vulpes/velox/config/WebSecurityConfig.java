@@ -39,9 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       return map -> {
         String principalEmail = (String) map.get("email");
         User user = userRepository.findByEmail(principalEmail);
-        if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
-          user.setIsAdmin(true);
-        }
         if (user == null) {
           LOGGER.info("No user found, access denied");
           return null;
@@ -53,7 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         if (user.getIsAdmin()==null){
          user.setIsAdmin(false);
         }
-
+        if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
+          user.setIsAdmin(true);
+        }
         user.setName((String) map.get("name"));
         user.setImageUrl((String) map.get("picture"));
         user.setLastLogin(LocalDateTime.now());
