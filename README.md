@@ -12,7 +12,8 @@
 > - HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5Dialect
 > - GOOGLE_CLIENT_ID=583881474030-15c3u6bjad65scfinp29etvp74te5gl5.apps.googleusercontent.com
 > - GOOGLE_CLIENT_SECRET=bLIhdXZ2INK1cG9ieO58W9ku
-> - ADMIN_PRESET=yourGoogleEmail@gmail.com //to have access to all endpoints
+>>To have access to all endpoints with your account
+>> - ADMIN_PRESET=yourGoogleEmail@gmail.com
 
 
 Environment variables in _.env_ file
