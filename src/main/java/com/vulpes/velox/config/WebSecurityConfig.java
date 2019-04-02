@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 
 @Configuration
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSecurityConfiguration.class);
+  private User userByEmail;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -34,31 +36,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticated();
   }
 
-    @Bean
-    public PrincipalExtractor principalExtractor(UserRepository userRepository) {
-      return map -> {
-        String principalEmail = (String) map.get("email");
-        User user = userRepository.findByEmail(principalEmail);
-        if (user == null) {
-          LOGGER.info("No user found, access denied");
-          return null;
-        }
-        if (user.getCreated() == null) {
-          user.setCreated(LocalDateTime.now());
-          user.setLoginType("google");
-        }
-        if (user.getIsAdmin()==null){
-         user.setIsAdmin(false);
-        }
-        if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
-          user.setIsAdmin(true);
-        }
-        user.setName((String) map.get("name"));
-        user.setImageUrl((String) map.get("picture"));
-        user.setLastLogin(LocalDateTime.now());
+  @Bean
+  public PrincipalExtractor principalExtractor(UserRepository userRepository) {
+    return map -> {
+      String principalEmail = (String) map.get("email");
+      userByEmail = userRepository.findByEmail(principalEmail);
+      if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
+        authorizeUserToAdmin(userByEmail, principalEmail);
+      }
+      if (userByEmail == null) {
+        LOGGER.info("No user found, access denied");
+        return null;
+      }
+      setUserFields(userByEmail, map, userRepository);
+      return userByEmail;
+    };
+  }
 
-        userRepository.save(user);
-        return user;
-      };
+  private void authorizeUserToAdmin(User user, String principalEmail) {
+    if (user == null){
+      user = new User();
+      user.setEmail(principalEmail);
     }
+    user.setIsAdmin(true);
+  }
+
+  private void setUserFields(User user, Map<String, Object> map, UserRepository userRepository) {
+    if (user.getCreated() == null) {
+      user.setCreated(LocalDateTime.now());
+      user.setLoginType("google");
+    }
+    if (user.getIsAdmin() == null){
+      user.setIsAdmin(false);
+    }
+    user.setName((String) map.get("name"));
+    user.setImageUrl((String) map.get("picture"));
+    user.setLastLogin(LocalDateTime.now());
+    userRepository.save(userByEmail);
+  }
+
 }
