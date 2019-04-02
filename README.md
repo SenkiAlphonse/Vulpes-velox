@@ -1,4 +1,4 @@
-# Vulpes-velox java SpringBoot storage management application
+# Vulpes-Velox Java SpringBoot Storage Management Application
 2 days project
 
 ## Set these environment variables for VeloxApplication:
@@ -48,28 +48,29 @@ You can run app with:
 $ docker-compose up -d
 ```
 
-## Input:
+## Input
 
 ### Balázs Kelemen  (Java Backend)
 - Validation
 - Css, Html
 - Controllers, Services, Repositories
 - General Mass Java Implementation
+- Exception Handling, @Valid
 - Package Structure
 - Flyway
-- Controller testing
+- Controller Tests
 
 ### Krisztina Nagy (Java Backend, Heroku)
 - Google OAuth2
 - @EnableOauth2Sso
 - PrincipalExtractor
-- Endpoint security
+- Endpoint Security
 - @Audited (Hybernate Envers)
-- Entity mapping design
+- Entity Mapping Design
 - Pagination (users.html)
 - Flyway
 - Heroku with PostgreSql
-- Css magic
+- Css Magic
 
 ### Gábor Molnár
 - Integration testing for all services and database connection
