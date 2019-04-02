@@ -10,6 +10,8 @@ import java.util.Map;
 public interface UserService {
   User findByEmail(String email);
 
+  void save(User user);
+
   User findById(Long id);
 
   List<User> getAll(int pageId);

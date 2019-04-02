@@ -1,9 +1,10 @@
 package com.vulpes.velox.config;
 
 import com.vulpes.velox.models.User;
-import com.vulpes.velox.repositories.UserRepository;
+import com.vulpes.velox.services.userservice.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSecurityConfiguration.class);
   private User userByEmail;
+  private UserService userService;
+
+  @Autowired
+  public WebSecurityConfig(UserService userService) {
+    this.userService = userService;
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -36,10 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public PrincipalExtractor principalExtractor(UserRepository userRepository) {
+  public PrincipalExtractor principalExtractor() {
     return map -> {
       String principalEmail = (String) map.get("email");
-      userByEmail = userRepository.findByEmail(principalEmail);
+      userByEmail = userService.findByEmail(principalEmail);
 
       if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
         authorizeUserByEmailToAdmin(principalEmail);
@@ -48,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         LOGGER.info("No user found, access denied");
         return null;
       }
-      updateUserByEmail(map, userRepository);
+      updateUserByEmail(map);
       return userByEmail;
     };
   }
@@ -61,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     userByEmail.setIsAdmin(true);
   }
 
-  private void updateUserByEmail(Map<String, Object> map, UserRepository userRepository) {
+  private void updateUserByEmail(Map<String, Object> map) {
     if (userByEmail.getCreated() == null) {
       userByEmail.setCreated(LocalDateTime.now());
       userByEmail.setLoginType("google");
@@ -72,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     userByEmail.setName((String) map.get("name"));
     userByEmail.setImageUrl((String) map.get("picture"));
     userByEmail.setLastLogin(LocalDateTime.now());
-    userRepository.save(userByEmail);
+    userService.save(userByEmail);
   }
 
 }
