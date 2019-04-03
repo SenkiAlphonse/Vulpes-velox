@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class ItemController {
 
@@ -55,7 +57,10 @@ public class ItemController {
       item.setIdentifiedProduct(identifiedProduct);
       itemService.save(item);
 
-      identifiedProduct.setQuantity((long) itemService.getAllByIdentifiedProduct(identifiedProduct).size());
+      List<Item> allItemsOfType = itemService.getAllByIdentifiedProduct(identifiedProduct);
+
+      identifiedProduct.setQuantity((long) allItemsOfType.size());
+      identifiedProduct.setPrice((long) identifiedProduct.getPrice() + item.getPrice());
       productService.update(identifiedProduct);
       itemService.getNewItemFlashAttributes(item, redirectAttributes);
       return "redirect:/storage/add#item";

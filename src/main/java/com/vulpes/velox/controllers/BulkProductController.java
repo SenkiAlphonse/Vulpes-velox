@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -29,6 +30,7 @@ public class BulkProductController {
 
   @PostMapping("/bulkProduct/new")
   public String bulkProductNew(
+      @RequestParam(value = "unitToSet") String unit,
       @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes,
@@ -39,6 +41,8 @@ public class BulkProductController {
         return "redirect:/storage/add";
       }
       bulkProduct.setQuantity((long) 0);
+      bulkProduct.setPrice(0L);
+      bulkProduct.setUnit(unit);
       productService.save(bulkProduct);
       bulkProductService.getNewBulkProductFlashAttributes(bulkProduct, redirectAttributes);
       return "redirect:/storage/add";

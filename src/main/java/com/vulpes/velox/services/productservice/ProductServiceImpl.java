@@ -81,6 +81,7 @@ public class ProductServiceImpl implements ProductService{
   public void updateBulkProductWithShipment(String bulkProductName, Shipment shipment) {
     BulkProduct bulkProduct = (BulkProduct) getByName(bulkProductName);
     bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
+    bulkProduct.setPrice(bulkProduct.getPrice() + shipment.getQuantity() * shipment.getPrice());
     update(bulkProduct);
   }
 
