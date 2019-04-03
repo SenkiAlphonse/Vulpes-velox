@@ -14,7 +14,7 @@ public class OrderedProduct {
   private String productName;
   private Long quantity;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "order_id")
   private Order order;
 

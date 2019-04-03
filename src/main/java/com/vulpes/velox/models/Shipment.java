@@ -27,6 +27,13 @@ public class Shipment {
   @JoinColumn(name = "bulk_product_id")
   private BulkProduct bulkProduct;
 
+  public Shipment() {
+  }
+
+  public Shipment(Long quantity) {
+    this.quantity = quantity;
+  }
+
   public Long getId() {
     return id;
   }

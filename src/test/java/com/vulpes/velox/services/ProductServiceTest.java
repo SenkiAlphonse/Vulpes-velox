@@ -1,8 +1,12 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.VeloxApplication;
+import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.services.productservice.ProductService;
+import com.vulpes.velox.services.shipmentservice.ShipmentService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,97 +15,105 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = VeloxApplication.class, webEnvironment = RANDOM_PORT)
 @SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
-})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")})
 public class ProductServiceTest {
 
   @Autowired
   private ProductService productService;
 
-  @Test
-  @Transactional
-  public void save_Test() {
-    Product addNewProduct = new BulkProduct();
-    addNewProduct.setName("updatedProduct22");
-    productService.save(addNewProduct);
+  @Autowired
+  private ShipmentService shipmentService;
 
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 3);
+  private int countAllStart;
+  private BulkProduct bulkProduct;
+  private List<Product> products;
+
+  @Before
+  public void setup() {
+    countAllStart = productService.getAll().size();
+    bulkProduct = (BulkProduct) productService.getByName("NameTaken");
+    products = new ArrayList<>();
+    products.add(bulkProduct);
+    products.add(productService.getByName("NameTaken2"));
+    products.add(productService.getByName("NameTaken3"));
+    products.add(productService.getByName("NameTaken4"));
   }
 
   @Test
-  public void save_Test_Fail() {
-    Product addNewProduct = new BulkProduct();
-    addNewProduct.setName("testProduct1");
-    productService.save(addNewProduct);
-
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 2);
+  public void save() {
+    assertThat(productService.getAll().size(), is(countAllStart));
+    productService.save(bulkProduct);
+    assertThat(productService.getAll().size(), is(countAllStart));
+    productService.save(new BulkProduct());
+    assertThat(productService.getAll().size(), is(countAllStart + 1));
   }
 
   @Test
-  @Transactional
-  public void update_Test() {
-    Product productUpdate = new BulkProduct();
-    productUpdate.setId(1L);
-    productUpdate.setName("updatedProduct");
-    productService.update(productUpdate);
-
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 2);
+  public void update() {
+    assertThat(productService.getAll().size(), is(countAllStart));
+    productService.update(new BulkProduct());
+    assertThat(productService.getAll().size(), is(countAllStart));
+    bulkProduct.setQuantity((long) 10);
+    productService.update(bulkProduct);
+    assertThat(productService.getAll().size(), is(countAllStart));
+    assertThat(bulkProduct.getQuantity(), is((long) 10));
   }
 
   @Test
-  @Transactional
-  public void deleteAll_Test() {
+  public void deleteAll() {
+    assertThat(productService.getAll().size(), is(countAllStart));
     productService.deleteAll();
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 0);
+    assertThat(productService.getAll().size(), is(0));
   }
 
   @Test
-  public void existByName_Test() {
-    boolean productExist = productService.existsByName("testProduct1");
-    assertTrue(productExist);
+  public void existsByName() {
+    assertTrue(productService.existsByName("NameTaken"));
+    assertFalse(productService.existsByName("NameNew"));
   }
 
   @Test
-  public void existByName_Test_False() {
-    boolean productExist = productService.existsByName("testProduct11");
-    assertFalse(productExist);
+  public void getByName() {
+    assertNotNull(bulkProduct);
+    assertThat(bulkProduct.getName(), is("NameTaken"));
+    assertThat(bulkProduct.getQuantity(), is((long) 3));
   }
 
   @Test
-  public void getByName_Test() {
-    Product testProduct = productService.getByName("testProduct1");
-    long testProductId = testProduct.getId();
-    assertEquals(testProductId, 1L);
+  public void getDtosFromEntities() {
+    assertThat(productService.getDtosFromEntities(Collections.emptyList()), is(Collections.emptyList()));
+    assertThat(productService.getDtosFromEntities(null), is(Collections.emptyList()));
+    assertThat(productService.getDtosFromEntities(products).get(0).name, is(products.get(0).getName()));
+    assertThat(productService.getDtosFromEntities(products).get(1).name, is(products.get(1).getName()));
+    assertThat(productService.getDtosFromEntities(products).get(0).quantity, is(products.get(0).getQuantity()));
+    assertThat(productService.getDtosFromEntities(products).get(1).quantity, is(products.get(1).getQuantity()));
   }
 
-  @Test
-  public void getByName_Test_False() {
-    Product testProduct = productService.getByName("testProduct11");
-    assertNull(testProduct);
-  }
+//  @Test
+//  public void getAll() {
+//    List<Product> productsAll = productService.getAll();
+//    List<Product> products2 = Arrays.asList(new BulkProduct(), new IdentifiedProduct());
+//    assertEquals(productsAll, products);
+//    assertNotSame(productsAll, products);
+//    assertNotEquals(productsAll, products2);
+//  }
 
   @Test
-  public void getAll_Test() {
-    List<Product> testList = productService.getAll();
-    int testListSize = testList.size();
-    assertEquals(testListSize, 2);
+  public void updateBulkProductWithShipment() {
+    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10));
+    assertThat(productService.getByName("NameTaken").getQuantity(), is((long) 13));
   }
+
 }

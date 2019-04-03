@@ -2,7 +2,6 @@ package com.vulpes.velox.services.bulkproductservice;
 
 import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.products.BulkProduct;
-import com.vulpes.velox.models.products.Product;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
