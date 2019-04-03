@@ -1,7 +1,7 @@
 INSERT INTO products
-  (name, quantity, price, value, dtype) VALUES
-  ('Orange', 50, 100, 8000,  'BulkProduct'),
-  ('Laptop DX-50', 3, 200000, 600000,  'IdentifiedProduct');
+  (name, quantity, price, value, unit, dtype) VALUES
+  ('Orange', 80, 100, 8000, 'Piece', 'BulkProduct'),
+  ('Laptop DX-50', 3, 200000, 600000, 'Piece', 'IdentifiedProduct');
 
 INSERT INTO items
   (product_number, price, identified_product_id) VALUES
