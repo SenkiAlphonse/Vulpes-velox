@@ -14,6 +14,7 @@
         <tr>
             <th scope="col"><h3>Bulk Product Name</h3></th>
             <th scope="col"><h3>Quantity</h3></th>
+            <th scope="col"><h3>Price</h3></th>
             <th scope="col"><h3>Arrival</h3></th>
             <th scope="col"><h3>Best before</h3></th>
         </tr>
@@ -25,6 +26,9 @@
                 </td>
                 <td data-label="Quantity">
                     <p th:text="${shipment.getQuantity()}"></p>
+                </td>
+                <td data-label="Price">
+                    <p th:text="${shipment.getPrice()}"></p>
                 </td>
                 <td data-label="Arrival">
                     <p th:text="${shipment.getArrival()}"></p>

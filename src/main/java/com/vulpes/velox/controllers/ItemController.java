@@ -58,11 +58,10 @@ public class ItemController {
       item.setIdentifiedProduct(identifiedProduct);
       itemService.save(item);
 
-      List<Item> allItemsOfType = itemService.getAllByIdentifiedProduct(identifiedProduct);
-
-      identifiedProduct.setQuantity((long) allItemsOfType.size());
-      identifiedProduct.setValue(BigInteger.valueOf(identifiedProduct.getPrice() + item.getPrice()));
-      identifiedProduct.setPrice(identifiedProduct.getValue().intValue() / (long) allItemsOfType.size());
+      identifiedProduct.setQuantity(identifiedProduct.getQuantity() + 1);
+      identifiedProduct.setValue(BigInteger.valueOf(
+          identifiedProduct.getValue().intValue() + item.getPrice()));
+      identifiedProduct.setPrice(identifiedProduct.getValue().intValue() / identifiedProduct.getQuantity());
       productService.update(identifiedProduct);
       itemService.getNewItemFlashAttributes(item, redirectAttributes);
       return "redirect:/storage/add#item";

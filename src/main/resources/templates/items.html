@@ -14,6 +14,7 @@
         <tr>
             <th scope="col"><h3>Item Name</h3></th>
             <th scope="col"><h3>Product number</h3></th>
+            <th scope="col"><h3>Price</h3></th>
         </tr>
         </thead>
         <div th:each="item : ${items}">
@@ -23,6 +24,9 @@
                 </td>
                 <td data-label="Product Number">
                         <p th:text="${item.getProductNumber()}"></p>
+                </td>
+                <td data-label="Price">
+                        <p th:text="${item.getPrice()}"></p>
                 </td>
             </tr>
         </div>
