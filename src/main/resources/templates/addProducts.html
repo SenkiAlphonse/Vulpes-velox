@@ -14,7 +14,6 @@
         <h2>Add product</h2>
         <form action="#" th:action="@{/bulkProduct/new}" th:object="${bulkProductNew}" method="post"
               id="bulkProductNew">
-            <!----------------------Added bulk product--------------------------------------->
             <div th:switch="${savedBulkProduct}">
                 <div th:case="${savedBulkProduct == true}">
                     <div class="alert-done">
@@ -25,7 +24,6 @@
                     </div>
                 </div>
             </div>
-            <!----------------------Bulk product error--------------------------------------->
             <div th:if="${bulkProductError}">
                 <div class="alert-error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -42,6 +40,22 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-label">
+                    <label for="unitBulkProduct">Unit</label>
+                </div>
+                <div class="col-input">
+                    <select name="unitToSet" id="unitBulkProduct">
+                        <option th:value="Piece">
+                            <p th:text="Piece"></p>
+                        </option>
+                        <option th:value="Kg">
+                            <p th:text="Kg"></p>
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-label"></div>
                 <button type="submit">New bulk product</button>
             </div>
@@ -50,7 +64,6 @@
         <!---------------------New identified product-------------------------------->
         <form action="#" th:action="@{/identifiedProduct/new}" th:object="${identifiedProductNew}" method="post"
               id="identifiedProductNew">
-            <!----------------------Added identified product--------------------------------------->
             <div th:switch="${savedIdentifiedProduct}">
                 <div th:case="${savedIdentifiedProduct == true}">
                     <div class="alert-done">
@@ -61,7 +74,6 @@
                     </div>
                 </div>
             </div>
-            <!----------------------Identified product error--------------------------------------->
             <div th:if="${identifiedProductError}">
                 <div class="alert-error">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -78,6 +90,22 @@
                            th:field="*{name}">
                 </div>
             </div>
+            <div class="row">
+                <div class="col-label">
+                    <label for="unitIdentifiedProduct">Unit</label>
+                </div>
+                <div class="col-input">
+                    <select name="unitToSet" id="unitIdentifiedProduct">
+                        <option th:value="Piece">
+                            <p th:text="Piece"></p>
+                        </option>
+                        <option th:value="Kg">
+                            <p th:text="Kg"></p>
+                        </option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-label"></div>
                 <button type="submit">New identified product</button>
@@ -98,7 +126,6 @@
     <!-----------------------Add item------------------------------------->
     <h2>Add item</h2>
     <form action="#" th:action="@{/item/new}" th:object="${itemNew}" method="post">
-        <!----------------------Added item--------------------------------------->
         <div th:switch="${savedItem}">
             <div th:case="${savedItem == true}">
                 <div class="alert-done">
@@ -111,7 +138,6 @@
                 </div>
             </div>
         </div>
-        <!----------------------Item error--------------------------------------->
         <div th:if="${itemError}">
             <div class="alert-error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -141,6 +167,14 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-label">
+                <label for="priceItem">Price</label>
+            </div>
+            <div class="col-input">
+                <input type="number" name="price" id="priceItem" th:field="*{price}">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-label"></div>
             <button type="submit">Add item</button>
         </div>
@@ -149,7 +183,6 @@
     <h2>Add shipment</h2>
     <form action="#" th:action="@{/shipment/new}" th:object="${shipmentNew}" method="post">
         <a name="shipment"></a>
-        <!----------------------Added shipment--------------------------------------->
         <div th:switch="${savedShipment}">
             <div th:case="${savedShipment == true}">
                 <div class="alert-done">
@@ -165,7 +198,6 @@
                 </div>
             </div>
         </div>
-        <!----------------------Shipment error--------------------------------------->
         <div th:if="${shipmentError}">
             <div class="alert-error">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -192,6 +224,14 @@
             </div>
             <div class="col-input">
                 <input type="number" name="quantity" id="quantity" th:field="*{quantity}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-label">
+                <label for="priceShipment">Price</label>
+            </div>
+            <div class="col-input">
+                <input type="number" name="price" id="priceShipment" th:field="*{price}">
             </div>
         </div>
         <div class="row">
