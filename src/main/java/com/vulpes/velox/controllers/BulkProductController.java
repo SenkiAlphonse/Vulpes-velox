@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
+
+import static sun.security.krb5.Confounder.intValue;
+
 @Controller
 public class BulkProductController {
 
@@ -40,8 +44,9 @@ public class BulkProductController {
           bulkProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";
       }
-      bulkProduct.setQuantity((long) 0);
+      bulkProduct.setQuantity(0L);
       bulkProduct.setPrice(0L);
+      bulkProduct.setValue(BigInteger.valueOf(0));
       bulkProduct.setUnit(unit);
       productService.save(bulkProduct);
       bulkProductService.getNewBulkProductFlashAttributes(bulkProduct, redirectAttributes);

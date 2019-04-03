@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
+
 @Controller
 public class IdentifiedProductController {
 
@@ -43,6 +45,7 @@ public class IdentifiedProductController {
       }
       identifiedProduct.setQuantity((long) 0);
       identifiedProduct.setPrice((long) 0);
+      identifiedProduct.setValue(BigInteger.valueOf(0));
       identifiedProduct.setUnit(unit);
       productService.save(identifiedProduct);
       identifiedProductService.getNewIdentifiedProductFlashAttributes(identifiedProduct, redirectAttributes);

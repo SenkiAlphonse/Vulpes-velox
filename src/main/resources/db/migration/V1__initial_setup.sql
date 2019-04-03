@@ -3,6 +3,7 @@ CREATE TABLE products (
   name     VARCHAR(255),
   quantity BIGINT,
   price    BIGINT,
+  value    BIGINT,
   unit     VARCHAR(255),
   dtype    VARCHAR(255)
 );
