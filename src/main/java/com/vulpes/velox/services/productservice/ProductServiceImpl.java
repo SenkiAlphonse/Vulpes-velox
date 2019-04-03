@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +82,8 @@ public class ProductServiceImpl implements ProductService{
   public void updateBulkProductWithShipment(String bulkProductName, Shipment shipment) {
     BulkProduct bulkProduct = (BulkProduct) getByName(bulkProductName);
     bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
-    bulkProduct.setPrice(bulkProduct.getPrice() + shipment.getQuantity() * shipment.getPrice());
+    bulkProduct.setValue(BigInteger.valueOf(bulkProduct.getPrice() + shipment.getQuantity() * shipment.getPrice()));
+    bulkProduct.setPrice((long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
     update(bulkProduct);
   }
 
