@@ -21,6 +21,7 @@ public class Shipment {
   private LocalDate arrival;
   @Column(name = "best_before")
   private LocalDate bestBefore;
+  private Long price;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "bulk_product_id")
@@ -64,5 +65,13 @@ public class Shipment {
 
   public void setBulkProduct(BulkProduct bulkProduct) {
     this.bulkProduct = bulkProduct;
+  }
+
+  public Long getPrice() {
+    return price;
+  }
+
+  public void setPrice(Long price) {
+    this.price = price;
   }
 }

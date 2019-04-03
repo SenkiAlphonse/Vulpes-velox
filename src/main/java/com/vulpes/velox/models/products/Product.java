@@ -19,14 +19,8 @@ public abstract class Product {
   @NotNull
   private String name;
   private Long quantity;
-
-  public Long getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(Long quantity) {
-    this.quantity = quantity;
-  }
+  private Long price;
+  private String unit;
 
   public Long getId() {
     return id;
@@ -52,4 +46,29 @@ public abstract class Product {
         ", quantity=" + quantity +
         '}';
   }
+
+  public Long getPrice() {
+    return price;
+  }
+
+  public void setPrice(Long price) {
+    this.price = price;
+  }
+
+  public String getUnit() {
+    return unit;
+  }
+
+  public void setUnit(String unit) {
+    this.unit = unit;
+  }
+
+  public Long getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Long quantity) {
+    this.quantity = quantity;
+  }
+
 }
