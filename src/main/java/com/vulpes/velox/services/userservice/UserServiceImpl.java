@@ -17,21 +17,26 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
 
-  private UserRepository userRepo;
+  private UserRepository userRepository;
 
   @Autowired
   public UserServiceImpl(UserRepository userRepository) {
-    this.userRepo = userRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
   public User findByEmail(String email) {
-    return userRepo.findByEmail(email);
+    return userRepository.findByEmail(email);
+  }
+
+  @Override
+  public void save(User user) {
+    userRepository.save(user);
   }
 
   @Override
   public boolean userExistsByEmail(String email) {
-    return userRepo.findByEmail(email) != null;
+    return userRepository.findByEmail(email) != null;
   }
 
   @Override
@@ -45,7 +50,7 @@ public class UserServiceImpl implements UserService {
   public Boolean isAdmin(OAuth2Authentication authentication) {
     LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
     String userEmail = properties.get("email").toString();
-    User user = userRepo.findByEmail(userEmail);
+    User user = userRepository.findByEmail(userEmail);
     if (user != null) {
       return user.getIsAdmin();
     }
@@ -60,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> getAll(int pageId) {
-    return userRepo.findAllByOrderByEmailAsc(PageRequest.of(pageId, 10));
+    return userRepository.findAllByOrderByEmailAsc(PageRequest.of(pageId, 10));
   }
 
   @Override
@@ -68,32 +73,32 @@ public class UserServiceImpl implements UserService {
     if (user == null) {
       throw new BadRequestException("Error creating user");
     }
-    userRepo.save(user);
+    userRepository.save(user);
 
   }
 
   @Override
   public void deleteUserById(Long id) {
     if (id != null) {
-      userRepo.deleteUserById(id);
+      userRepository.deleteUserById(id);
     }
   }
 
   @Override
   public User findById(Long id) {
-    return userRepo.getById(id);
+    return userRepository.getById(id);
   }
 
   @Override
   public Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user) {
-    if (user.getEmail() == null || "".equals(user.getEmail())) {
+    if (user == null) {
+      return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
+    }
+    if (user.getEmail() == null || user.getEmail().isEmpty()) {
       return getErrorMessageFlashAttributes("Enter an e-mail address.", redirectAttributes);
     }
     if (userExistsByEmail(user.getEmail())) {
       return getErrorMessageFlashAttributes("This e-mail address already exists in the database.", redirectAttributes);
-    }
-    if (user == null) {
-      return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
     }
     return redirectAttributes.getFlashAttributes();
   }
