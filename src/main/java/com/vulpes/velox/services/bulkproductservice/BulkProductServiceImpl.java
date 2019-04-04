@@ -20,7 +20,9 @@ public class BulkProductServiceImpl implements BulkProductService {
   private MethodService methodService;
 
   @Autowired
-  public BulkProductServiceImpl(BulkProductRepository bulkProductRepository, ProductService productService, MethodService methodService) {
+  public BulkProductServiceImpl(BulkProductRepository bulkProductRepository,
+                                ProductService productService,
+                                MethodService methodService) {
     this.bulkProductRepository = bulkProductRepository;
     this.productService = productService;
     this.methodService = methodService;

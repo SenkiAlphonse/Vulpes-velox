@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService {
   private MethodService methodService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, MethodService methodService) {
+  public UserServiceImpl(UserRepository userRepository,
+                         MethodService methodService) {
     this.userRepository = userRepository;
     this.methodService = methodService;
   }
@@ -55,12 +56,6 @@ public class UserServiceImpl implements UserService {
       return user.getIsAdmin();
     }
     throw new UnauthorizedException("Access denied, this account is not an admin");
-  }
-
-  @Override
-  public String getGoogleUserName(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    return properties.get("name").toString();
   }
 
   @Override
@@ -114,7 +109,18 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public String getUserEmail(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    LinkedHashMap<String, Object> properties = getAuthDetails(authentication);
     return properties.get("email").toString();
+  }
+
+  @Override
+  public String getGoogleUserName(OAuth2Authentication authentication) {
+    LinkedHashMap<String, Object> properties = getAuthDetails(authentication);
+    return properties.get("name").toString();
+  }
+
+  @Override
+  public LinkedHashMap<String, Object> getAuthDetails(OAuth2Authentication authentication) {
+    return (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
   }
 }

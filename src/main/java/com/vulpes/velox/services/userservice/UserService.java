@@ -4,6 +4,7 @@ import com.vulpes.velox.models.User;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,7 @@ public interface UserService {
   Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user);
 
   String getUserEmail(OAuth2Authentication authentication);
+
+  LinkedHashMap<String, Object> getAuthDetails(OAuth2Authentication authentication);
 
 }

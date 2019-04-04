@@ -80,11 +80,15 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void updateBulkProductWithShipment(String bulkProductName, Shipment shipment) {
-    BulkProduct bulkProduct = (BulkProduct) getByName(bulkProductName);
-    bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
-    bulkProduct.setValue(BigInteger.valueOf(
+    BulkProduct bulkProduct =
+        (BulkProduct) getByName(bulkProductName);
+    bulkProduct.setQuantity(
+        bulkProduct.getQuantity() + shipment.getQuantity());
+    bulkProduct.setValue(
+        BigInteger.valueOf(
         bulkProduct.getValue().intValue() + (shipment.getQuantity() * shipment.getPrice())));
-    bulkProduct.setPrice((long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
+    bulkProduct.setPrice(
+        (long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
     update(bulkProduct);
   }
 

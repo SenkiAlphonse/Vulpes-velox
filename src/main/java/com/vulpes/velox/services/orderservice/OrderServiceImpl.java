@@ -17,7 +17,8 @@ public class OrderServiceImpl implements OrderService {
   private MethodService methodService;
 
   @Autowired
-  public OrderServiceImpl(OrderRepository orderRepository, MethodService methodService) {
+  public OrderServiceImpl(OrderRepository orderRepository,
+                          MethodService methodService) {
     this.orderRepository = orderRepository;
     this.methodService = methodService;
   }
@@ -45,7 +46,8 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(Order order, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(Order order,
+                                                RedirectAttributes redirectAttributes) {
     if(order.getName() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter order name.",

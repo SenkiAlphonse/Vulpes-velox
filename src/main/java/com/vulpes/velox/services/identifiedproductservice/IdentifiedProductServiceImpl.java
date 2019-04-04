@@ -20,7 +20,9 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   private MethodService methodService;
 
   @Autowired
-  public IdentifiedProductServiceImpl(IdentifiedProductRepository identifiedProductRepository, ProductService productService, MethodService methodService) {
+  public IdentifiedProductServiceImpl(IdentifiedProductRepository identifiedProductRepository,
+                                      ProductService productService,
+                                      MethodService methodService) {
     this.identifiedProductRepository = identifiedProductRepository;
     this.productService = productService;
     this.methodService = methodService;
@@ -40,7 +42,8 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(IdentifiedProduct identifiedProduct, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(IdentifiedProduct identifiedProduct,
+                                                RedirectAttributes redirectAttributes) {
     if(identifiedProduct.getName() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter identified product name.",
@@ -63,7 +66,9 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   }
 
   @Override
-  public Map<String, ?> getNewIdentifiedProductFlashAttributes(IdentifiedProduct identifiedProduct, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getNewIdentifiedProductFlashAttributes(
+      IdentifiedProduct identifiedProduct,
+      RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("savedIdentifiedProduct", true);
     redirectAttributes.addFlashAttribute("identifiedProductName", identifiedProduct.getName());
     return redirectAttributes.getFlashAttributes();

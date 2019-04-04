@@ -44,7 +44,9 @@ public class ItemServiceImpl implements ItemService{
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(String identifiedProductName, Item item, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(String identifiedProductName,
+                                                Item item,
+                                                RedirectAttributes redirectAttributes) {
     if(item.getProductNumber() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter product number.",
@@ -79,10 +81,13 @@ public class ItemServiceImpl implements ItemService{
   }
 
   @Override
-  public Map<String, ?> getNewItemFlashAttributes(Item item, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getNewItemFlashAttributes(Item item,
+                                                  RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("savedItem", true);
     redirectAttributes.addFlashAttribute("productNumber", item.getProductNumber());
-    redirectAttributes.addFlashAttribute("identifiedProductName", item.getIdentifiedProduct().getName());
+    redirectAttributes.addFlashAttribute(
+        "identifiedProductName",
+        item.getIdentifiedProduct().getName());
     return redirectAttributes.getFlashAttributes();
   }
 }

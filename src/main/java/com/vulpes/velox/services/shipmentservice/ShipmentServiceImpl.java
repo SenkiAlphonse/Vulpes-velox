@@ -24,7 +24,10 @@ public class ShipmentServiceImpl implements ShipmentService {
 
 
   @Autowired
-  public ShipmentServiceImpl(ShipmentRepository shipmentRepository, BulkProductService bulkProductService, ProductService productService, MethodService methodService) {
+  public ShipmentServiceImpl(ShipmentRepository shipmentRepository,
+                             BulkProductService bulkProductService,
+                             ProductService productService,
+                             MethodService methodService) {
     this.shipmentRepository = shipmentRepository;
     this.bulkProductService = bulkProductService;
     this.productService = productService;
@@ -58,7 +61,11 @@ public class ShipmentServiceImpl implements ShipmentService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(String bulkProductName, String arrivalDate, String bestBeforeDate, Shipment shipment, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(String bulkProductName,
+                                                String arrivalDate,
+                                                String bestBeforeDate,
+                                                Shipment shipment,
+                                                RedirectAttributes redirectAttributes) {
     if (shipment.getQuantity() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter quantity.",
@@ -101,7 +108,9 @@ public class ShipmentServiceImpl implements ShipmentService {
   @Override
   public Map<String, ?> getNewShipmentFlashAttributes(Shipment shipment, RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("savedShipment", true);
-    redirectAttributes.addFlashAttribute("bulkProductName", shipment.getBulkProduct().getName());
+    redirectAttributes.addFlashAttribute(
+        "bulkProductName",
+        shipment.getBulkProduct().getName());
     redirectAttributes.addFlashAttribute("quantity", shipment.getQuantity());
     redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
     redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());
@@ -109,10 +118,16 @@ public class ShipmentServiceImpl implements ShipmentService {
   }
 
   @Override
-  public void saveNewShipment(String bulkProductName, String arrival, String bestBefore, Shipment shipment) {
-    shipment.setArrival(getLocalDateFromDateString(arrival));
-    shipment.setBestBefore(getLocalDateFromDateString(bestBefore));
-    shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
+  public void saveNewShipment(String bulkProductName,
+                              String arrival,
+                              String bestBefore,
+                              Shipment shipment) {
+    shipment.setArrival(
+        getLocalDateFromDateString(arrival));
+    shipment.setBestBefore(
+        getLocalDateFromDateString(bestBefore));
+    shipment.setBulkProduct(
+        (BulkProduct) productService.getByName(bulkProductName));
     save(shipment);
   }
 
