@@ -16,8 +16,8 @@ repositories {
 }
 
 pitest {
-    targetClasses = ['com.vulpes.velox.controllers.IdentifiedProductController']
-    targetTests = ['com.vulpes.velox.controllers.IdentifiedProductControllerTest']
+    targetClasses = ['com.vulpes.velox.controllers.OrderController']
+    targetTests = ['com.vulpes.velox.controllers.OrderControllerTest']
 }
 
 dependencies {

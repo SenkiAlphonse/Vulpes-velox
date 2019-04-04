@@ -1,11 +1,7 @@
 package com.vulpes.velox.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vulpes.velox.models.Order;
-import com.vulpes.velox.models.products.IdentifiedProduct;
-import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
 import com.vulpes.velox.services.orderservice.OrderService;
-import com.vulpes.velox.services.userservice.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,18 +14,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+
 import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,10 +38,10 @@ public class OrderControllerTest {
 
   private Map<String, Boolean> errorFlashAttributes;
 
+  @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("orderError", true);
-
   }
 
   @Test
@@ -96,7 +89,7 @@ public class OrderControllerTest {
     mockMvc.perform(post("/order/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("id", "1")
-        .param("name", "Name")
+        .param("name", "Taken")
     )
         .andDo(print())
         .andExpect(status().isFound())
@@ -105,12 +98,12 @@ public class OrderControllerTest {
 
     ArgumentCaptor<Order> orderArgument = ArgumentCaptor.forClass(Order.class);
     verify(orderService, times(1))
-        .getErrorFlashAttributes(any(Order.class), any(RedirectAttributes.class));
+        .getErrorFlashAttributes(orderArgument.capture(), any(RedirectAttributes.class));
     verifyNoMoreInteractions(orderService);
 
     Order orderArgumentValue = orderArgument.getValue();
     assertThat(orderArgumentValue.getId(), is((long) 1));
-    assertThat(orderArgumentValue.getName(), is(nullValue()));
+    assertThat(orderArgumentValue.getName(), is("Taken"));
     assertThat(orderArgumentValue.getDate(), is(nullValue()));
   }
 
