@@ -1,7 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
-import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.userservice.UserService;

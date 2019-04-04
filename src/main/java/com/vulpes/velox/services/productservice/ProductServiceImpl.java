@@ -1,8 +1,10 @@
 package com.vulpes.velox.services.productservice;
 
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,18 @@ public class ProductServiceImpl implements ProductService{
     bulkProduct.setPrice(
         (long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
     update(bulkProduct);
+  }
+
+  @Override
+  public void updateIdentifiedProductWithItem(IdentifiedProduct identifiedProduct,
+                                              Item item) {
+    identifiedProduct.setQuantity(
+        identifiedProduct.getQuantity() + 1);
+    identifiedProduct.setValue(BigInteger.valueOf(
+        identifiedProduct.getValue().intValue() + item.getPrice()));
+    identifiedProduct.setPrice(
+        identifiedProduct.getValue().intValue() / identifiedProduct.getQuantity());
+    update(identifiedProduct);
   }
 
 

@@ -15,15 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class IdentifiedProductController {
 
-
   private UserService userService;
-  private ProductService productService;
   private IdentifiedProductService identifiedProductService;
 
   @Autowired
-  public IdentifiedProductController(UserService userService, ProductService productService, IdentifiedProductService identifiedProductService) {
+  public IdentifiedProductController(UserService userService,
+                                     IdentifiedProductService identifiedProductService) {
     this.userService = userService;
-    this.productService = productService;
     this.identifiedProductService = identifiedProductService;
   }
 

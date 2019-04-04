@@ -1,7 +1,9 @@
 package com.vulpes.velox.services.productservice;
 
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.products.Product;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public interface ProductService {
   List<Product> getAll();
 
   void updateBulkProductWithShipment(String bulkProductName, Shipment shipment);
+
+  void updateIdentifiedProductWithItem(IdentifiedProduct identifiedProduct, Item item);
 
 
 
