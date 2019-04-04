@@ -72,7 +72,6 @@ public class OrderControllerTest {
         .save(orderArgument.capture());
     verify(orderService, times(1))
         .getErrorFlashAttributes(any(Order.class), any(RedirectAttributes.class));
-
     verifyNoMoreInteractions(orderService);
 
     Order orderArgumentValue = orderArgument.getValue();
@@ -106,7 +105,6 @@ public class OrderControllerTest {
     assertThat(orderArgumentValue.getName(), is("Taken"));
     assertThat(orderArgumentValue.getDate(), is(nullValue()));
   }
-
 
 
 }

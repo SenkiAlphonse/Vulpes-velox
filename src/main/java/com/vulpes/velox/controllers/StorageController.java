@@ -34,7 +34,7 @@ public class StorageController {
   }
 
   @GetMapping("/storage/add")
-  public String addProducts(@Valid Model model,
+  public String addProducts(Model model,
                             @ModelAttribute(value = "bulkProductNew") BulkProduct bulkProduct,
                             @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
                             @ModelAttribute(value = "itemNew") Item item,
