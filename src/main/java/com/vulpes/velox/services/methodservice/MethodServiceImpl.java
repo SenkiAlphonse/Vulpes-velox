@@ -29,7 +29,9 @@ public class MethodServiceImpl implements MethodService {
   }
 
   @Override
-  public Map<String, ?> getNameErrorAttributes(Product product, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getNameErrorAttributes(Product product,
+                                               RedirectAttributes redirectAttributes,
+                                               String errorAttribute) {
     String displayName;
     if (product instanceof BulkProduct) {
       displayName = "bulk product";
@@ -41,19 +43,19 @@ public class MethodServiceImpl implements MethodService {
       return getErrorMessageFlashAttributes(
           "Enter " + displayName + " name.",
           redirectAttributes,
-          "bulkProductError");
+          errorAttribute);
     }
     if (product.getName().isEmpty()) {
       return getErrorMessageFlashAttributes(
           "Empty " + displayName + " name.",
           redirectAttributes,
-          "bulkProductError");
+          errorAttribute);
     }
     if (productService.existsByName(product.getName())) {
       return getErrorMessageFlashAttributes(
           "Product name already exists.",
           redirectAttributes,
-          "bulkProductError");
+          errorAttribute);
     }
     return redirectAttributes.getFlashAttributes();
   }

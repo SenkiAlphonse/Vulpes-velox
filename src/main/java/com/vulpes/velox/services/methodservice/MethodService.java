@@ -11,7 +11,9 @@ public interface MethodService {
                                                 RedirectAttributes redirectAttributes,
                                                 String errorAttribute);
 
-  Map<String, ?> getNameErrorAttributes(Product product, RedirectAttributes redirectAttributes);
+  Map<String, ?> getNameErrorAttributes(Product product,
+                                        RedirectAttributes redirectAttributes,
+                                        String errorAttribute);
 }
 
 

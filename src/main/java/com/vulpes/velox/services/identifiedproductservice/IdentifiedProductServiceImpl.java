@@ -45,7 +45,10 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(IdentifiedProduct identifiedProduct,
                                                 RedirectAttributes redirectAttributes) {
-    return methodService.getNameErrorAttributes(identifiedProduct, redirectAttributes);
+    return methodService.getNameErrorAttributes(
+        identifiedProduct,
+        redirectAttributes,
+        "identifiedProductError");
   }
 
   @Override

@@ -49,7 +49,10 @@ public class BulkProductServiceImpl implements BulkProductService {
 
   @Override
   public Map<String, ?> getErrorFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes) {
-    return methodService.getNameErrorAttributes(bulkProduct, redirectAttributes);
+    return methodService.getNameErrorAttributes(
+        bulkProduct,
+        redirectAttributes,
+        "bulkProductError");
   }
 
   @Override
