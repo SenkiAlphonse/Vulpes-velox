@@ -16,14 +16,15 @@ repositories {
 }
 
 pitest {
-    excludedTestClasses = ['com.vulpes.velox.services.**']
-//    excludedTestClasses = ['com.vulpes.velox.services.orderedproductservice']
-//    excludedTestClasses = ['com.vulpes.velox.services.itemservice']
-    excludedTestClasses = ['com.vulpes.velox.controllers.itemcontroller']
+    targetClasses = ['com.vulpes.velox.controllers.BulkProductController']
+    targetTests = ['com.vulpes.velox.controllers.BulkProductControllerTest']
+//    excludedTestClasses = ['com.vulpes.velox.services.**']
+//    excludedClasses = ['com.vulpes.velox.services.**']
+//    excludedTestClasses = ['com.vulpes.velox.controllers.ItemControllerTest']
+//    excludedClasses = ['com.vulpes.velox.controllers.ItemController']
 }
 
 dependencies {
-
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
