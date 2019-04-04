@@ -114,4 +114,23 @@ public class BulkProductControllerTest {
     assertThat(bulkProductArgumentValue.getName(), is(nullValue()));
   }
 
+  @Test
+  public void bulkProductNewNotAuthenticated() throws Exception {
+    when(userService.isUser(isNull())).thenReturn(false);
+
+    mockMvc.perform(post("/bulkProduct/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("name", "Name")
+        .param("unitToSet", "Piece")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(view().name("unauthorized"));
+
+    verify(userService, times(1)).isUser(isNull());
+    verify(userService, times(1)).getUserEmail(isNull());
+    verifyNoMoreInteractions(userService);
+  }
+
 }
