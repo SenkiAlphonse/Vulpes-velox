@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = ItemController.class, secure = false)
-public class ItemControllerEndpointTest {
+public class ItemControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
