@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -78,5 +79,15 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   public List<IdentifiedProduct> getAllFilteredBy(String filter) {
     return identifiedProductRepository.findAllByNameContaining(filter);
   }
+
+  @Override
+  public void saveNewIdentifiedProduct(IdentifiedProduct identifiedProduct) {
+    identifiedProduct.setQuantity((long) 0);
+    identifiedProduct.setPrice((long) 0);
+    identifiedProduct.setValue(BigInteger.valueOf(0));
+    identifiedProduct.setUnit("Piece");
+    productService.save(identifiedProduct);
+  }
+
 
 }

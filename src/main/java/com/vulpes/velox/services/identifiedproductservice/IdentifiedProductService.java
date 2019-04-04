@@ -19,4 +19,6 @@ public interface IdentifiedProductService {
   Map<String, ?> getNewIdentifiedProductFlashAttributes(IdentifiedProduct identifiedProduct, RedirectAttributes redirectAttributes);
 
   List<IdentifiedProduct> getAllFilteredBy(String filter);
+
+  void saveNewIdentifiedProduct(IdentifiedProduct identifiedProduct);
 }

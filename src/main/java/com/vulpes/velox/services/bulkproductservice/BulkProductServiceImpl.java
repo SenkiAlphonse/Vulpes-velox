@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +80,15 @@ public class BulkProductServiceImpl implements BulkProductService {
   @Override
   public List<BulkProduct> getAllFilteredBy(String filter) {
     return bulkProductRepository.findAllByNameContaining(filter);
+  }
+
+  @Override
+  public void saveNewBulkProduct(BulkProduct bulkProduct, String unit) {
+    bulkProduct.setQuantity((long) 0);
+    bulkProduct.setPrice((long) 0);
+    bulkProduct.setValue(BigInteger.valueOf(0));
+    bulkProduct.setUnit(unit);
+    productService.save(bulkProduct);
   }
 
 }
