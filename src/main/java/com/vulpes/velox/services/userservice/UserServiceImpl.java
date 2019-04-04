@@ -44,15 +44,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isUser(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
-    return findByEmail(userEmail) != null;
+    return findByEmail(getUserEmail(authentication)) != null;
   }
 
   @Override
   public Boolean isAdmin(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
+    String userEmail = getUserEmail(authentication);
     User user = userRepository.findByEmail(userEmail);
     if (user != null) {
       return user.getIsAdmin();
