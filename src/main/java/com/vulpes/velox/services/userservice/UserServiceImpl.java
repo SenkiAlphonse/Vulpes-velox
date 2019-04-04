@@ -4,6 +4,7 @@ import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
+import com.vulpes.velox.services.methodservice.MethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -18,10 +19,13 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
+  private MethodService methodService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository,
+                         MethodService methodService) {
     this.userRepository = userRepository;
+    this.methodService = methodService;
   }
 
   @Override
@@ -41,15 +45,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isUser(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
-    return findByEmail(userEmail) != null;
+    return findByEmail(getUserEmail(authentication)) != null;
   }
 
   @Override
   public Boolean isAdmin(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    String userEmail = properties.get("email").toString();
+    String userEmail = getUserEmail(authentication);
     User user = userRepository.findByEmail(userEmail);
     if (user != null) {
       return user.getIsAdmin();
@@ -58,14 +59,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String getGoogleUserName(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
-    return properties.get("name").toString();
-  }
-
-  @Override
   public List<User> getAll(int pageId) {
-    return userRepository.findAllByOrderByEmailAsc(PageRequest.of(pageId, 10));
+    return userRepository.findAllByOrderByEmailAsc(
+        PageRequest.of(pageId, 10));
   }
 
   @Override
@@ -92,26 +88,40 @@ public class UserServiceImpl implements UserService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user) {
     if (user == null) {
-      return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "Error creating user.",
+          redirectAttributes,
+          "userError");
     }
     if (user.getEmail() == null || user.getEmail().isEmpty()) {
-      return getErrorMessageFlashAttributes("Enter an e-mail address.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "Enter an e-mail address.",
+          redirectAttributes,
+          "userError");
     }
     if (userExistsByEmail(user.getEmail())) {
-      return getErrorMessageFlashAttributes("This e-mail address already exists in the database.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "This e-mail address already exists in the database.",
+          redirectAttributes,
+          "userError");
     }
-    return redirectAttributes.getFlashAttributes();
-  }
-
-  private Map<String, ?> getErrorMessageFlashAttributes(String message, RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("userError", true);
-    redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
   }
 
   @Override
   public String getUserEmail(OAuth2Authentication authentication) {
-    LinkedHashMap<String, Object> properties = (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
+    LinkedHashMap<String, Object> properties = getAuthDetails(authentication);
     return properties.get("email").toString();
+  }
+
+  @Override
+  public String getGoogleUserName(OAuth2Authentication authentication) {
+    LinkedHashMap<String, Object> properties = getAuthDetails(authentication);
+    return properties.get("name").toString();
+  }
+
+  @Override
+  public LinkedHashMap<String, Object> getAuthDetails(OAuth2Authentication authentication) {
+    return (LinkedHashMap<String, Object>) authentication.getUserAuthentication().getDetails();
   }
 }

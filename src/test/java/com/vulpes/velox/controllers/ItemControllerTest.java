@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = ItemController.class, secure = false)
-public class ItemControllerEndpointTest {
+public class ItemControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -51,6 +51,7 @@ public class ItemControllerEndpointTest {
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
+    identifiedProduct.setQuantity((long) 2);
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("itemError", true);
     items = Arrays.asList(new Item(), new Item());
@@ -84,7 +85,6 @@ public class ItemControllerEndpointTest {
 
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);
     verify(itemService, times(1)).save(itemArgument.capture());
-    verify(itemService, times(1)).getAllByIdentifiedProduct(identifiedProduct);
     verify(itemService, times(1)).getErrorFlashAttributes(
         anyString(), any(Item.class), any(RedirectAttributes.class));
     verify(itemService, times(1)).getNewItemFlashAttributes(
@@ -98,8 +98,8 @@ public class ItemControllerEndpointTest {
     assertThat(itemArgumentValue.getProductNumber(), is((long) 2));
     assertThat(itemArgumentValue.getIdentifiedProduct(), is(identifiedProduct));
 
+    verify(productService, times(1)).updateIdentifiedProductWithItem(identifiedProduct, itemArgumentValue);
     verify(productService, times(1)).getByName("IdentifiedProductName");
-    verify(productService, times(1)).update(identifiedProduct);
     verifyNoMoreInteractions(productService);
 
   }

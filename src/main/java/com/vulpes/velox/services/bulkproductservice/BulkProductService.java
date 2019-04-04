@@ -20,4 +20,6 @@ public interface BulkProductService {
   Map<String, ?> getNewBulkProductFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes);
 
   List<BulkProduct> getAllFilteredBy(String filter);
+
+  void saveNewBulkProduct(BulkProduct bulkProduct, String unit);
 }

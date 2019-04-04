@@ -1,9 +1,9 @@
 INSERT INTO products
-  (name, quantity, dtype) VALUES
-  ('NameTaken', 3,'BulkProduct'),
-  ('NameTaken2', 3,'BulkProduct'),
-  ('NameTaken3', 4, 'IdentifiedProduct'),
-  ('NameTaken4', 4, 'IdentifiedProduct');
+  (name, quantity, price, value, dtype) VALUES
+  ('NameTaken', 3, 2, 1, 'BulkProduct'),
+  ('NameTaken2', 3, 2, 1, 'BulkProduct'),
+  ('NameTaken3', 4, 5, 6, 'IdentifiedProduct'),
+  ('NameTaken4', 4, 5, 6, 'IdentifiedProduct');
 
 INSERT INTO orders
   (name, date) VALUES

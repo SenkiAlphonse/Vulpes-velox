@@ -1,7 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
-import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.services.productservice.ProductService;
 import com.vulpes.velox.services.shipmentservice.ShipmentService;
@@ -19,13 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ShipmentController {
 
-
   private UserService userService;
   private ShipmentService shipmentService;
   private ProductService productService;
 
   @Autowired
-  public ShipmentController(UserService userService, ShipmentService shipmentService, ProductService productService) {
+  public ShipmentController(UserService userService,
+                            ShipmentService shipmentService,
+                            ProductService productService) {
     this.userService = userService;
     this.shipmentService = shipmentService;
     this.productService = productService;

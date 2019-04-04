@@ -1,8 +1,10 @@
 package com.vulpes.velox.services.productservice;
 
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
   private ProductRepository productRepository;
 
@@ -25,14 +27,14 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void save(Product product) {
-    if(!existsByName(product.getName())) {
+    if (!existsByName(product.getName())) {
       productRepository.save(product);
     }
   }
 
   @Override
   public void update(Product product) {
-    if(existsByName(product.getName())) {
+    if (existsByName(product.getName())) {
       productRepository.save(product);
     }
   }
@@ -80,12 +82,28 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void updateBulkProductWithShipment(String bulkProductName, Shipment shipment) {
-    BulkProduct bulkProduct = (BulkProduct) getByName(bulkProductName);
-    bulkProduct.setQuantity(bulkProduct.getQuantity() + shipment.getQuantity());
-    bulkProduct.setValue(BigInteger.valueOf(
-        bulkProduct.getValue().intValue() + (shipment.getQuantity() * shipment.getPrice())));
-    bulkProduct.setPrice((long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
+    BulkProduct bulkProduct =
+        (BulkProduct) getByName(bulkProductName);
+    bulkProduct.setQuantity(
+        bulkProduct.getQuantity() + shipment.getQuantity());
+    bulkProduct.setValue(
+        BigInteger.valueOf(
+            bulkProduct.getValue().intValue() + (shipment.getQuantity() * shipment.getPrice())));
+    bulkProduct.setPrice(
+        (long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
     update(bulkProduct);
+  }
+
+  @Override
+  public void updateIdentifiedProductWithItem(IdentifiedProduct identifiedProduct,
+                                              Item item) {
+    identifiedProduct.setQuantity(
+        identifiedProduct.getQuantity() + 1);
+    identifiedProduct.setValue(BigInteger.valueOf(
+        identifiedProduct.getValue().intValue() + item.getPrice()));
+    identifiedProduct.setPrice(
+        identifiedProduct.getValue().intValue() / identifiedProduct.getQuantity());
+    update(identifiedProduct);
   }
 
 

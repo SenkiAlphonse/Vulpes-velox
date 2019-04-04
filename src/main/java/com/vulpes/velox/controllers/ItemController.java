@@ -1,6 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.services.itemservice.ItemService;
@@ -15,9 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.math.BigInteger;
-import java.util.List;
 
 @Controller
 public class ItemController {
@@ -52,17 +48,11 @@ public class ItemController {
       if(!itemService.getErrorFlashAttributes(identifiedProductName, item, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#item";
       }
-
-      IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
-
+      IdentifiedProduct identifiedProduct =
+          (IdentifiedProduct) productService.getByName(identifiedProductName);
       item.setIdentifiedProduct(identifiedProduct);
       itemService.save(item);
-
-      identifiedProduct.setQuantity(identifiedProduct.getQuantity() + 1);
-      identifiedProduct.setValue(BigInteger.valueOf(
-          identifiedProduct.getValue().intValue() + item.getPrice()));
-      identifiedProduct.setPrice(identifiedProduct.getValue().intValue() / identifiedProduct.getQuantity());
-      productService.update(identifiedProduct);
+      productService.updateIdentifiedProductWithItem(identifiedProduct, item);
       itemService.getNewItemFlashAttributes(item, redirectAttributes);
       return "redirect:/storage/add#item";
     }  else {

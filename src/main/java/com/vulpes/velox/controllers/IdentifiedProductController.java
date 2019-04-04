@@ -10,31 +10,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.math.BigInteger;
 
 @Controller
 public class IdentifiedProductController {
 
-
   private UserService userService;
-  private ProductService productService;
   private IdentifiedProductService identifiedProductService;
 
   @Autowired
-  public IdentifiedProductController(UserService userService, ProductService productService, IdentifiedProductService identifiedProductService) {
+  public IdentifiedProductController(UserService userService,
+                                     IdentifiedProductService identifiedProductService) {
     this.userService = userService;
-    this.productService = productService;
     this.identifiedProductService = identifiedProductService;
   }
 
   @PostMapping("/identifiedProduct/new")
   public String identifiedProductNew(
-      @RequestParam(value = "unitToSet") String unit,
       @ModelAttribute(value = "identifiedProductNew") IdentifiedProduct identifiedProduct,
-
       OAuth2Authentication authentication,
       RedirectAttributes redirectAttributes,
       Model model) {
@@ -43,11 +36,7 @@ public class IdentifiedProductController {
           identifiedProduct, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add";
       }
-      identifiedProduct.setQuantity((long) 0);
-      identifiedProduct.setPrice((long) 0);
-      identifiedProduct.setValue(BigInteger.valueOf(0));
-      identifiedProduct.setUnit(unit);
-      productService.save(identifiedProduct);
+      identifiedProductService.saveNewIdentifiedProduct(identifiedProduct);
       identifiedProductService.getNewIdentifiedProductFlashAttributes(identifiedProduct, redirectAttributes);
       return "redirect:/storage/add";
     } else {

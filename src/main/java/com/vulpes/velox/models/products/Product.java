@@ -24,6 +24,13 @@ public abstract class Product {
   private String unit;
   private BigInteger value;
 
+  public Product() {
+  }
+
+  public Product(BigInteger value) {
+    this.value = value;
+  }
+
   public Long getId() {
     return id;
   }
@@ -38,15 +45,6 @@ public abstract class Product {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  @Override
-  public String toString() {
-    return "Product{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", quantity=" + quantity +
-        '}';
   }
 
   public Long getPrice() {
@@ -80,4 +78,14 @@ public abstract class Product {
   public void setValue(BigInteger value) {
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return "Product{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", quantity=" + quantity +
+        '}';
+  }
+
 }
