@@ -187,7 +187,7 @@ table {
     padding: 0;
     width: 100%;
     table-layout: fixed;
-    font-size: 20px;
+    font-size: 2vw;
 }
 
 table caption {
