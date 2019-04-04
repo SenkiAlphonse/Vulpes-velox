@@ -24,6 +24,13 @@ public abstract class Product {
   private String unit;
   private BigInteger value;
 
+  public Product() {
+  }
+
+  public Product(BigInteger value) {
+    this.value = value;
+  }
+
   public Long getId() {
     return id;
   }

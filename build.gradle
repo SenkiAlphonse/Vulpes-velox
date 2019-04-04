@@ -16,9 +16,10 @@ repositories {
 }
 
 pitest {
-    excludedTestClasses = ['com.vulpes.velox.controllers.**']
+    excludedTestClasses = ['com.vulpes.velox.services.**']
 //    excludedTestClasses = ['com.vulpes.velox.services.orderedproductservice']
-    excludedTestClasses = ['com.vulpes.velox.services.itemservice']
+//    excludedTestClasses = ['com.vulpes.velox.services.itemservice']
+    excludedTestClasses = ['com.vulpes.velox.controllers.itemcontroller']
 }
 
 dependencies {

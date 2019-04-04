@@ -30,8 +30,9 @@ public class Shipment {
   public Shipment() {
   }
 
-  public Shipment(Long quantity) {
+  public Shipment(Long quantity, Long price) {
     this.quantity = quantity;
+    this.price = price;
   }
 
   public Long getId() {

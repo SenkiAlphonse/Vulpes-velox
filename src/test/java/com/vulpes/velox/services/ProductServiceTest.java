@@ -15,12 +15,16 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
@@ -49,6 +53,7 @@ public class ProductServiceTest {
     products.add(productService.getByName("NameTaken2"));
     products.add(productService.getByName("NameTaken3"));
     products.add(productService.getByName("NameTaken4"));
+
   }
 
   @Test
@@ -112,7 +117,7 @@ public class ProductServiceTest {
 
   @Test
   public void updateBulkProductWithShipment() {
-    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10));
+    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10, (long) 10));
     assertThat(productService.getByName("NameTaken").getQuantity(), is((long) 13));
   }
 

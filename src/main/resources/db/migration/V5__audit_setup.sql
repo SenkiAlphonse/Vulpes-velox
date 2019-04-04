@@ -20,6 +20,9 @@ CREATE TABLE products_AUD (
   revtype SMALLINT,
   name VARCHAR(255),
   quantity BIGINT,
+  price    BIGINT,
+  value    BIGINT,
+  unit     VARCHAR(255),
   PRIMARY KEY (id, rev),
   FOREIGN KEY (rev) REFERENCES revinfo (rev)
 );
@@ -29,6 +32,7 @@ CREATE TABLE shipments_AUD (
   rev BIGINT NOT NULL,
   revtype SMALLINT,
   quantity            BIGINT,
+  price    BIGINT,
   arrival             VARCHAR(255),
   best_before         VARCHAR(255),
   bulk_product_id     BIGINT,
@@ -41,6 +45,7 @@ CREATE TABLE items_AUD (
   rev BIGINT NOT NULL,
   revtype SMALLINT,
   product_number      VARCHAR(255),
+  price    BIGINT,
   identified_product_id     BIGINT,
   PRIMARY KEY (id, rev),
   FOREIGN KEY (rev) REFERENCES revinfo (rev)
