@@ -77,6 +77,18 @@ public class ItemServiceImpl implements ItemService{
           redirectAttributes,
           "itemError");
     }
+    if(item.getPrice() == null) {
+      return methodService.getErrorMessageFlashAttributes(
+          "Enter price.",
+          redirectAttributes,
+          "itemError");
+    }
+    if(item.getPrice() <= 0) {
+      return methodService.getErrorMessageFlashAttributes(
+          "Price not allowed.",
+          redirectAttributes,
+          "itemError");
+    }
     return redirectAttributes.getFlashAttributes();
   }
 

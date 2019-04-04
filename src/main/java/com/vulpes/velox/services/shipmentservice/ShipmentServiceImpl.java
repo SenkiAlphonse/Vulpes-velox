@@ -78,6 +78,18 @@ public class ShipmentServiceImpl implements ShipmentService {
           redirectAttributes,
           "shipmentError");
     }
+    if (shipment.getPrice() == null) {
+      return methodService.getErrorMessageFlashAttributes(
+          "Enter price.",
+          redirectAttributes,
+          "shipmentError");
+    }
+    if (shipment.getPrice() <= 0) {
+      return methodService.getErrorMessageFlashAttributes(
+          "Price not allowed.",
+          redirectAttributes,
+          "shipmentError");
+    }
     if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
       return methodService.getErrorMessageFlashAttributes(
           "Date entered not allowed.",
