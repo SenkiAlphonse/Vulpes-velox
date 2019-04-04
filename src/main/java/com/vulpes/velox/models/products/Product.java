@@ -40,15 +40,6 @@ public abstract class Product {
     this.name = name;
   }
 
-  @Override
-  public String toString() {
-    return "Product{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", quantity=" + quantity +
-        '}';
-  }
-
   public Long getPrice() {
     return price;
   }
@@ -80,4 +71,14 @@ public abstract class Product {
   public void setValue(BigInteger value) {
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return "Product{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", quantity=" + quantity +
+        '}';
+  }
+
 }

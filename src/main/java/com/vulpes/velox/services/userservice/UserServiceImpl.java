@@ -4,6 +4,7 @@ import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.repositories.UserRepository;
+import com.vulpes.velox.services.methodservice.MethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -18,10 +19,12 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
   private UserRepository userRepository;
+  private MethodService methodService;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository, MethodService methodService) {
     this.userRepository = userRepository;
+    this.methodService = methodService;
   }
 
   @Override
@@ -92,20 +95,23 @@ public class UserServiceImpl implements UserService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user) {
     if (user == null) {
-      return getErrorMessageFlashAttributes("Error creating user.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "Error creating user.",
+          redirectAttributes,
+          "userError");
     }
     if (user.getEmail() == null || user.getEmail().isEmpty()) {
-      return getErrorMessageFlashAttributes("Enter an e-mail address.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "Enter an e-mail address.",
+          redirectAttributes,
+          "userError");
     }
     if (userExistsByEmail(user.getEmail())) {
-      return getErrorMessageFlashAttributes("This e-mail address already exists in the database.", redirectAttributes);
+      return methodService.getErrorMessageFlashAttributes(
+          "This e-mail address already exists in the database.",
+          redirectAttributes,
+          "userError");
     }
-    return redirectAttributes.getFlashAttributes();
-  }
-
-  private Map<String, ?> getErrorMessageFlashAttributes(String message, RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("userError", true);
-    redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();
   }
 
