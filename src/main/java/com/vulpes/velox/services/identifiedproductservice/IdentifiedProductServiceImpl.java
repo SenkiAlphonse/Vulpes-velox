@@ -45,25 +45,7 @@ public class IdentifiedProductServiceImpl implements IdentifiedProductService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(IdentifiedProduct identifiedProduct,
                                                 RedirectAttributes redirectAttributes) {
-    if(identifiedProduct.getName() == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter identified product name.",
-          redirectAttributes,
-          "identifiedProductError");
-    }
-    if(identifiedProduct.getName().isEmpty()) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Empty identified product name.",
-          redirectAttributes,
-          "identifiedProductError");
-    }
-    if(productService.existsByName(identifiedProduct.getName())) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Product name already exists.",
-          redirectAttributes,
-          "identifiedProductError");
-    }
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getNameErrorAttributes(identifiedProduct, redirectAttributes);
   }
 
   @Override

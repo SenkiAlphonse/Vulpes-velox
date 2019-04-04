@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
   private ProductRepository productRepository;
 
@@ -27,14 +27,14 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public void save(Product product) {
-    if(!existsByName(product.getName())) {
+    if (!existsByName(product.getName())) {
       productRepository.save(product);
     }
   }
 
   @Override
   public void update(Product product) {
-    if(existsByName(product.getName())) {
+    if (existsByName(product.getName())) {
       productRepository.save(product);
     }
   }
@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService{
         bulkProduct.getQuantity() + shipment.getQuantity());
     bulkProduct.setValue(
         BigInteger.valueOf(
-        bulkProduct.getValue().intValue() + (shipment.getQuantity() * shipment.getPrice())));
+            bulkProduct.getValue().intValue() + (shipment.getQuantity() * shipment.getPrice())));
     bulkProduct.setPrice(
         (long) bulkProduct.getValue().intValue() / bulkProduct.getQuantity());
     update(bulkProduct);

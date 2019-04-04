@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
 
   private ItemRepository itemRepository;
   private MethodService methodService;
@@ -47,43 +47,43 @@ public class ItemServiceImpl implements ItemService{
   public Map<String, ?> getErrorFlashAttributes(String identifiedProductName,
                                                 Item item,
                                                 RedirectAttributes redirectAttributes) {
-    if(item.getProductNumber() == null) {
+    if (item.getProductNumber() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter product number.",
           redirectAttributes,
           "itemError");
     }
-    if(item.getProductNumber().toString().length() != 8) {
+    if (item.getProductNumber().toString().length() != 8) {
       return methodService.getErrorMessageFlashAttributes(
           "Product number has to be 8 digits.",
           redirectAttributes,
           "itemError");
     }
-    if(itemRepository.existsByProductNumber(item.getProductNumber())) {
+    if (itemRepository.existsByProductNumber(item.getProductNumber())) {
       return methodService.getErrorMessageFlashAttributes(
           "Product number already exists.",
           redirectAttributes,
           "itemError");
     }
-    if(identifiedProductName == null) {
+    if (identifiedProductName == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter identified product.",
           redirectAttributes,
           "itemError");
     }
-    if(identifiedProductName.isEmpty()) {
+    if (identifiedProductName.isEmpty()) {
       return methodService.getErrorMessageFlashAttributes(
           "Empty identified product name.",
           redirectAttributes,
           "itemError");
     }
-    if(item.getPrice() == null) {
+    if (item.getPrice() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter price.",
           redirectAttributes,
           "itemError");
     }
-    if(item.getPrice() <= 0) {
+    if (item.getPrice() <= 0) {
       return methodService.getErrorMessageFlashAttributes(
           "Price not allowed.",
           redirectAttributes,

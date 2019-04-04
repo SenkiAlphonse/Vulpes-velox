@@ -60,7 +60,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> getAll(int pageId) {
-    return userRepository.findAllByOrderByEmailAsc(PageRequest.of(pageId, 10));
+    return userRepository.findAllByOrderByEmailAsc(
+        PageRequest.of(pageId, 10));
   }
 
   @Override

@@ -49,25 +49,7 @@ public class BulkProductServiceImpl implements BulkProductService {
 
   @Override
   public Map<String, ?> getErrorFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes) {
-    if(bulkProduct.getName() == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter bulk product name.",
-          redirectAttributes,
-          "bulkProductError");
-    }
-    if(bulkProduct.getName().isEmpty()) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Empty bulk product name.",
-          redirectAttributes,
-          "bulkProductError");
-    }
-    if(productService.existsByName(bulkProduct.getName())) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Product name already exists.",
-          redirectAttributes,
-          "bulkProductError");
-    }
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getNameErrorAttributes(bulkProduct, redirectAttributes);
   }
 
   @Override
