@@ -57,7 +57,6 @@ public class ItemControllerTest {
     items = Arrays.asList(new Item(), new Item());
   }
 
-
   @Test
   public void itemNewIsFound() throws Exception {
     when(userService.isUser(isNull())).thenReturn(true);

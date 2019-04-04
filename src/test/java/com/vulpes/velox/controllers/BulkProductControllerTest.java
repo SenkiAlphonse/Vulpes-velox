@@ -1,15 +1,12 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
-import com.vulpes.velox.services.productservice.ProductService;
 import com.vulpes.velox.services.userservice.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BulkProductControllerTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @MockBean
   private BulkProductService bulkProductService;
