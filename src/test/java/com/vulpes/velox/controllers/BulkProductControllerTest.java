@@ -47,7 +47,7 @@ public class BulkProductControllerTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("bulkProductError", true);
   }
 
   @Test

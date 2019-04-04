@@ -48,7 +48,7 @@ public class IdentifiedProductControllerTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("identifiedProductError", true);
   }
 
   @Test
