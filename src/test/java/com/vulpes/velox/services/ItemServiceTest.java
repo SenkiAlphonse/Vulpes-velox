@@ -67,21 +67,6 @@ public class ItemServiceTest {
   }
 
 //  @Test
-//  public void save() {
-//
-//  }
-
-//  @Test
-//  void getAll() {
-//
-//  }
-//
-//  @Test
-//  void existsByProductNumber() {
-//
-//  }
-
-//  @Test
 //  public void getErrorFlashAttributes() throws Exception {
 //    ItemServiceImpl itemServiceMock = spy(new ItemServiceImpl());
 //    doReturn(Collections.emptyMap()).when(itemServiceMock,
@@ -99,8 +84,4 @@ public class ItemServiceTest {
 //        is(Collections.emptyMap()));
 //  }
 
-//  @Test
-//  void getNewItemFlashAttributes() {
-//
-//  }
 }
