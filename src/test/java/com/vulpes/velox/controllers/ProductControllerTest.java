@@ -36,12 +36,8 @@ public class ProductControllerTest {
   @MockBean
   private UserService userService;
 
-  private Map<String, Boolean> errorFlashAttributes;
-
   @Before
   public void setup() {
-    errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("orderError", true);
   }
 
   @Test

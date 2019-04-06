@@ -69,8 +69,12 @@ public class ShipmentControllerTest {
   @Test
   public void shipmentNewOk() throws Exception {
     when(userService.isUser(isNull())).thenReturn(true);
-    when(bulkProductService.getErrorFlashAttributes(
-        notNull(), notNull())).thenReturn(Collections.emptyMap());
+    when(shipmentService.getErrorFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(Collections.emptyMap());
 
     mockMvc.perform(post("/shipment/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -125,5 +129,64 @@ public class ShipmentControllerTest {
     assertThat(stringArgumentValue2, is("Arrival"));
     assertThat(stringArgumentValue3, is("BestBefore"));
   }
+
+  @Test
+  public void shipmentNewWithoutPrice() throws Exception {
+    when(userService.isUser(isNull())).thenReturn(true);
+    when((Object) shipmentService.getErrorFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+
+    mockMvc.perform(post("/shipment/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("quantity", "5")
+        .param("bulkProductToSet", "BulkProductName")
+        .param("arrivalToSet", "Arrival")
+        .param("bestBeforeToSet", "BestBefore")
+    )
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/storage/add#shipment"))
+        .andExpect(view().name("redirect:/storage/add#shipment"));
+
+    verify(userService, times(1)).isUser(isNull());
+    verifyNoMoreInteractions(userService);
+    verify(shipmentService, times(1))
+        .getErrorFlashAttributes(
+            anyString(),
+            anyString(),
+            anyString(),
+            any(Shipment.class),
+            any(RedirectAttributes.class));
+    verifyNoMoreInteractions(shipmentService);
+  }
+
+  @Test
+  public void shipmentNewNotAuthenticated() throws Exception {
+    when(userService.isUser(isNull())).thenReturn(false);
+
+    mockMvc.perform(post("/shipment/new")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", "1")
+        .param("quantity", "5")
+        .param("price", "100")
+        .param("bulkProductToSet", "BulkProductName")
+        .param("arrivalToSet", "Arrival")
+        .param("bestBeforeToSet", "BestBefore")
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(view().name("unauthorized"));
+
+    verify(userService, times(1)).isUser(isNull());
+    verify(userService, times(1)).getUserEmail(isNull());
+    verifyNoMoreInteractions(userService);
+    verifyZeroInteractions(shipmentService);
+  }
+
 
 }
