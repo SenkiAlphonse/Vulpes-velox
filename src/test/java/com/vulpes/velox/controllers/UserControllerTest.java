@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,11 +46,13 @@ public class UserControllerTest {
   private UserService userService;
 
   private Map<String, Boolean> errorFlashAttributes;
+  private User user;
 
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("bulkProductError", true);
+    user = new User();
   }
 
   @Test
@@ -210,6 +213,83 @@ public class UserControllerTest {
     verify(userService, times(1)).isAdmin(isNull());
     verifyNoMoreInteractions(userService);
   }
+
+  @Test
+  public void usersDeleteOk() throws Exception {
+    when(userService.isAdmin(isNull())).thenReturn(true);
+
+    mockMvc.perform(post("/users/delete/5"))
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/users"))
+        .andExpect(view().name("redirect:/users"));
+
+    verify(userService, times(1)).isAdmin(isNull());
+    verify(userService, times(1)).deleteUserById((long) 5);
+    verifyNoMoreInteractions(userService);
+  }
+
+  @Test
+  public void usersDeleteUnauthorized() throws Exception {
+    when(userService.isAdmin(isNull())).thenReturn(false);
+
+    mockMvc.perform(post("/users/delete/5")
+    )
+        .andDo(print())
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.status", is("UNAUTHORIZED")))
+        .andExpect(jsonPath("$.message", is(
+            "Request denied, admin role is required to delete users.")))
+        .andExpect(jsonPath("$.path", is("/users/delete/5")))
+        .andExpect(jsonPath("$.timeStamp", containsString("")));
+
+    verify(userService, times(1)).isAdmin(isNull());
+    verifyNoMoreInteractions(userService);
+  }
+
+
+  @Test
+  public void usersUpdateOk() throws Exception {
+    when(userService.isAdmin(isNull())).thenReturn(true);
+    when(userService.isUser(isNull())).thenReturn(true);
+    when(userService.findById((long) 5)).thenReturn(user);
+
+    assertThat(user.getIsAdmin(), is(false));
+
+    mockMvc.perform(post("/users/update/5"))
+        .andDo(print())
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/users"))
+        .andExpect(view().name("redirect:/users"));
+
+    verify(userService, times(1)).isAdmin(isNull());
+    verify(userService, times(1)).isUser(isNull());
+    verify(userService, times(1)).findById((long) 5);
+    verify(userService, times(1)).addUser(user);
+    verifyNoMoreInteractions(userService);
+
+    assertThat(user.getIsAdmin(), is(true));
+  }
+
+  @Test
+  public void usersUpdateUnauthorized() throws Exception {
+    when(userService.isUser(isNull())).thenReturn(false);
+
+    mockMvc.perform(post("/users/update/5")
+    )
+        .andDo(print())
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.status", is("UNAUTHORIZED")))
+        .andExpect(jsonPath("$.message", is(
+            "Request denied, admin role is required to update user roles.")))
+        .andExpect(jsonPath("$.path", is("/users/update/5")))
+        .andExpect(jsonPath("$.timeStamp", containsString("")));
+
+    verify(userService, times(1)).isUser(isNull());
+    verifyNoMoreInteractions(userService);
+  }
+
+
 
 
 
