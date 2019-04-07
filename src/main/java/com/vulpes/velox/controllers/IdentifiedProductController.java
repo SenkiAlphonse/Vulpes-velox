@@ -2,7 +2,6 @@ package com.vulpes.velox.controllers;
 
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.productservice.ProductService;
 import com.vulpes.velox.services.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
