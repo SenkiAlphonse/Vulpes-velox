@@ -1,11 +1,7 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
-import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Order;
-import com.vulpes.velox.models.products.IdentifiedProduct;
-import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.itemservice.ItemService;
 import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.orderservice.OrderService;
 import org.junit.Before;
@@ -39,6 +35,12 @@ public class OrderServiceTest {
 
   @Autowired
   private OrderService orderService;
+
+  @MockBean
+  private MethodService methodService;
+
+  @MockBean
+  private RedirectAttributes redirectAttributes;
 
   private Map<String, Boolean> errorFlashAttributes;
   private Order order;
@@ -76,6 +78,45 @@ public class OrderServiceTest {
     assertThat(orderByName.getName(), is("NameTaken"));
   }
 
+  @Test
+  public void existsByName() {
+    assertTrue(orderService.existsByName("NameTaken"));
+    assertFalse(orderService.existsByName("NameNew"));
+  }
+
+  @Test
+  public void getErrorFlashAttributes() {
+    String message = "Enter order name.";
+
+    when((Object) methodService.getErrorMessageFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+
+    for (int i = 0; i < 3; i++) {
+      if (i == 1) {
+        order.setName("");
+        message = "Empty order name.";
+      } else if (i == 2) {
+        order.setName("NameTaken");
+        message = "Order name already exists.";
+      }
+
+      assertFalse(orderService.getErrorFlashAttributes(order, redirectAttributes).isEmpty());
+
+      ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+      ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+      verify(methodService, atLeast(1))
+          .getErrorMessageFlashAttributes(
+              stringArgument.capture(),
+              any(RedirectAttributes.class),
+              stringArgument2.capture());
+      verifyNoMoreInteractions(methodService);
+      assertThat(stringArgument.getValue(), is(message));
+      assertThat(stringArgument2.getValue(), is("orderError"));
+      clearInvocations();
+    }
+  }
 
 
 }

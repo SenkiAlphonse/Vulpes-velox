@@ -89,7 +89,6 @@ public class ItemServiceTest {
 
   @Test
   public void getErrorFlashAttributes() {
-
     String identifiedProductName = identifiedProduct.getName();
     String message = "Enter product number.";
 
@@ -122,7 +121,6 @@ public class ItemServiceTest {
 
       assertFalse(itemService.getErrorFlashAttributes(
           identifiedProductName, item, redirectAttributes).isEmpty());
-
 
       ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
       ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
