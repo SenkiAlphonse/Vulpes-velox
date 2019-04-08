@@ -63,6 +63,16 @@ public class ItemServiceTest {
   }
 
   @Test
+  public void save() {
+    assertThat(itemService.getAll().size(), is(1));
+    item.setPrice((long) 2);
+    itemService.save(item);
+    assertThat(itemService.getAll().size(), is(2));
+    assertThat(itemService.getAll().get(1).getPrice(), is((long) 2));
+    assertThat(itemService.getAll().get(1).getProductNumber(), is(nullValue()));
+  }
+
+  @Test
   public void getAll() {
     assertFalse(itemService.getAll().isEmpty());
     assertThat(itemService.getAll().size(), is(1));
@@ -128,6 +138,8 @@ public class ItemServiceTest {
       clearInvocations();
     }
   }
+
+
 
 
 
