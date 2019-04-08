@@ -3,17 +3,13 @@ package com.vulpes.velox.services;
 import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.products.IdentifiedProduct;
-import com.vulpes.velox.repositories.ItemRepository;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
 import com.vulpes.velox.services.itemservice.ItemService;
-import com.vulpes.velox.services.itemservice.ItemServiceImpl;
 import com.vulpes.velox.services.methodservice.MethodService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,7 +23,6 @@ import java.util.*;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -66,6 +61,14 @@ public class ItemServiceTest {
     errorFlashAttributes.put("itemError", true);
     item = new Item();
   }
+
+  @Test
+  public void getAll() {
+    assertFalse(itemService.getAll().isEmpty());
+    assertThat(itemService.getAll().size(), is(1));
+    assertThat(itemService.getAll().get(0).getProductNumber(), is((long) 11111111));
+  }
+
 
   @Test
   public void getAllByIdentifiedProduct() {
@@ -126,46 +129,6 @@ public class ItemServiceTest {
     }
   }
 
-  @Test
-  public void getErrorFlashAttributesNotAllowedProductNumber() {
-    item.setProductNumber((long) 223);
 
-    when((Object) methodService.getErrorMessageFlashAttributes(
-        notNull(),
-        notNull(),
-        notNull())).thenReturn(errorFlashAttributes);
-    assertFalse(itemService.getErrorFlashAttributes(
-        identifiedProduct.getName(), item, redirectAttributes).isEmpty());
-
-    ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
-    ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
-    verify(methodService, times(1))
-        .getErrorMessageFlashAttributes(
-            stringArgument.capture(),
-            any(RedirectAttributes.class),
-            stringArgument2.capture());
-    String stringArgumentValue = stringArgument.getValue();
-    String stringArgumentValue2 = stringArgument2.getValue();
-    assertThat(stringArgumentValue, containsString("Product number has to be 8 digits."));
-    assertThat(stringArgumentValue2, is("itemError"));
-  }
-
-//  @Test
-//  public void getErrorFlashAttributes() throws Exception {
-//    ItemServiceImpl itemServiceMock = spy(new ItemServiceImpl());
-//    doReturn(Collections.emptyMap()).when(itemServiceMock,
-//        "getErrorMessageFlashAttributes",
-//        any(), any());
-//    when(itemServiceMock, "getErrorFlashAttributes",
-//        any(), any(), any())
-//        .thenReturn(Collections.emptyMap());
-//
-////    assertThat(Whitebox.invokeMethod(new ItemServiceImpl(),
-////        "getErrorMessageFlashAttributes", "message", any(RedirectAttributes.class)), instanceOf(Map.class));
-//    assertThat(
-//        itemService.getErrorFlashAttributes(
-//            "name", new Item(), redirectAttributes),
-//        is(Collections.emptyMap()));
-//  }
 
 }
