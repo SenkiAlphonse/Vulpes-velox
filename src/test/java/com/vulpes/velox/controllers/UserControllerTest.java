@@ -45,7 +45,7 @@ public class UserControllerTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("bulkProductError", true);
+    errorFlashAttributes.put("userError", true);
     user = new User();
   }
 
