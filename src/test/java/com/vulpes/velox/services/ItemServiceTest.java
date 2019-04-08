@@ -123,6 +123,7 @@ public class ItemServiceTest {
       assertFalse(itemService.getErrorFlashAttributes(
           identifiedProductName, item, redirectAttributes).isEmpty());
 
+
       ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
       ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
       verify(methodService, atLeast(1))
@@ -149,23 +150,22 @@ public class ItemServiceTest {
     assertFalse(itemService.getNewItemFlashAttributes(item, redirectAttributes).isEmpty());
 
     ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
-    ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
-    ArgumentCaptor<String> stringArgument3 = ArgumentCaptor.forClass(String.class);
     verify(redirectAttributes, atLeast(1))
         .addFlashAttribute(
             stringArgument.capture(),
             any(Boolean.class));
     verify(redirectAttributes, atLeast(1))
         .addFlashAttribute(
-            stringArgument2.capture(),
+            stringArgument.capture(),
             any(Long.class));
     verify(redirectAttributes, atLeast(1))
         .addFlashAttribute(
-            stringArgument3.capture(),
+            stringArgument.capture(),
             anyString());
-    assertThat(stringArgument.getValue(), is("savedItem"));
-    assertThat(stringArgument2.getValue(), is("productNumber"));
-    assertThat(stringArgument3.getValue(), is("identifiedProductName"));
+    List<String> stringArgumentValue = stringArgument.getAllValues();
+    assertThat(stringArgumentValue.get(0), is("savedItem"));
+    assertThat(stringArgumentValue.get(1), is("productNumber"));
+    assertThat(stringArgumentValue.get(2), is("identifiedProductName"));
 
   }
 
