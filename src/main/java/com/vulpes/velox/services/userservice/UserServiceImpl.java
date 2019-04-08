@@ -88,25 +88,18 @@ public class UserServiceImpl implements UserService {
   @Override
   public Map<String, ?> getErrorFlashAttributes( User user, RedirectAttributes redirectAttributes) {
     String attributeName = "userError";
+    String message = "";
     if (user == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Error creating user.",
-          redirectAttributes,
-          attributeName);
+      message = "Error creating user.";
+    } else if (user.getEmail() == null || user.getEmail().isEmpty()) {
+      message = "Enter an e-mail address.";
+    } else if (existsByEmail(user.getEmail())) {
+      message = "This e-mail address already exists in the database.";
     }
-    if (user.getEmail() == null || user.getEmail().isEmpty()) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter an e-mail address.",
-          redirectAttributes,
-          attributeName);
-    }
-    if (existsByEmail(user.getEmail())) {
-      return methodService.getErrorMessageFlashAttributes(
-          "This e-mail address already exists in the database.",
-          redirectAttributes,
-          attributeName);
-    }
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        attributeName);
   }
 
   @Override
