@@ -139,6 +139,45 @@ public class ItemServiceTest {
     }
   }
 
+  @Test
+  public void getNewItemFlashAttributes() {
+    when((Object) redirectAttributes.addFlashAttribute(
+        notNull(), notNull())).thenReturn(redirectAttributes);
+    when((Object) redirectAttributes.getFlashAttributes()).thenReturn(errorFlashAttributes);
+
+    item.setProductNumber((long) 22222222);
+    item.setIdentifiedProduct(identifiedProduct);
+    assertFalse(itemService.getNewItemFlashAttributes(item, redirectAttributes).isEmpty());
+
+    ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> stringArgument3 = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> stringArgument4 = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> stringArgument5 = ArgumentCaptor.forClass(String.class);
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            any(Boolean.class));
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument2.capture(),
+            stringArgument3.capture());
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument4.capture(),
+            stringArgument5.capture());
+    String stringArgumentValue = stringArgument.getValue();
+    String stringArgumentValue2 = stringArgument2.getValue();
+    String stringArgumentValue3 = stringArgument3.getValue();
+    String stringArgumentValue4 = stringArgument2.getValue();
+    String stringArgumentValue5 = stringArgument3.getValue();
+    assertThat(stringArgumentValue, is("savedItem"));
+    assertThat(stringArgumentValue2, is("identifiedProductName"));
+    assertThat(stringArgumentValue3, is(identifiedProduct.getName()));
+    assertThat(stringArgumentValue4, is("productNumber"));
+    assertThat(stringArgumentValue5, is((long) 22222222));
+
+  }
 
 
 
