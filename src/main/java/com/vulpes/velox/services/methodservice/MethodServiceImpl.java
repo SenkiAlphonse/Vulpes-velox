@@ -42,26 +42,18 @@ public class MethodServiceImpl implements MethodService {
     } else {
       displayName = "identified product";
     }
-
+    String message = "";
     if (product.getName() == null) {
-      return getErrorMessageFlashAttributes(
-          "Enter " + displayName + " name.",
-          redirectAttributes,
-          errorAttribute);
+      message = "Enter " + displayName + " name.";
+    } else if (product.getName().isEmpty()) {
+      message = "Empty " + displayName + " name.";
+    } else if (productService.existsByName(product.getName())) {
+      message = "Product name already exists.";
     }
-    if (product.getName().isEmpty()) {
-      return getErrorMessageFlashAttributes(
-          "Empty " + displayName + " name.",
-          redirectAttributes,
-          errorAttribute);
-    }
-    if (productService.existsByName(product.getName())) {
-      return getErrorMessageFlashAttributes(
-          "Product name already exists.",
-          redirectAttributes,
-          errorAttribute);
-    }
-    return redirectAttributes.getFlashAttributes();
+    return getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        errorAttribute);
   }
 
 }
