@@ -68,7 +68,6 @@ public class ShipmentServiceImpl implements ShipmentService {
                                                 RedirectAttributes redirectAttributes) {
     String attributeName = "shipmentError";
     String message = "";
-
     if (shipment.getQuantity() == null) {
       message = "Enter quantity.";
     } else if (shipment.getQuantity() <= 0) {

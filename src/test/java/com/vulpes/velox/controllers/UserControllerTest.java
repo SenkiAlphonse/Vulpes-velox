@@ -164,7 +164,7 @@ public class UserControllerTest {
     verify(userService, times(1)).isAdmin(isNull());
     verify(userService, times(1)).addUser(userArgument.capture());
     verify(userService, times(1))
-        .getErrorFlashAttributes(any(RedirectAttributes.class), any(User.class));
+        .getErrorFlashAttributes(any(User.class), any(RedirectAttributes.class));
     verifyNoMoreInteractions(userService);
 
     User userArgumentValue = userArgument.getValue();
@@ -192,7 +192,7 @@ public class UserControllerTest {
 
     verify(userService, times(1)).isAdmin(isNull());
     verify(userService, times(1))
-        .getErrorFlashAttributes(any(RedirectAttributes.class), any(User.class));
+        .getErrorFlashAttributes(any(User.class), any(RedirectAttributes.class));
     verifyNoMoreInteractions(userService);
   }
 
@@ -247,7 +247,6 @@ public class UserControllerTest {
     verifyNoMoreInteractions(userService);
   }
 
-
   @Test
   public void usersUpdateOk() throws Exception {
     when(userService.isAdmin(isNull())).thenReturn(true);
@@ -288,18 +287,5 @@ public class UserControllerTest {
     verify(userService, times(1)).isUser(isNull());
     verifyNoMoreInteractions(userService);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

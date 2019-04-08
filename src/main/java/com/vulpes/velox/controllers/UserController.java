@@ -64,7 +64,7 @@ public class UserController {
                         OAuth2Authentication authentication,
                         RedirectAttributes redirectAttributes) {
     if (userService.isAdmin(authentication)) {
-      if(!userService.getErrorFlashAttributes(redirectAttributes, newUser).isEmpty()) {
+      if(!userService.getErrorFlashAttributes(newUser, redirectAttributes).isEmpty()) {
 
         return "redirect:/users#adduser";
       }
