@@ -23,6 +23,10 @@ public class MethodServiceImpl implements MethodService {
   public Map<String, ?> getErrorMessageFlashAttributes(String message,
                                                        RedirectAttributes redirectAttributes,
                                                        String errorAttribute) {
+    if (message.isEmpty()) {
+      return redirectAttributes.getFlashAttributes();
+    }
+
     redirectAttributes.addFlashAttribute(errorAttribute, true);
     redirectAttributes.addFlashAttribute("errorMessage", message);
     return redirectAttributes.getFlashAttributes();

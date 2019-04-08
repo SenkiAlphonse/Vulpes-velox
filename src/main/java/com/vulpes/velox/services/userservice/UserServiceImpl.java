@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean userExistsByEmail(String email) {
+  public boolean existsByEmail(String email) {
     return userRepository.findByEmail(email) != null;
   }
 
@@ -86,24 +86,25 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user) {
+  public Map<String, ?> getErrorFlashAttributes( User user, RedirectAttributes redirectAttributes) {
+    String attributeName = "userError";
     if (user == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Error creating user.",
           redirectAttributes,
-          "userError");
+          attributeName);
     }
     if (user.getEmail() == null || user.getEmail().isEmpty()) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter an e-mail address.",
           redirectAttributes,
-          "userError");
+          attributeName);
     }
-    if (userExistsByEmail(user.getEmail())) {
+    if (existsByEmail(user.getEmail())) {
       return methodService.getErrorMessageFlashAttributes(
           "This e-mail address already exists in the database.",
           redirectAttributes,
-          "userError");
+          attributeName);
     }
     return redirectAttributes.getFlashAttributes();
   }

@@ -27,9 +27,9 @@ public interface UserService {
 
   String getGoogleUserName(OAuth2Authentication authentication);
 
-  boolean userExistsByEmail(String email);
+  boolean existsByEmail(String email);
 
-  Map<String, ?> getErrorFlashAttributes(RedirectAttributes redirectAttributes, User user);
+  Map<String, ?> getErrorFlashAttributes(User user, RedirectAttributes redirectAttributes);
 
   String getUserEmail(OAuth2Authentication authentication);
 

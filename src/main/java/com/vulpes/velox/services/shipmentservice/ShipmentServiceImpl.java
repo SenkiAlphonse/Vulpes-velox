@@ -66,55 +66,30 @@ public class ShipmentServiceImpl implements ShipmentService {
                                                 String bestBeforeDate,
                                                 Shipment shipment,
                                                 RedirectAttributes redirectAttributes) {
+    String attributeName = "shipmentError";
+    String message = "";
+
     if (shipment.getQuantity() == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter quantity.",
-          redirectAttributes,
-          "shipmentError");
+      message = "Enter quantity.";
+    } else if (shipment.getQuantity() <= 0) {
+      message = "Quantity not allowed.";
+    } else if (shipment.getPrice() == null) {
+      message = "Enter price.";
+    } else if (shipment.getPrice() <= 0) {
+      message = "Price not allowed.";
+    } else if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
+      message = "Date entered not allowed.";
+    } else if (bulkProductName == null) {
+      message = "Enter bulk product name.";
+    } else if (bulkProductName.isEmpty()) {
+      message = "Empty bulk product name.";
+    } else if (!bulkProductService.existsByName(bulkProductName)) {
+      message = "Bulk product not found.";
     }
-    if (shipment.getQuantity() <= 0) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Quantity not allowed.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (shipment.getPrice() == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter price.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (shipment.getPrice() <= 0) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Price not allowed.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Date entered not allowed.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (bulkProductName == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter bulk product name.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (bulkProductName.isEmpty()) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Empty bulk product name.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    if (!bulkProductService.existsByName(bulkProductName)) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Bulk product not found.",
-          redirectAttributes,
-          "shipmentError");
-    }
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        attributeName);
   }
 
   @Override

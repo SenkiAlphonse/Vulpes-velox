@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,47 +48,57 @@ public class ItemServiceImpl implements ItemService {
   public Map<String, ?> getErrorFlashAttributes(String identifiedProductName,
                                                 Item item,
                                                 RedirectAttributes redirectAttributes) {
+//    List<Boolean> booleans = Arrays.asList(
+//        item.getProductNumber() == null,
+//        item.getProductNumber().toString().length() != 8,
+//        existsByProductNumber(item.getProductNumber()),
+//        identifiedProductName == null,
+//        identifiedProductName.isEmpty(),
+//        item.getPrice() == null,
+//        item.getPrice() <= 0);
+    String attributeName = "itemError";
+
     if (item.getProductNumber() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter product number.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     if (item.getProductNumber().toString().length() != 8) {
       return methodService.getErrorMessageFlashAttributes(
           "Product number has to be 8 digits.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
-    if (itemRepository.existsByProductNumber(item.getProductNumber())) {
+    if (existsByProductNumber(item.getProductNumber())) {
       return methodService.getErrorMessageFlashAttributes(
           "Product number already exists.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     if (identifiedProductName == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter identified product.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     if (identifiedProductName.isEmpty()) {
       return methodService.getErrorMessageFlashAttributes(
           "Empty identified product name.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     if (item.getPrice() == null) {
       return methodService.getErrorMessageFlashAttributes(
           "Enter price.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     if (item.getPrice() <= 0) {
       return methodService.getErrorMessageFlashAttributes(
           "Price not allowed.",
           redirectAttributes,
-          "itemError");
+          attributeName);
     }
     return redirectAttributes.getFlashAttributes();
   }

@@ -48,23 +48,19 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(Order order,
                                                 RedirectAttributes redirectAttributes) {
+    String attributeName = "orderError";
+    String message = "";
     if (order.getName() == null) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Enter order name.",
-          redirectAttributes,
-          "orderError");
+      message = "Enter order name.";
     }
     if (order.getName().isEmpty()) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Empty order name.",
-          redirectAttributes,
-          "orderError");
+      message = "Empty order name.";
     }
-    if (orderRepository.existsByName(order.getName())) {
+    if (existsByName(order.getName())) {
       return methodService.getErrorMessageFlashAttributes(
           "Order name already exists.",
           redirectAttributes,
-          "orderError");
+          attributeName);
     }
     return redirectAttributes.getFlashAttributes();
   }
