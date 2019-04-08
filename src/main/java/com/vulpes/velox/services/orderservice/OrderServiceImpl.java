@@ -52,17 +52,15 @@ public class OrderServiceImpl implements OrderService {
     String message = "";
     if (order.getName() == null) {
       message = "Enter order name.";
-    }
-    if (order.getName().isEmpty()) {
+    } else if (order.getName().isEmpty()) {
       message = "Empty order name.";
+    } else if (existsByName(order.getName())) {
+      message = "Order name already exists.";
     }
-    if (existsByName(order.getName())) {
-      return methodService.getErrorMessageFlashAttributes(
-          "Order name already exists.",
-          redirectAttributes,
-          attributeName);
-    }
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        attributeName);
   }
 
 }
