@@ -96,11 +96,18 @@ public class ProductServiceTest {
   public void getDtosFromEntities() {
     assertThat(productService.getDtosFromEntities(Collections.emptyList()), is(Collections.emptyList()));
     assertThat(productService.getDtosFromEntities(null), is(Collections.emptyList()));
-    assertThat(productService.getDtosFromEntities(products).get(0).name, is(products.get(0).getName()));
-    assertThat(productService.getDtosFromEntities(products).get(1).name, is(products.get(1).getName()));
-    assertThat(productService.getDtosFromEntities(products).get(0).quantity, is(products.get(0).getQuantity()));
-    assertThat(productService.getDtosFromEntities(products).get(1).quantity, is(products.get(1).getQuantity()));
+    for (int i = 0; i < products.size(); i++) {
+      assertThat(productService.getDtosFromEntities(products).get(i).name, is(products.get(i).getName()));
+      assertThat(productService.getDtosFromEntities(products).get(i).quantity, is(products.get(i).getQuantity()));
+    }
   }
+
+  @Test
+  public void updateBulkProductWithShipment() {
+    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10, (long) 10));
+    assertThat(productService.getByName("NameTaken").getQuantity(), is((long) 13));
+  }
+
 
 //  @Test
 //  public void getAll() {
@@ -110,11 +117,5 @@ public class ProductServiceTest {
 //    assertNotSame(productsAll, products);
 //    assertNotEquals(productsAll, products2);
 //  }
-
-  @Test
-  public void updateBulkProductWithShipment() {
-    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10, (long) 10));
-    assertThat(productService.getByName("NameTaken").getQuantity(), is((long) 13));
-  }
 
 }

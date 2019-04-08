@@ -81,10 +81,9 @@ public class BulkProductControllerTest {
     verifyNoMoreInteractions(bulkProductService);
 
     BulkProduct bulkProductArgumentValue = bulkProductArgument.getValue();
-    String stringArgumentValue = stringArgument.getValue();
     assertThat(bulkProductArgumentValue.getId(), is((long) 1));
     assertThat(bulkProductArgumentValue.getName(), is("Name"));
-    assertThat(stringArgumentValue, is("Piece"));
+    assertThat(stringArgument.getValue(), is("Piece"));
   }
 
   @Test

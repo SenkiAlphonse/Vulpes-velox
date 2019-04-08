@@ -131,10 +131,8 @@ public class ItemServiceTest {
               any(RedirectAttributes.class),
               stringArgument2.capture());
       verifyNoMoreInteractions(methodService);
-      String stringArgumentValue = stringArgument.getValue();
-      String stringArgumentValue2 = stringArgument2.getValue();
-      assertThat(stringArgumentValue, is(message));
-      assertThat(stringArgumentValue2, is("itemError"));
+      assertThat(stringArgument.getValue(), is(message));
+      assertThat(stringArgument2.getValue(), is("itemError"));
       clearInvocations();
     }
   }
@@ -165,16 +163,10 @@ public class ItemServiceTest {
         .addFlashAttribute(
             stringArgument3.capture(),
             anyString());
-    String stringArgumentValue = stringArgument.getValue();
-    String stringArgumentValue2 = stringArgument2.getValue();
-    String stringArgumentValue3 = stringArgument3.getValue();
-    assertThat(stringArgumentValue, is("savedItem"));
-    assertThat(stringArgumentValue2, is("productNumber"));
-    assertThat(stringArgumentValue3, is("identifiedProductName"));
+    assertThat(stringArgument.getValue(), is("savedItem"));
+    assertThat(stringArgument2.getValue(), is("productNumber"));
+    assertThat(stringArgument3.getValue(), is("identifiedProductName"));
 
   }
-
-
-
 
 }

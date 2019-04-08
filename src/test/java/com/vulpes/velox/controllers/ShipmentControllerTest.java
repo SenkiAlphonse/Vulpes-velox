@@ -119,15 +119,12 @@ public class ShipmentControllerTest {
     verifyNoMoreInteractions(bulkProductService);
 
     Shipment shipmentArgumentValue = shipmentArgument.getValue();
-    String stringArgumentValue = stringArgument.getValue();
-    String stringArgumentValue2 = stringArgument2.getValue();
-    String stringArgumentValue3 = stringArgument3.getValue();
     assertThat(shipmentArgumentValue.getId(), is((long) 1));
     assertThat(shipmentArgumentValue.getQuantity(), is((long) 5));
     assertThat(shipmentArgumentValue.getPrice(), is((long) 100));
-    assertThat(stringArgumentValue, is("BulkProductName"));
-    assertThat(stringArgumentValue2, is("Arrival"));
-    assertThat(stringArgumentValue3, is("BestBefore"));
+    assertThat(stringArgument.getValue(), is("BulkProductName"));
+    assertThat(stringArgument2.getValue(), is("Arrival"));
+    assertThat(stringArgument3.getValue(), is("BestBefore"));
   }
 
   @Test
