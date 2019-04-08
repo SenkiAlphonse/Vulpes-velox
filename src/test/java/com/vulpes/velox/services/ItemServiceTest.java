@@ -7,9 +7,12 @@ import com.vulpes.velox.repositories.ItemRepository;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
 import com.vulpes.velox.services.itemservice.ItemService;
 import com.vulpes.velox.services.itemservice.ItemServiceImpl;
+import com.vulpes.velox.services.methodservice.MethodService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,17 +22,16 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
@@ -46,17 +48,23 @@ public class ItemServiceTest {
   private IdentifiedProductService identifiedProductService;
 
   @MockBean
+  private MethodService methodService;
+
+  @MockBean
   private RedirectAttributes redirectAttributes;
 
   private List<IdentifiedProduct> identifiedProducts;
   private IdentifiedProduct identifiedProduct;
-  private Map<String, Boolean> map;
-
+  private Map<String, Boolean> errorFlashAttributes;
+  private Item item;
 
   @Before
   public void setup() {
     identifiedProducts = identifiedProductService.getAll();
     identifiedProduct = identifiedProducts.get(0);
+    errorFlashAttributes = new HashMap<>();
+    errorFlashAttributes.put("itemError", true);
+    item = new Item();
   }
 
   @Test
@@ -64,6 +72,82 @@ public class ItemServiceTest {
     assertThat(itemService.getAllByIdentifiedProduct(identifiedProduct).size(), is(1));
     assertThat(itemService.getAllByIdentifiedProduct(identifiedProduct), instanceOf(List.class));
     assertThat(itemService.getAllByIdentifiedProduct(identifiedProduct).get(0).getProductNumber(), is((long) 11111111));
+  }
+
+  @Test
+  public void getErrorFlashAttributes() {
+
+    String identifiedProductName = identifiedProduct.getName();
+    String message = "Enter product number.";
+
+    when((Object) methodService.getErrorMessageFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+
+    for (int i = 0; i < 7; i++) {
+      if (i == 1) {
+        item.setProductNumber((long) 2135);
+        message = "Product number has to be 8 digits.";
+      } else if (i == 2) {
+        item.setProductNumber((long) 11111111);
+        message = "Product number already exists.";
+      } else if (i == 3) {
+        item.setProductNumber((long) 11111112);
+        identifiedProductName = null;
+        message = "Enter identified product.";
+      } else if (i == 4) {
+        identifiedProductName = "";
+        message = "Empty identified product name.";
+      } else if (i == 5) {
+        identifiedProductName = "NameTaken3";
+        message = "Enter price.";
+      } else if (i == 6) {
+        item.setPrice((long) 0);
+        message = "Price not allowed.";
+      }
+
+      assertFalse(itemService.getErrorFlashAttributes(
+          identifiedProductName, item, redirectAttributes).isEmpty());
+
+      ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+      ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+      verify(methodService, atLeast(1))
+          .getErrorMessageFlashAttributes(
+              stringArgument.capture(),
+              any(RedirectAttributes.class),
+              stringArgument2.capture());
+      verifyNoMoreInteractions(methodService);
+      String stringArgumentValue = stringArgument.getValue();
+      String stringArgumentValue2 = stringArgument2.getValue();
+      assertThat(stringArgumentValue, is(message));
+      assertThat(stringArgumentValue2, is("itemError"));
+      clearInvocations();
+    }
+  }
+
+  @Test
+  public void getErrorFlashAttributesNotAllowedProductNumber() {
+    item.setProductNumber((long) 223);
+
+    when((Object) methodService.getErrorMessageFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+    assertFalse(itemService.getErrorFlashAttributes(
+        identifiedProduct.getName(), item, redirectAttributes).isEmpty());
+
+    ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+    verify(methodService, times(1))
+        .getErrorMessageFlashAttributes(
+            stringArgument.capture(),
+            any(RedirectAttributes.class),
+            stringArgument2.capture());
+    String stringArgumentValue = stringArgument.getValue();
+    String stringArgumentValue2 = stringArgument2.getValue();
+    assertThat(stringArgumentValue, containsString("Product number has to be 8 digits."));
+    assertThat(stringArgumentValue2, is("itemError"));
   }
 
 //  @Test
