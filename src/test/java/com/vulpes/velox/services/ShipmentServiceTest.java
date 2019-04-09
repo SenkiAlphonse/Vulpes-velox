@@ -3,6 +3,7 @@ package com.vulpes.velox.services;
 import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
+import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
@@ -45,14 +46,23 @@ public class ShipmentServiceTest {
   @Autowired
   private BulkProductService bulkProductService;
 
+  @MockBean
+  private MethodService methodService;
+  @MockBean
+  private RedirectAttributes redirectAttributes;
+
   private Map<String, Boolean> errorFlashAttributes;
   private int countAllStart;
+  private BulkProduct bulkProduct;
+  private Shipment shipment;
 
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("itemError", true);
     countAllStart = shipmentService.getAll().size();
+    bulkProduct = bulkProductService.getAll().get(0);
+    shipment = new Shipment();
   }
 
   @Test
@@ -79,7 +89,7 @@ public class ShipmentServiceTest {
 
   @Test
   public void getAllByBulkProduct() {
-    List<Shipment> allByBulkProduct = shipmentService.getAllByBulkProduct(bulkProductService.getAll().get(0));
+    List<Shipment> allByBulkProduct = shipmentService.getAllByBulkProduct(bulkProduct);
     assertThat(allByBulkProduct.size(), is(1));
     assertThat(allByBulkProduct.get(0).getQuantity(), is((long) 5));
   }
@@ -90,6 +100,60 @@ public class ShipmentServiceTest {
     assertTrue(shipmentService.isAllowedDateFormat("0123456789"));
   }
 
+  @Test
+  public void getErrorFlashAttributes() {
+    String bulkProductName = "";
+    String arrivalDate = "";
+    String bestBeforeDate = "";
+    String message = "Enter quantity.";
+
+    when((Object) methodService.getErrorMessageFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+
+    for (int i = 0; i < 8; i++) {
+      if (i == 1) {
+        shipment.setQuantity((long) 0);
+        message = "Quantity not allowed.";
+      } else if (i == 2) {
+        shipment.setQuantity((long) 10);
+        message = "Enter price.";
+      } else if (i == 3) {
+        shipment.setPrice((long) 0);
+        message = "Price not allowed.";
+      } else if (i == 4) {
+        shipment.setPrice((long) 400);
+        message = "Date entered not allowed.";
+      } else if (i == 5) {
+        arrivalDate = "2019-10-01";
+        bestBeforeDate = "2019-10-20";
+        bulkProductName = null;
+        message = "Enter bulk product name.";
+      } else if (i == 6) {
+        bulkProductName = "";
+        message = "Empty bulk product name.";
+      } else if (i == 7) {
+        bulkProductName = "NotFound";
+        message = "Bulk product not found.";
+      }
+
+      assertFalse(shipmentService.getErrorFlashAttributes(
+          bulkProductName, arrivalDate, bestBeforeDate, shipment, redirectAttributes).isEmpty());
+
+      ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+      ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+      verify(methodService, atLeast(1))
+          .getErrorMessageFlashAttributes(
+              stringArgument.capture(),
+              any(RedirectAttributes.class),
+              stringArgument2.capture());
+      verifyNoMoreInteractions(methodService);
+      assertThat(stringArgument.getValue(), is(message));
+      assertThat(stringArgument2.getValue(), is("shipmentError"));
+      clearInvocations();
+    }
+  }
 
 
 }
