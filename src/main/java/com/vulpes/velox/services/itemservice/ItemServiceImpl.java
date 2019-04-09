@@ -47,7 +47,6 @@ public class ItemServiceImpl implements ItemService {
   public Map<String, ?> getErrorFlashAttributes(String identifiedProductName,
                                                 Item item,
                                                 RedirectAttributes redirectAttributes) {
-    String attributeName = "itemError";
     String message = "";
     if (item.getProductNumber() == null) {
       message = "Enter product number.";
@@ -67,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     return methodService.getErrorMessageFlashAttributes(
         message,
         redirectAttributes,
-        attributeName);
+        "itemError");
   }
 
   @Override

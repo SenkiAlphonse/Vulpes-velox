@@ -66,7 +66,6 @@ public class ShipmentServiceImpl implements ShipmentService {
                                                 String bestBeforeDate,
                                                 Shipment shipment,
                                                 RedirectAttributes redirectAttributes) {
-    String attributeName = "shipmentError";
     String message = "";
     if (shipment.getQuantity() == null) {
       message = "Enter quantity.";
@@ -88,7 +87,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     return methodService.getErrorMessageFlashAttributes(
         message,
         redirectAttributes,
-        attributeName);
+        "shipmentError");
   }
 
   @Override

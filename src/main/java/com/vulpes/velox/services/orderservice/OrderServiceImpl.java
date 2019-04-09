@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Map<String, ?> getErrorFlashAttributes(Order order,
                                                 RedirectAttributes redirectAttributes) {
-    String attributeName = "orderError";
     String message = "";
     if (order.getName() == null) {
       message = "Enter order name.";
@@ -60,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
     return methodService.getErrorMessageFlashAttributes(
         message,
         redirectAttributes,
-        attributeName);
+        "orderError");
   }
 
 }

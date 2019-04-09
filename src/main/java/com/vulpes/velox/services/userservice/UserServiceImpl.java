@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Map<String, ?> getErrorFlashAttributes( User user, RedirectAttributes redirectAttributes) {
-    String attributeName = "userError";
     String message = "";
     if (user == null) {
       message = "Error creating user.";
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
     return methodService.getErrorMessageFlashAttributes(
         message,
         redirectAttributes,
-        attributeName);
+        "userError");
   }
 
   @Override
