@@ -155,5 +155,50 @@ public class ShipmentServiceTest {
     }
   }
 
+  @Test
+  public void getNewShipmentFlashAttributes() {
+    when((Object) redirectAttributes.addFlashAttribute(
+        notNull(), notNull())).thenReturn(redirectAttributes);
+    when((Object) redirectAttributes.getFlashAttributes()).thenReturn(errorFlashAttributes);
+
+    shipment.setPrice((long) 150);
+    shipment.setArrival(LocalDate.of(2019,8,10));
+    shipment.setBestBefore(LocalDate.of(2019,10,10));
+    shipment.setQuantity((long) 5);
+    shipment.setBulkProduct(bulkProduct);
+
+    assertFalse(shipmentService.getNewShipmentFlashAttributes(shipment, redirectAttributes).isEmpty());
+
+    ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<LocalDate> localDateArgument = ArgumentCaptor.forClass(LocalDate.class);
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            any(Boolean.class));
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            anyString());
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            any(Long.class));
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            any(LocalDate.class));
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            anyString(),
+            localDateArgument.capture());
+    List<String> stringArgumentValue = stringArgument.getAllValues();
+    LocalDate localDateArgumentValue = localDateArgument.getValue();
+    assertThat(stringArgumentValue.get(0), is("savedShipment"));
+    assertThat(stringArgumentValue.get(1), is("bulkProductName"));
+    assertThat(stringArgumentValue.get(2), is("quantity"));
+    assertThat(stringArgumentValue.get(3), is("arrival"));
+    assertThat(localDateArgumentValue, is(LocalDate.of(2019,10,10)));
+  }
+  
 
 }
