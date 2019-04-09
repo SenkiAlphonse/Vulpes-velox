@@ -1,13 +1,9 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
-import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
-import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
-import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.itemservice.ItemService;
 import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.shipmentservice.ShipmentService;
 import org.junit.Before;
@@ -199,6 +195,19 @@ public class ShipmentServiceTest {
     assertThat(stringArgumentValue.get(3), is("arrival"));
     assertThat(localDateArgumentValue, is(LocalDate.of(2019,10,10)));
   }
-  
+
+  @Test
+  public void saveNewShipment() {
+    assertThat(shipmentService.getAll().size(), is(countAllStart));
+    shipmentService.saveNewShipment(
+        "NameTaken",
+        "2019-10-05",
+        "2019-10-20",
+        shipment);
+    assertThat(shipmentService.getAll().size(), is(countAllStart + 1));
+    assertThat(shipment.getBulkProduct().getName(), is("NameTaken"));
+    assertThat(shipment.getArrival(), is(LocalDate.of(2019,10,5)));
+    assertThat(shipment.getBestBefore(), is(LocalDate.of(2019,10,20)));
+  }
 
 }
