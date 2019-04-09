@@ -44,12 +44,14 @@ public class OrderServiceTest {
 
   private Map<String, Boolean> errorFlashAttributes;
   private Order order;
+  private int countAllStart;
 
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("itemError", true);
     order = new Order();
+    countAllStart = orderService.getAll().size();
   }
 
   @Test
@@ -61,13 +63,13 @@ public class OrderServiceTest {
 
   @Test
   public void save() {
-    assertThat(orderService.getAll().size(), is(2));
+    assertThat(orderService.getAll().size(), is(countAllStart));
     order.setName("NameTaken");
     orderService.save(order);
-    assertThat(orderService.getAll().size(), is(2));
+    assertThat(orderService.getAll().size(), is(countAllStart));
     order.setName("NameNew");
     orderService.save(order);
-    assertThat(orderService.getAll().size(), is(3));
+    assertThat(orderService.getAll().size(), is(countAllStart + 1));
     assertThat(orderService.getAll().get(2).getName(), is("NameNew"));
   }
 
