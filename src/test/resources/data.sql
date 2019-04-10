@@ -35,4 +35,5 @@ INSERT INTO users
   ('email8', 'user8', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
   ('email9', 'user9', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
   ('email10', 'user10', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
-  ('email11', 'user11', true, 'img', '2019-03-03', '2019-03-18', 'loginType');
+  ('email11', 'user11', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email12', 'user12', true, 'img', '2019-03-03', '2019-03-18', 'loginType');

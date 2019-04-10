@@ -1,6 +1,7 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
+import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.models.products.BulkProduct;
@@ -8,13 +9,17 @@ import com.vulpes.velox.services.bulkproductservice.BulkProductService;
 import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.shipmentservice.ShipmentService;
 import com.vulpes.velox.services.userservice.UserService;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.*;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,6 +48,8 @@ public class UserServiceTest {
 
   @MockBean
   private MethodService methodService;
+  @MockBean
+  private OAuth2Authentication authentication;
 
   private Map<String, Boolean> errorFlashAttributes;
   private int countAllStart;
@@ -79,13 +86,23 @@ public class UserServiceTest {
   }
 
   @Test
-  public void isUser() {
-
+  public void getAllForPage() {
+    assertFalse(userService.getAllForPage(1).isEmpty());
+    assertThat(userService.getAllForPage(1).get(0).getEmail(), is("email8"));
+    assertThat(userService.getAllForPage(1).get(1).getEmail(), is("email9"));
   }
 
+  @Test(expected = BadRequestException.class)
+  public void addUserException() {
+    userService.addUser(null);
+  }
 
-
-
+  @Test
+  public void addUser() {
+    assertThat(userService.getAllForPage(1).size(), is(countAllStart));
+    userService.addUser(user);
+    assertThat(userService.getAllForPage(1).size(), is(countAllStart + 1));
+  }
 
 
 
