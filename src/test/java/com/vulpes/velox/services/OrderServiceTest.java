@@ -49,7 +49,7 @@ public class OrderServiceTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("orderError", true);
     order = new Order();
     countAllStart = orderService.getAll().size();
   }

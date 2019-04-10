@@ -51,7 +51,7 @@ public class BulkProductServiceTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("bulkProductError", true);
     productDto = new ProductDto();
     productDto.name = "DtoName";
     productDto.quantity = (long) 5;

@@ -55,7 +55,7 @@ public class ShipmentServiceTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("shipmentError", true);
     countAllStart = shipmentService.getAll().size();
     bulkProduct = bulkProductService.getAll().get(0);
     shipment = new Shipment();

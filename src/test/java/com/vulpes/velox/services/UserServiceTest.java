@@ -10,9 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -23,8 +25,9 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Mockito.verify;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -40,11 +43,15 @@ public class UserServiceTest {
 
   @MockBean
   private MethodService methodService;
-  @MockBean
-  private OAuth2Authentication authentication;
+  @Mock
+  private OAuth2Authentication authenticationOauth2;
   @MockBean
   private RedirectAttributes redirectAttributes;
+  @MockBean
+  private Authentication authentication;
 
+  private LinkedHashMap<String, Object> authDetails;
+  private LinkedHashMap<String, Object> authDetailsFound;
   private Map<String, Boolean> errorFlashAttributes;
   private int countAllStart;
   private User user;
@@ -53,10 +60,11 @@ public class UserServiceTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("userError", true);
     countAllStart = userService.getAllForPage(1).size();
     user = new User();
     user.setEmail("EmailNew");
+    authDetails = new LinkedHashMap<>();
   }
 
   @Test
@@ -152,7 +160,20 @@ public class UserServiceTest {
     }
   }
 
+  @Test
+  public void isUserNotFound() {
+    authDetails.put("email", "NotFound");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertFalse(userService.isUser(authenticationOauth2));
+  }
 
-
+  @Test
+  public void isUserFound() {
+    authDetails.put("email", "email");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertTrue(userService.isUser(authenticationOauth2));
+  }
 
 }

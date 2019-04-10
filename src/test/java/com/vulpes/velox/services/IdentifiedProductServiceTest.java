@@ -51,7 +51,7 @@ public class IdentifiedProductServiceTest {
   @Before
   public void setup() {
     errorFlashAttributes = new HashMap<>();
-    errorFlashAttributes.put("itemError", true);
+    errorFlashAttributes.put("identifiedProductError", true);
     countAllStart = identifiedProductService.getAll().size();
     productDto = new ProductDto();
     productDto.name = "DtoName";
