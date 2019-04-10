@@ -25,7 +25,7 @@ INSERT INTO shipments
 
 INSERT INTO users
   (email, name, is_admin, image_url, created, last_login, login_type) VALUES
-  ('email', 'user', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email', 'user', false, 'img', '2019-03-03', '2019-03-18', 'loginType'),
   ('email2', 'user2', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
   ('email3', 'user3', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
   ('email4', 'user4', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),

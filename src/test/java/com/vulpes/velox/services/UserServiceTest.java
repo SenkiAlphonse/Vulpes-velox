@@ -2,6 +2,7 @@ package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
+import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.methodservice.MethodService;
@@ -51,7 +52,6 @@ public class UserServiceTest {
   private Authentication authentication;
 
   private LinkedHashMap<String, Object> authDetails;
-  private LinkedHashMap<String, Object> authDetailsFound;
   private Map<String, Boolean> errorFlashAttributes;
   private int countAllStart;
   private User user;
@@ -162,7 +162,7 @@ public class UserServiceTest {
 
   @Test
   public void isUserNotFound() {
-    authDetails.put("email", "NotFound");
+    authDetails.put("email", "x");
     when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
     when(authentication.getDetails()).thenReturn(authDetails);
     assertFalse(userService.isUser(authenticationOauth2));
@@ -175,5 +175,55 @@ public class UserServiceTest {
     when(authentication.getDetails()).thenReturn(authDetails);
     assertTrue(userService.isUser(authenticationOauth2));
   }
+
+  @Test
+  public void isAdminNotFound() {
+    authDetails.put("email", "email");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertFalse(userService.isAdmin(authenticationOauth2));
+  }
+
+  @Test
+  public void isAdminFound() {
+    authDetails.put("email", "email2");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertTrue(userService.isAdmin(authenticationOauth2));
+  }
+
+  @Test(expected = UnauthorizedException.class)
+  public void isAdminUserNotFound() {
+    authDetails.put("email", "x");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    userService.isAdmin(authenticationOauth2);
+  }
+
+  @Test
+  public void getUserEmail() {
+    authDetails.put("email", "userEmail");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertThat(userService.getUserEmail(authenticationOauth2), is("userEmail"));
+  }
+
+  @Test
+  public void getGoogleUserName() {
+    authDetails.put("name", "Name");
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertThat(userService.getGoogleUserName(authenticationOauth2), is("Name"));
+  }
+
+  @Test
+  public void getAuthDetails() {
+    when(authenticationOauth2.getUserAuthentication()).thenReturn(authentication);
+    when(authentication.getDetails()).thenReturn(authDetails);
+    assertThat(userService.getAuthDetails(authenticationOauth2), is(authDetails));
+  }
+
+
+
 
 }
