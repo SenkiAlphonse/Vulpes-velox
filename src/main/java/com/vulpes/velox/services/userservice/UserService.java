@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-  User findByEmail(String email);
+  User getByEmail(String email);
 
   void save(User user);
 
-  User findById(Long id);
+  User getById(Long id);
 
   List<User> getAllForPage(int pageId);
 

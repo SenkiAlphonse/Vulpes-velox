@@ -245,7 +245,7 @@ public class UserControllerTest {
   public void usersUpdateOk() throws Exception {
     when(userService.isAdmin(isNull())).thenReturn(true);
     when(userService.isUser(isNull())).thenReturn(true);
-    when(userService.findById((long) 5)).thenReturn(user);
+    when(userService.getById((long) 5)).thenReturn(user);
 
     assertThat(user.getIsAdmin(), is(false));
 
@@ -257,7 +257,7 @@ public class UserControllerTest {
 
     verify(userService, times(1)).isAdmin(isNull());
     verify(userService, times(1)).isUser(isNull());
-    verify(userService, times(1)).findById((long) 5);
+    verify(userService, times(1)).getById((long) 5);
     verify(userService, times(1)).addUser(user);
     verifyNoMoreInteractions(userService);
 

@@ -86,7 +86,7 @@ public class UserController {
   @PostMapping("/users/update/{id}")
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
     if (userService.isUser(authentication) && userService.isAdmin(authentication)) {
-      User updateUser = userService.findById(id);
+      User updateUser = userService.getById(id);
       updateUser.setIsAdmin(!updateUser.getIsAdmin());
       userService.addUser(updateUser);
       return "redirect:/users";

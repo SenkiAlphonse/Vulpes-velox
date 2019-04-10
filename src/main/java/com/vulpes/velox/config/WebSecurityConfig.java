@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public PrincipalExtractor principalExtractor() {
     return map -> {
       String principalEmail = (String) map.get("email");
-      userByEmail = userService.findByEmail(principalEmail);
+      userByEmail = userService.getByEmail(principalEmail);
 
       if (principalEmail.equals(System.getenv("ADMIN_PRESET"))) {
         authorizeUserByEmailToAdmin(principalEmail);

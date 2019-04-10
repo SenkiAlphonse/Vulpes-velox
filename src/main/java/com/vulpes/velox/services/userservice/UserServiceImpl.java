@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User findByEmail(String email) {
+  public User getByEmail(String email) {
     return userRepository.findByEmail(email);
   }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Boolean isUser(OAuth2Authentication authentication) {
-    return findByEmail(getUserEmail(authentication)) != null;
+    return getByEmail(getUserEmail(authentication)) != null;
   }
 
   @Override
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User findById(Long id) {
+  public User getById(Long id) {
     return userRepository.getById(id);
   }
 
