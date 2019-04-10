@@ -70,8 +70,8 @@ public class UserControllerTest {
   @Test
   public void usersWithPageId() throws Exception {
     when(userService.isUser(isNull())).thenReturn(true);
-    when(userService.getAll(5)).thenReturn(Collections.emptyList());
-    when(userService.getAll(6)).thenReturn(Collections.emptyList());
+    when(userService.getAllForPage(5)).thenReturn(Collections.emptyList());
+    when(userService.getAllForPage(6)).thenReturn(Collections.emptyList());
 
     mockMvc.perform(get("/users")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -86,16 +86,16 @@ public class UserControllerTest {
         .andExpect(view().name("users"));
 
     verify(userService, times(1)).isUser(isNull());
-    verify(userService, times(1)).getAll(5);
-    verify(userService, times(1)).getAll(6);
+    verify(userService, times(1)).getAllForPage(5);
+    verify(userService, times(1)).getAllForPage(6);
     verifyNoMoreInteractions(userService);
   }
 
   @Test
   public void usersWithoutPageId() throws Exception {
     when(userService.isUser(isNull())).thenReturn(true);
-    when(userService.getAll(0)).thenReturn(Collections.emptyList());
-    when(userService.getAll(1)).thenReturn(Collections.emptyList());
+    when(userService.getAllForPage(0)).thenReturn(Collections.emptyList());
+    when(userService.getAllForPage(1)).thenReturn(Collections.emptyList());
 
     mockMvc.perform(get("/users")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -109,8 +109,8 @@ public class UserControllerTest {
         .andExpect(view().name("users"));
 
     verify(userService, times(1)).isUser(isNull());
-    verify(userService, times(1)).getAll(0);
-    verify(userService, times(1)).getAll(1);
+    verify(userService, times(1)).getAllForPage(0);
+    verify(userService, times(1)).getAllForPage(1);
     verifyNoMoreInteractions(userService);
   }
 

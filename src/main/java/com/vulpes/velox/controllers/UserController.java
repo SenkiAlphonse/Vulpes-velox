@@ -46,8 +46,8 @@ public class UserController {
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
     if (userService.isUser(authentication)) {
-      List<User> myPage = userService.getAll(pageId);
-      List<User> peekPage = userService.getAll(pageId + 1);
+      List<User> myPage = userService.getAllForPage(pageId);
+      List<User> peekPage = userService.getAllForPage(pageId + 1);
 
       model.addAttribute("users", myPage);
       model.addAttribute("pageid", pageId);

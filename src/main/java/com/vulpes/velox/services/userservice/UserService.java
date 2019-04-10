@@ -15,7 +15,7 @@ public interface UserService {
 
   User findById(Long id);
 
-  List<User> getAll(int pageId);
+  List<User> getAllForPage(int pageId);
 
   void addUser(User user);
 

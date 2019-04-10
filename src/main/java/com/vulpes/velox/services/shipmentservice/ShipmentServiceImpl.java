@@ -17,11 +17,11 @@ import java.util.Map;
 
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
+
   private ShipmentRepository shipmentRepository;
   private BulkProductService bulkProductService;
   private ProductService productService;
   private MethodService methodService;
-
 
   @Autowired
   public ShipmentServiceImpl(ShipmentRepository shipmentRepository,

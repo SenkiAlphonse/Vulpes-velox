@@ -73,9 +73,13 @@ CREATE TABLE users_AUD (
   id BIGINT AUTO_INCREMENT NOT NULL,
   rev BIGINT NOT NULL,
   revtype SMALLINT,
-  name VARCHAR(255),
+  created VARCHAR(255),
   email VARCHAR(255),
+  image_url VARCHAR(255),
   is_admin BOOL,
+  last_login VARCHAR(255),
+  login_type VARCHAR(255),
+  name VARCHAR(255),
   PRIMARY KEY (id, rev),
   FOREIGN KEY (rev) REFERENCES revinfo (rev)
 );
