@@ -21,8 +21,8 @@ pitest {
 //                       'com.vulpes.velox.controllers.UserController']
 //    targetClasses = ['com.vulpes.velox.controllers.**']
 //    targetTests = ['com.vulpes.velox.controllers.**']
-    targetClasses = ['com.vulpes.velox.services.shipmentservice.**']
-    targetTests = ['com.vulpes.velox.services.ShipmentServiceTest']
+    targetClasses = ['com.vulpes.velox.services.bulkproductservice.**']
+    targetTests = ['com.vulpes.velox.services.BulkProductServiceTest']
 }
 
 dependencies {

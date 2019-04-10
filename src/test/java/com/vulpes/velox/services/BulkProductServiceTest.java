@@ -2,12 +2,8 @@ package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.dtos.ProductDto;
-import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.products.BulkProduct;
-import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
-import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.itemservice.ItemService;
 import com.vulpes.velox.services.methodservice.MethodService;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +17,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -49,6 +46,7 @@ public class BulkProductServiceTest {
   private Map<String, Boolean> errorFlashAttributes;
   private ProductDto productDto;
   private BulkProduct bulkProduct;
+  private int countAllStart;
 
   @Before
   public void setup() {
@@ -60,6 +58,7 @@ public class BulkProductServiceTest {
     bulkProduct = new BulkProduct();
     bulkProduct.setName("Name");
     bulkProduct.setQuantity((long) 15);
+    countAllStart = bulkProductService.getAll().size();
   }
 
   @Test
@@ -104,7 +103,47 @@ public class BulkProductServiceTest {
     assertThat(stringArgument.getValue(), is("bulkProductError"));
   }
 
-  
+  @Test
+  public void getNewBulkProductFlashAttributes() {
+    when((Object) redirectAttributes.addFlashAttribute(
+        notNull(), notNull())).thenReturn(redirectAttributes);
+    when((Object) redirectAttributes.getFlashAttributes()).thenReturn(errorFlashAttributes);
+
+    assertFalse(bulkProductService.getNewBulkProductFlashAttributes(bulkProduct, redirectAttributes).isEmpty());
+
+    ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            any(Boolean.class));
+    verify(redirectAttributes, atLeast(1))
+        .addFlashAttribute(
+            stringArgument.capture(),
+            anyString());
+    List<String> stringArgumentValue = stringArgument.getAllValues();
+    assertThat(stringArgumentValue.get(0), is("savedBulkProduct"));
+    assertThat(stringArgumentValue.get(1), is("bulkProductName"));
+  }
+
+  @Test
+  public void getAllFilteredBy() {
+    assertTrue(bulkProductService.getAllFilteredBy("x").isEmpty());
+    assertThat(bulkProductService.getAllFilteredBy("Name").size(), is(2));
+    assertThat(bulkProductService.getAllFilteredBy("2").size(), is(1));
+    assertThat(bulkProductService.getAllFilteredBy("Name").get(0).getName(), is("NameTaken"));
+  }
+
+  @Test
+  public void saveNewBulkProduct() {
+    assertThat(bulkProductService.getAll().size(), is(countAllStart));
+    bulkProductService.saveNewBulkProduct(bulkProduct, "Unit");
+    assertThat(bulkProductService.getAll().size(), is(countAllStart + 1));
+    assertThat(bulkProduct.getQuantity(), is((long) 0));
+    assertThat(bulkProduct.getPrice(), is((long) 0));
+    assertThat(bulkProduct.getValue(), is(BigInteger.valueOf(0)));
+    assertThat(bulkProduct.getUnit(), is("Unit"));
+  }
+
 }
 
 
