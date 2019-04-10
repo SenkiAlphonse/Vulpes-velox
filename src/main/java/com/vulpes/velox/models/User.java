@@ -30,7 +30,7 @@ public class User {
 
   private LocalDateTime created;
 
-  public LocalDateTime lastLogin;
+  private LocalDateTime lastLogin;
 
   private String loginType;
 
