@@ -23,8 +23,10 @@ pitest {
 //                     'com.vulpes.velox.services.**']
 //    targetTests = ['com.vulpes.velox.controllers.**',
 //                   'com.vulpes.velox.services.**']
-    targetClasses = ['com.vulpes.velox.services.productservice.**']
-    targetTests = ['com.vulpes.velox.services.ProductServiceTest']
+//    targetClasses = ['com.vulpes.velox.services.productservice.**']
+//    targetTests = ['com.vulpes.velox.services.ProductServiceTest']
+    targetClasses = ['com.vulpes.velox.controllers.UserController']
+    targetTests = ['com.vulpes.velox.controllers.UserControllerTest']
 }
 
 dependencies {

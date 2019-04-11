@@ -82,20 +82,6 @@ public class MethodServiceTest {
     verifyNoMoreInteractions(redirectAttributes);
   }
 
-//  @Test
-//  public void getErrorMessageFlashAttributesEmptyMessage() {
-//    when((Object) redirectAttributes.addFlashAttribute(
-//        notNull(), notNull())).thenReturn(redirectAttributes);
-//    when((Object) redirectAttributes.getFlashAttributes()).thenReturn(errorFlashAttributes);
-//
-//    assertFalse(methodService.getErrorMessageFlashAttributes(
-//        "", redirectAttributes, "ErrorAttribute").isEmpty());
-//
-//    verify(redirectAttributes, times(1))
-//        .getFlashAttributes();
-//    verifyNoMoreInteractions(redirectAttributes);
-//  }
-
   @Test
   public void getNameErrorAttributes() {
     Product product = new BulkProduct();
