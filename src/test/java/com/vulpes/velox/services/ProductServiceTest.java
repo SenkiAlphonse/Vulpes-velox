@@ -1,8 +1,10 @@
 package com.vulpes.velox.services;
 
 import com.vulpes.velox.VeloxApplication;
+import com.vulpes.velox.models.Item;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.products.BulkProduct;
+import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.services.productservice.ProductService;
 import com.vulpes.velox.services.shipmentservice.ShipmentService;
@@ -15,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,18 +41,19 @@ public class ProductServiceTest {
 
   private int countAllStart;
   private BulkProduct bulkProduct;
+  private IdentifiedProduct identifiedProduct;
   private List<Product> products;
 
   @Before
   public void setup() {
     countAllStart = productService.getAll().size();
     bulkProduct = (BulkProduct) productService.getByName("NameTaken");
+    identifiedProduct = (IdentifiedProduct) productService.getByName("NameTaken3");
     products = new ArrayList<>();
     products.add(bulkProduct);
     products.add(productService.getByName("NameTaken2"));
     products.add(productService.getByName("NameTaken3"));
     products.add(productService.getByName("NameTaken4"));
-
   }
 
   @Test
@@ -104,10 +108,25 @@ public class ProductServiceTest {
 
   @Test
   public void updateBulkProductWithShipment() {
-    productService.updateBulkProductWithShipment("NameTaken", new Shipment((long) 10, (long) 10));
-    assertThat(productService.getByName("NameTaken").getQuantity(), is((long) 13));
+    productService.updateBulkProductWithShipment(
+        "NameTaken", new Shipment((long) 10, (long) 10));
+    BulkProduct bulkProductUpdated = (BulkProduct) productService.getByName("NameTaken");
+    assertThat(bulkProductUpdated.getQuantity(), is((long) 13));
+    assertThat(bulkProductUpdated.getValue(), is(BigInteger.valueOf(101)));
+    assertThat(bulkProductUpdated.getPrice(), is((long) 101/13));
   }
 
+  @Test
+  public void updateIdentifiedProductWithItem() {
+    Item item = new Item();
+    item.setPrice((long) 100);
+
+    productService.updateIdentifiedProductWithItem(identifiedProduct, item);
+
+    assertThat(identifiedProduct.getQuantity(), is((long) 5));
+    assertThat(identifiedProduct.getValue(), is(BigInteger.valueOf(106)));
+    assertThat(identifiedProduct.getPrice(), is((long) 106/5));
+  }
 
 //  @Test
 //  public void getAll() {
