@@ -16,17 +16,16 @@ repositories {
 }
 
 pitest {
-//    excludedClasses = ['com.vulpes.velox.controllers.ShipmentController',
-//                       'com.vulpes.velox.controllers.StorageController',
-//                       'com.vulpes.velox.controllers.UserController']
-//    targetClasses = ['com.vulpes.velox.controllers.**',
-//                     'com.vulpes.velox.services.**']
-//    targetTests = ['com.vulpes.velox.controllers.**',
-//                   'com.vulpes.velox.services.**']
+    excludedClasses = ['com.vulpes.velox.controllers.restcontrollers.**',
+                       'com.vulpes.velox.controllers.controlleradvices.**']
+    targetClasses = ['com.vulpes.velox.controllers.**',
+                     'com.vulpes.velox.services.**']
+    targetTests = ['com.vulpes.velox.controllers.**',
+                   'com.vulpes.velox.services.**']
 //    targetClasses = ['com.vulpes.velox.services.productservice.**']
 //    targetTests = ['com.vulpes.velox.services.ProductServiceTest']
-    targetClasses = ['com.vulpes.velox.controllers.UserController']
-    targetTests = ['com.vulpes.velox.controllers.UserControllerTest']
+//    targetClasses = ['com.vulpes.velox.controllers.UserController']
+//    targetTests = ['com.vulpes.velox.controllers.UserControllerTest']
 }
 
 dependencies {

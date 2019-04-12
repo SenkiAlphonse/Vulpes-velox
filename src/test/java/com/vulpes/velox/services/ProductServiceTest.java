@@ -7,7 +7,6 @@ import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.products.Product;
 import com.vulpes.velox.services.productservice.ProductService;
-import com.vulpes.velox.services.shipmentservice.ShipmentService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +34,6 @@ public class ProductServiceTest {
 
   @Autowired
   private ProductService productService;
-
-  @Autowired
-  private ShipmentService shipmentService;
 
   private int countAllStart;
   private BulkProduct bulkProduct;

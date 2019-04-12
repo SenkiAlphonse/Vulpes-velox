@@ -3,7 +3,6 @@ package com.vulpes.velox.services;
 import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
-import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.userservice.UserService;
@@ -55,7 +54,6 @@ public class UserServiceTest {
   private Map<String, Boolean> errorFlashAttributes;
   private int countAllStart;
   private User user;
-  private Shipment shipment;
 
   @Before
   public void setup() {
@@ -222,8 +220,5 @@ public class UserServiceTest {
     when(authentication.getDetails()).thenReturn(authDetails);
     assertThat(userService.getAuthDetails(authenticationOauth2), is(authDetails));
   }
-
-
-
 
 }

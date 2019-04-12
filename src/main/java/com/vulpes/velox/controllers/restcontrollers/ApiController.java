@@ -35,7 +35,7 @@ public class ApiController {
   @GetMapping("/api/products")
   public ResponseEntity<List<ProductDto>> products() {
     List<ProductDto> productDtos = productService.getDtosFromEntities(productService.getAll());
-    if (productDtos != null || !productDtos.isEmpty()) {
+    if (productDtos != null && !productDtos.isEmpty()) {
       return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
     throw new InternalServerErrorException("Can't find products");
