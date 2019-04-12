@@ -1,8 +1,9 @@
-package com.vulpes.velox.controllers;
+package com.vulpes.velox.controllers.restcontrollers;
 
 import com.vulpes.velox.TestService;
 import com.vulpes.velox.controllers.restcontrollers.ApiController;
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
@@ -141,5 +142,37 @@ public class ApiControllerTest {
         .andExpect(status().isBadRequest());
   }
 
+  @Test
+  public void newBulkProductOk() throws Exception {
+    when(bulkProductService.getEntityFromDto(notNull())).thenReturn(new BulkProduct());
+
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(productDto))
+    )
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void newBulkProductEmptyDto() throws Exception {
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(new ProductDto()))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message[0]").isNotEmpty())
+        .andExpect(jsonPath("$.message[1]").isNotEmpty());
+  }
+
+  @Test
+  public void newBulkProductWithoutDto() throws Exception {
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
 
 }
