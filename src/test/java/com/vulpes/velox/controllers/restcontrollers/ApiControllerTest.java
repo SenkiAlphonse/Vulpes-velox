@@ -26,7 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -117,6 +117,11 @@ public class ApiControllerTest {
     )
         .andDo(print())
         .andExpect(status().isOk());
+
+    verify(productService).save(notNull());
+    verifyNoMoreInteractions(productService);
+    verify(identifiedProductService).getEntityFromDto(notNull());
+    verifyNoMoreInteractions(identifiedProductService);
   }
 
   @Test
@@ -150,6 +155,11 @@ public class ApiControllerTest {
     )
         .andDo(print())
         .andExpect(status().isOk());
+
+    verify(productService).save(notNull());
+    verifyNoMoreInteractions(productService);
+    verify(bulkProductService).getEntityFromDto(notNull());
+    verifyNoMoreInteractions(bulkProductService);
   }
 
   @Test
