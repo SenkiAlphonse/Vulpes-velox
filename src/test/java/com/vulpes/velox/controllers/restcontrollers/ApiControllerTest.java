@@ -1,9 +1,7 @@
 package com.vulpes.velox.controllers.restcontrollers;
 
 import com.vulpes.velox.TestService;
-import com.vulpes.velox.controllers.restcontrollers.ApiController;
 import com.vulpes.velox.dtos.ProductDto;
-import com.vulpes.velox.exceptions.runtimeexceptions.ForbiddenException;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
@@ -36,7 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = ApiController.class, secure = false)
 public class ApiControllerTest {
-
 
   @Autowired
   private MockMvc mockMvc;

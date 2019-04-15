@@ -5,35 +5,22 @@ import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
 import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.ForbiddenException;
 import com.vulpes.velox.exceptions.runtimeexceptions.NotFoundException;
-import com.vulpes.velox.models.Item;
-import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
 import com.vulpes.velox.services.identifiedproductservice.IdentifiedProductService;
-import com.vulpes.velox.services.itemservice.ItemService;
 import com.vulpes.velox.services.productservice.ProductService;
-import com.vulpes.velox.services.userservice.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
-import static org.junit.Assert.assertThat;
 
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
