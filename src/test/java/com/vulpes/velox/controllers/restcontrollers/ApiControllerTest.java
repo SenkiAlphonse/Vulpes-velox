@@ -3,6 +3,7 @@ package com.vulpes.velox.controllers.restcontrollers;
 import com.vulpes.velox.TestService;
 import com.vulpes.velox.controllers.restcontrollers.ApiController;
 import com.vulpes.velox.dtos.ProductDto;
+import com.vulpes.velox.exceptions.runtimeexceptions.ForbiddenException;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
@@ -164,6 +165,32 @@ public class ApiControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.message[0]").isNotEmpty())
         .andExpect(jsonPath("$.message[1]").isNotEmpty());
+  }
+
+  @Test
+  public void newBulkProductWithoutName() throws Exception {
+    productDto.name = "";
+
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(productDto))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message[0]", is("Empty parameter: name")));
+  }
+
+  @Test
+  public void newBulkProductWithoutQuantity() throws Exception {
+    productDto.quantity = null;
+
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(productDto))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message[0]", is("Missing parameter: quantity")));
   }
 
   @Test
