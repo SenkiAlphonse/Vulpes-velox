@@ -64,7 +64,7 @@ public class ExceptionRestControllerAdvice extends ResponseEntityExceptionHandle
   @ExceptionHandler(BadEmailException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   ErrorResponseDto badEmailHandler(
-      HttpServletRequest page, BadRequestException exception) {
+      HttpServletRequest page, BadEmailException exception) {
     return getErrorResponseDto(
         exception.getExceptionMessage(), page, HttpStatus.BAD_REQUEST);
   }

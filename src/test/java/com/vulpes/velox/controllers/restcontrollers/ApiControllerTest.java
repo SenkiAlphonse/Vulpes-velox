@@ -1,7 +1,6 @@
 package com.vulpes.velox.controllers.restcontrollers;
 
 import com.vulpes.velox.TestService;
-import com.vulpes.velox.controllers.restcontrollers.ApiController;
 import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.products.IdentifiedProduct;
@@ -27,7 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,7 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = ApiController.class, secure = false)
 public class ApiControllerTest {
-
 
   @Autowired
   private MockMvc mockMvc;
@@ -119,6 +117,11 @@ public class ApiControllerTest {
     )
         .andDo(print())
         .andExpect(status().isOk());
+
+    verify(productService).save(notNull());
+    verifyNoMoreInteractions(productService);
+    verify(identifiedProductService).getEntityFromDto(notNull());
+    verifyNoMoreInteractions(identifiedProductService);
   }
 
   @Test
@@ -152,6 +155,11 @@ public class ApiControllerTest {
     )
         .andDo(print())
         .andExpect(status().isOk());
+
+    verify(productService).save(notNull());
+    verifyNoMoreInteractions(productService);
+    verify(bulkProductService).getEntityFromDto(notNull());
+    verifyNoMoreInteractions(bulkProductService);
   }
 
   @Test
@@ -164,6 +172,32 @@ public class ApiControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.message[0]").isNotEmpty())
         .andExpect(jsonPath("$.message[1]").isNotEmpty());
+  }
+
+  @Test
+  public void newBulkProductWithoutName() throws Exception {
+    productDto.name = "";
+
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(productDto))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message[0]", is("Empty parameter: name")));
+  }
+
+  @Test
+  public void newBulkProductWithoutQuantity() throws Exception {
+    productDto.quantity = null;
+
+    mockMvc.perform(post("/api/product/bulk")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestService.convertToJson(productDto))
+    )
+        .andDo(print())
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message[0]", is("Missing parameter: quantity")));
   }
 
   @Test
