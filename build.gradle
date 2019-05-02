@@ -18,8 +18,8 @@ repositories {
 pitest {
 //    excludedClasses = ['com.vulpes.velox.controllers.restcontrollers.**',
 //                       'com.vulpes.velox.controllers.controlleradvices.**'
-    targetClasses = ['com.vulpes.velox.controllers.restcontrollers.**']
-    targetTests = ['com.vulpes.velox.controllers.restcontrollers.**']
+    targetClasses = ['com.vulpes.velox.controllers.controlleradvices.**']
+    targetTests = ['com.vulpes.velox.controllers.UserControllerTest']
 
 //    targetClasses = ['com.vulpes.velox.controllers.**',
 
