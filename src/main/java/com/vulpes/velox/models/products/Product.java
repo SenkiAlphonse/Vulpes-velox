@@ -5,6 +5,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "products")
@@ -19,13 +20,15 @@ public abstract class Product {
   @NotNull
   private String name;
   private Long quantity;
+  private Long price;
+  private String unit;
+  private BigInteger value;
 
-  public Long getQuantity() {
-    return quantity;
+  public Product() {
   }
 
-  public void setQuantity(Long quantity) {
-    this.quantity = quantity;
+  public Product(BigInteger value) {
+    this.value = value;
   }
 
   public Long getId() {
@@ -44,6 +47,38 @@ public abstract class Product {
     this.name = name;
   }
 
+  public Long getPrice() {
+    return price;
+  }
+
+  public void setPrice(Long price) {
+    this.price = price;
+  }
+
+  public String getUnit() {
+    return unit;
+  }
+
+  public void setUnit(String unit) {
+    this.unit = unit;
+  }
+
+  public Long getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Long quantity) {
+    this.quantity = quantity;
+  }
+
+  public BigInteger getValue() {
+    return value;
+  }
+
+  public void setValue(BigInteger value) {
+    this.value = value;
+  }
+
   @Override
   public String toString() {
     return "Product{" +
@@ -52,4 +87,5 @@ public abstract class Product {
         ", quantity=" + quantity +
         '}';
   }
+
 }

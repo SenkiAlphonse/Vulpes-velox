@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="fragments/head :: head"></div>
+    <title id="title">Products</title>
+</head>
+<body>
+<div th:replace="fragments/nav-bar :: nav"></div>
+
+<div class="container">
+    <!----------------------Products table------------------------------------->
+    <table>
+        <thead>
+        <tr>
+            <th scope="col"><h3>Product Name</h3></th>
+            <th scope="col"><h3>Unit</h3></th>
+            <th scope="col"><h3>Quantity</h3></th>
+            <th scope="col"><h3>Price</h3></th>
+            <th scope="col"><h3>Value</h3></th>
+        </tr>
+        </thead>
+        <div th:each="product : ${products}">
+            <tr>
+                <td data-label="Product Name">
+                    <p th:text="${product.getName()}"></p>
+                </td>
+                <td data-label="Unit">
+                    <p th:text="${product.getUnit()}"></p>
+                </td>
+                <td data-label="Quantity">
+                    <p th:text="${product.getQuantity()}"></p>
+                </td>
+                <td data-label="Price">
+                    <p th:text="${product.getPrice()}"></p>
+                </td>
+                <td data-label="Value">
+                    <p th:text="${product.getValue()}"></p>
+                </td>
+            </tr>
+        </div>
+    </table>
+</div>
+</body>
+</html>

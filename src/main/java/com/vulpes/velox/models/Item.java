@@ -17,6 +17,7 @@ public class Item {
   private Long id;
   @Column(name = "product_number")
   private Long productNumber;
+  private Long price;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "identified_product_id")
@@ -44,5 +45,13 @@ public class Item {
 
   public void setIdentifiedProduct(IdentifiedProduct identifiedProduct) {
     this.identifiedProduct = identifiedProduct;
+  }
+
+  public Long getPrice() {
+    return price;
+  }
+
+  public void setPrice(Long price) {
+    this.price = price;
   }
 }

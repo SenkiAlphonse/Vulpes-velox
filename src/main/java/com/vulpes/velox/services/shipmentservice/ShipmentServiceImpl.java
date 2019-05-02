@@ -4,6 +4,7 @@ import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.models.Shipment;
 import com.vulpes.velox.repositories.ShipmentRepository;
 import com.vulpes.velox.services.bulkproductservice.BulkProductService;
+import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.productservice.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,21 @@ import java.util.Map;
 
 @Service
 public class ShipmentServiceImpl implements ShipmentService {
+
   private ShipmentRepository shipmentRepository;
   private BulkProductService bulkProductService;
   private ProductService productService;
+  private MethodService methodService;
 
   @Autowired
-  public ShipmentServiceImpl(ShipmentRepository shipmentRepository, BulkProductService bulkProductService, ProductService productService) {
+  public ShipmentServiceImpl(ShipmentRepository shipmentRepository,
+                             BulkProductService bulkProductService,
+                             ProductService productService,
+                             MethodService methodService) {
     this.shipmentRepository = shipmentRepository;
     this.bulkProductService = bulkProductService;
     this.productService = productService;
+    this.methodService = methodService;
   }
 
   @Override
@@ -54,39 +61,41 @@ public class ShipmentServiceImpl implements ShipmentService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(String bulkProductName, String arrivalDate, String bestBeforeDate, Shipment shipment, RedirectAttributes redirectAttributes) {
+  public Map<String, ?> getErrorFlashAttributes(String bulkProductName,
+                                                String arrivalDate,
+                                                String bestBeforeDate,
+                                                Shipment shipment,
+                                                RedirectAttributes redirectAttributes) {
+    String message = "";
     if (shipment.getQuantity() == null) {
-      return getErrorMessageFlashAttributes("Enter quantity.", redirectAttributes);
+      message = "Enter quantity.";
+    } else if (shipment.getQuantity() <= 0) {
+      message = "Quantity not allowed.";
+    } else if (shipment.getPrice() == null) {
+      message = "Enter price.";
+    } else if (shipment.getPrice() <= 0) {
+      message = "Price not allowed.";
+    } else if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
+      message = "Date entered not allowed.";
+    } else if (bulkProductName == null) {
+      message = "Enter bulk product name.";
+    } else if (bulkProductName.isEmpty()) {
+      message = "Empty bulk product name.";
+    } else if (!bulkProductService.existsByName(bulkProductName)) {
+      message = "Bulk product not found.";
     }
-    if (shipment.getQuantity() <= 0) {
-      return getErrorMessageFlashAttributes("Quantity not allowed.", redirectAttributes);
-    }
-    if (!isAllowedDateFormat(arrivalDate) || !isAllowedDateFormat(bestBeforeDate)) {
-      return getErrorMessageFlashAttributes("Date entered not allowed.", redirectAttributes);
-    }
-    if (bulkProductName == null) {
-      return getErrorMessageFlashAttributes("Enter bulk product name.", redirectAttributes);
-    }
-    if (bulkProductName.isEmpty()) {
-      return getErrorMessageFlashAttributes("Empty bulk product name.", redirectAttributes);
-    }
-    if (!bulkProductService.existsByName(bulkProductName)) {
-      return getErrorMessageFlashAttributes("Bulk product not found.", redirectAttributes);
-    }
-    return redirectAttributes.getFlashAttributes();
-  }
-
-  private Map<String, ?> getErrorMessageFlashAttributes(String message,
-                                                        RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("shipmentError", true);
-    redirectAttributes.addFlashAttribute("errorMessage", message);
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        "shipmentError");
   }
 
   @Override
   public Map<String, ?> getNewShipmentFlashAttributes(Shipment shipment, RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("savedShipment", true);
-    redirectAttributes.addFlashAttribute("bulkProductName", shipment.getBulkProduct().getName());
+    redirectAttributes.addFlashAttribute(
+        "bulkProductName",
+        shipment.getBulkProduct().getName());
     redirectAttributes.addFlashAttribute("quantity", shipment.getQuantity());
     redirectAttributes.addFlashAttribute("arrival", shipment.getArrival());
     redirectAttributes.addFlashAttribute("bestBefore", shipment.getBestBefore());
@@ -94,10 +103,16 @@ public class ShipmentServiceImpl implements ShipmentService {
   }
 
   @Override
-  public void saveNewShipment(String bulkProductName, String arrival, String bestBefore, Shipment shipment) {
-    shipment.setArrival(getLocalDateFromDateString(arrival));
-    shipment.setBestBefore(getLocalDateFromDateString(bestBefore));
-    shipment.setBulkProduct((BulkProduct) productService.getByName(bulkProductName));
+  public void saveNewShipment(String bulkProductName,
+                              String arrival,
+                              String bestBefore,
+                              Shipment shipment) {
+    shipment.setArrival(
+        getLocalDateFromDateString(arrival));
+    shipment.setBestBefore(
+        getLocalDateFromDateString(bestBefore));
+    shipment.setBulkProduct(
+        (BulkProduct) productService.getByName(bulkProductName));
     save(shipment);
   }
 

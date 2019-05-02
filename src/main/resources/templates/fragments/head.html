@@ -9,10 +9,14 @@
           href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
-    <link rel="stylesheet" media="screen and (max-width: 1200px) and (min-width: 671px)"
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/style.css}"/>
+    <link rel="stylesheet" media="screen and (max-width: 1200px) and (min-width: 776px)"
           th:href="@{/laptop.css}"/>
-    <link rel="stylesheet" media="screen and (max-width: 670px)" th:href="@{/mobile.css}"/>
+    <link rel="stylesheet" media="screen and (max-width: 775px) and (min-width: 601px)"
+          th:href="@{/laptopResponsiveNavBar.css}"/>
+    <link rel="stylesheet" media="screen and (max-width: 600px)"
+          th:href="@{/mobile.css}"/>
     <title th:include=":: #title">Title</title>
 </head>
 <body>

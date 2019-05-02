@@ -2,6 +2,7 @@ package com.vulpes.velox.services.orderservice;
 
 import com.vulpes.velox.models.Order;
 import com.vulpes.velox.repositories.OrderRepository;
+import com.vulpes.velox.services.methodservice.MethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -13,10 +14,13 @@ import java.util.Map;
 public class OrderServiceImpl implements OrderService {
 
   private OrderRepository orderRepository;
+  private MethodService methodService;
 
   @Autowired
-  public OrderServiceImpl(OrderRepository orderRepository) {
+  public OrderServiceImpl(OrderRepository orderRepository,
+                          MethodService methodService) {
     this.orderRepository = orderRepository;
+    this.methodService = methodService;
   }
 
   @Override
@@ -42,24 +46,20 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Map<String, ?> getErrorFlashAttributes(Order order, RedirectAttributes redirectAttributes) {
-    if(order.getName() == null) {
-      return getErrorMessageFlashAttributes("Enter order name.", redirectAttributes);
+  public Map<String, ?> getErrorFlashAttributes(Order order,
+                                                RedirectAttributes redirectAttributes) {
+    String message = "";
+    if (order.getName() == null) {
+      message = "Enter order name.";
+    } else if (order.getName().isEmpty()) {
+      message = "Empty order name.";
+    } else if (existsByName(order.getName())) {
+      message = "Order name already exists.";
     }
-    if(order.getName().isEmpty()) {
-      return getErrorMessageFlashAttributes("Empty order name.", redirectAttributes);
-    }
-    if(orderRepository.existsByName(order.getName())) {
-      return getErrorMessageFlashAttributes("Order name already exists.", redirectAttributes);
-    }
-    return redirectAttributes.getFlashAttributes();
-  }
-
-  private Map<String, ?> getErrorMessageFlashAttributes(String message,
-                                                        RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("orderError", true);
-    redirectAttributes.addFlashAttribute("errorMessage", message);
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getErrorMessageFlashAttributes(
+        message,
+        redirectAttributes,
+        "orderError");
   }
 
 }

@@ -17,9 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 import static org.junit.Assert.assertThat;
 
@@ -33,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(controllers = ItemController.class, secure = false)
-public class ItemControllerEndpointTest {
+public class ItemControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -47,23 +46,27 @@ public class ItemControllerEndpointTest {
 
   private IdentifiedProduct identifiedProduct;
   private Map<String, Boolean> errorFlashAttributes;
+  private List<Item> items;
 
   @Before
   public void setup() {
     identifiedProduct = new IdentifiedProduct();
+    identifiedProduct.setQuantity((long) 2);
     errorFlashAttributes = new HashMap<>();
     errorFlashAttributes.put("itemError", true);
+    items = Arrays.asList(new Item(), new Item());
   }
-
 
   @Test
   public void itemNewIsFound() throws Exception {
-    when(userService.isUser(any())).thenReturn(true);
+    when(userService.isUser(isNull())).thenReturn(true);
     when(itemService.getErrorFlashAttributes(
         notNull(), notNull(), notNull())).thenReturn(Collections.emptyMap());
     when(itemService.getNewItemFlashAttributes(
         notNull(), notNull())).thenReturn(Collections.emptyMap());
     when(productService.getByName("IdentifiedProductName")).thenReturn(identifiedProduct);
+    when(itemService.getAllByIdentifiedProduct(identifiedProduct)).thenReturn(items);
+
 
     mockMvc.perform(post("/item/new")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -76,26 +79,28 @@ public class ItemControllerEndpointTest {
         .andExpect(redirectedUrl("/storage/add#item"))
         .andExpect(view().name("redirect:/storage/add#item"));
 
-    verify(userService, times(1)).isUser(any());
+    verify(userService, times(1)).isUser(isNull());
     verifyNoMoreInteractions(userService);
 
     ArgumentCaptor<Item> itemArgument = ArgumentCaptor.forClass(Item.class);
     verify(itemService, times(1)).save(itemArgument.capture());
-    verify(itemService, times(1)).getAllByIdentifiedProduct(identifiedProduct);
     verify(itemService, times(1)).getErrorFlashAttributes(
         anyString(), any(Item.class), any(RedirectAttributes.class));
     verify(itemService, times(1)).getNewItemFlashAttributes(
         any(Item.class), any(RedirectAttributes.class));
     verifyNoMoreInteractions(itemService);
 
+    assertThat(identifiedProduct.getQuantity(), is((long) 2));
+
     Item itemArgumentValue = itemArgument.getValue();
     assertThat(itemArgumentValue.getId(), is((long) 1));
     assertThat(itemArgumentValue.getProductNumber(), is((long) 2));
     assertThat(itemArgumentValue.getIdentifiedProduct(), is(identifiedProduct));
 
+    verify(productService, times(1)).updateIdentifiedProductWithItem(identifiedProduct, itemArgumentValue);
     verify(productService, times(1)).getByName("IdentifiedProductName");
-    verify(productService, times(1)).update(identifiedProduct);
     verifyNoMoreInteractions(productService);
+
   }
 
   @Test
@@ -141,11 +146,17 @@ public class ItemControllerEndpointTest {
     verifyNoMoreInteractions(itemService);
     verifyNoMoreInteractions(productService);
   }
+
   @Test
   public void identifiedProducts() throws Exception {
+    when(itemService.getAll()).thenReturn(items);
+
     mockMvc.perform(get("/items"))
         .andExpect(status().isOk())
+        .andExpect(model().attribute("items", items))
+        .andExpect(content().contentType(new MediaType("text", "html", StandardCharsets.UTF_8)))
         .andExpect(view().name("items"));
   }
+
 
 }

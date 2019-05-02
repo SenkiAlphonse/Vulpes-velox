@@ -1,21 +1,39 @@
-INSERT INTO products (id, name, quantity, dtype)
-VALUES(1, 'testProduct1', 10,'BulkProduct'),
-      (2, 'testProduct2', 10, 'IdentifiedProduct');
+INSERT INTO products
+  (name, quantity, price, value, dtype) VALUES
+  ('NameTaken', 3, 2, 1, 'BulkProduct'),
+  ('NameTaken2', 3, 2, 1, 'BulkProduct'),
+  ('NameTaken3', 4, 5, 6, 'IdentifiedProduct'),
+  ('NameTaken4', 4, 5, 6, 'IdentifiedProduct');
 
-INSERT INTO orders (id, name, date)
-VALUES(1, 'testName1', '2018-10-10'),
-      (2, 'testName2', '2018-10-10');
+INSERT INTO orders
+  (name, date) VALUES
+  ('NameTaken', '2019-03-10'),
+  ('NameTaken2', '2019-03-20');
 
-INSERT INTO ordered_products (id, product_name, quantity, order_id)
-VALUES(1, 'testProduct1', 5, 1),
-      (2, 'testProduct2', 5, 2);
+INSERT INTO ordered_products
+  (product_name, quantity, order_id) VALUES
+  ('NameTaken', 2, (SELECT id FROM orders WHERE name = 'NameTaken')),
+  ('NameTaken2', 7, (SELECT id FROM orders WHERE name = 'NameTaken'));
 
-INSERT INTO items (id, product_number, identified_product_id)
-VALUES(1, 1111000, 2);
+INSERT INTO items
+  (product_number, identified_product_id)VALUES
+  (11111111, (SELECT id FROM products WHERE name = 'NameTaken3'));
 
-INSERT INTO shipments (id, quantity, arrival, best_before, bulk_product_id)
-VALUES(1, 10, '2019-03-12', '2020-01-01', 1);
+INSERT INTO shipments
+  (quantity, arrival, best_before, bulk_product_id) VALUES
+  (5, '2019-03-10', '2019-04-20', (SELECT id FROM products WHERE name = 'NameTaken'));
 
-INSERT INTO users (id, email, name, is_admin, image_url, created, last_login, login_type)
-VALUES(1, 'user@test.hu', 'testUser', 0, 'noURL', '1000-01-01 00:00:00', '1000-01-01 00:00:00', NULL),
-      (2, 'admin@test.hu', 'testAdmin', 1, 'noURL', '1000-01-01 00:00:00', '1000-01-01 00:00:00', NULL);
+INSERT INTO users
+  (email, name, is_admin, image_url, created, last_login, login_type) VALUES
+  ('email', 'user', false, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email2', 'user2', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email3', 'user3', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email4', 'user4', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email5', 'user5', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email6', 'user6', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email7', 'user7', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email8', 'user8', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email9', 'user9', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email10', 'user10', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email11', 'user11', true, 'img', '2019-03-03', '2019-03-18', 'loginType'),
+  ('email12', 'user12', true, 'img', '2019-03-03', '2019-03-18', 'loginType');

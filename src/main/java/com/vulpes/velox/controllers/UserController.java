@@ -1,7 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.BadEmailException;
-import com.vulpes.velox.exceptions.runtimeexceptions.BadRequestException;
 import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.User;
 import com.vulpes.velox.services.userservice.UserService;
@@ -48,8 +46,8 @@ public class UserController {
                           @RequestParam(value = "pageId", required = false, defaultValue = "0") int pageId,
                           @ModelAttribute(name = "newuser") User newUser) {
     if (userService.isUser(authentication)) {
-      List<User> myPage = userService.getAll(pageId);
-      List<User> peekPage = userService.getAll(pageId + 1);
+      List<User> myPage = userService.getAllForPage(pageId);
+      List<User> peekPage = userService.getAllForPage(pageId + 1);
 
       model.addAttribute("users", myPage);
       model.addAttribute("pageid", pageId);
@@ -66,7 +64,7 @@ public class UserController {
                         OAuth2Authentication authentication,
                         RedirectAttributes redirectAttributes) {
     if (userService.isAdmin(authentication)) {
-      if(!userService.getErrorFlashAttributes(redirectAttributes, newUser).isEmpty()) {
+      if(!userService.getErrorFlashAttributes(newUser, redirectAttributes).isEmpty()) {
 
         return "redirect:/users#adduser";
       }
@@ -88,7 +86,7 @@ public class UserController {
   @PostMapping("/users/update/{id}")
   public String updateUser(@PathVariable(value = "id") Long id, OAuth2Authentication authentication) {
     if (userService.isUser(authentication) && userService.isAdmin(authentication)) {
-      User updateUser = userService.findById(id);
+      User updateUser = userService.getById(id);
       updateUser.setIsAdmin(!updateUser.getIsAdmin());
       userService.addUser(updateUser);
       return "redirect:/users";

@@ -1,6 +1,5 @@
 package com.vulpes.velox.controllers;
 
-import com.vulpes.velox.exceptions.runtimeexceptions.UnauthorizedException;
 import com.vulpes.velox.models.products.IdentifiedProduct;
 import com.vulpes.velox.models.Item;
 import com.vulpes.velox.services.itemservice.ItemService;
@@ -49,14 +48,11 @@ public class ItemController {
       if(!itemService.getErrorFlashAttributes(identifiedProductName, item, redirectAttributes).isEmpty()) {
         return "redirect:/storage/add#item";
       }
-
-      IdentifiedProduct identifiedProduct = (IdentifiedProduct) productService.getByName(identifiedProductName);
-
+      IdentifiedProduct identifiedProduct =
+          (IdentifiedProduct) productService.getByName(identifiedProductName);
       item.setIdentifiedProduct(identifiedProduct);
       itemService.save(item);
-
-      identifiedProduct.setQuantity((long) itemService.getAllByIdentifiedProduct(identifiedProduct).size());
-      productService.update(identifiedProduct);
+      productService.updateIdentifiedProductWithItem(identifiedProduct, item);
       itemService.getNewItemFlashAttributes(item, redirectAttributes);
       return "redirect:/storage/add#item";
     }  else {

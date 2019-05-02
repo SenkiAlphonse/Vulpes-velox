@@ -14,15 +14,21 @@
         <tr>
             <th scope="col"><h3>Item Name</h3></th>
             <th scope="col"><h3>Product number</h3></th>
+            <th scope="col"><h3>Price</h3></th>
         </tr>
         </thead>
         <div th:each="item : ${items}">
             <tr>
-                <td data-label="Product Name">
+                <div th:if="${item.getIdentifiedProduct() != null}">
+                    <td data-label="Product Name">
                         <p th:text="${item.getIdentifiedProduct().getName()}"></p>
-                </td>
+                    </td>
+                </div>
                 <td data-label="Product Number">
-                        <p th:text="${item.getProductNumber()}"></p>
+                    <p th:text="${item.getProductNumber()}"></p>
+                </td>
+                <td data-label="Price">
+                    <p th:text="${item.getPrice()}"></p>
                 </td>
             </tr>
         </div>

@@ -1,87 +1,124 @@
 package com.vulpes.velox.services;
 
+import com.vulpes.velox.VeloxApplication;
 import com.vulpes.velox.models.Order;
+import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.orderservice.OrderService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = VeloxApplication.class, webEnvironment = RANDOM_PORT)
 @SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql")
-})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:schema.sql"),
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")})
 public class OrderServiceTest {
 
   @Autowired
   private OrderService orderService;
 
-  @Test
-  public void getAll_Test() {
-    List<Order> testList = orderService.getAll();
-    int testListSize = testList.size();
+  @MockBean
+  private MethodService methodService;
 
-    assertEquals(testListSize, 2);
+  @MockBean
+  private RedirectAttributes redirectAttributes;
+
+  private Map<String, Boolean> errorFlashAttributes;
+  private Order order;
+  private int countAllStart;
+
+  @Before
+  public void setup() {
+    errorFlashAttributes = new HashMap<>();
+    errorFlashAttributes.put("orderError", true);
+    order = new Order();
+    countAllStart = orderService.getAll().size();
   }
 
   @Test
-  public void save_Test() {
-    Order testOrder = new Order();
-    testOrder.setName("newTestOrder");
-    testOrder.setDate(new Date());
-
-    orderService.save(testOrder);
-    List<Order> testList = orderService.getAll();
-    int testListSize = testList.size();
-
-    assertEquals(testListSize, 3);
+  public void getAll() {
+    assertFalse(orderService.getAll().isEmpty());
+    assertThat(orderService.getAll().size(), is(2));
+    assertThat(orderService.getAll().get(0).getName(), is("NameTaken"));
   }
 
   @Test
-  public void save_Test_Fail() {
-    Order testOrder = new Order();
-    testOrder.setName("testName1");
-    testOrder.setDate(new Date());
-
-    orderService.save(testOrder);
-    List<Order> testList = orderService.getAll();
-    int testListSize = testList.size();
-
-    assertEquals(testListSize, 2);
+  public void save() {
+    assertThat(orderService.getAll().size(), is(countAllStart));
+    order.setName("NameTaken");
+    orderService.save(order);
+    assertThat(orderService.getAll().size(), is(countAllStart));
+    order.setName("NameNew");
+    orderService.save(order);
+    assertThat(orderService.getAll().size(), is(countAllStart + 1));
+    assertThat(orderService.getAll().get(2).getName(), is("NameNew"));
   }
 
   @Test
-  public void getByName_Test() {
-    Order testOrder = orderService.getByName("testName1");
-    assertNotNull(testOrder);
+  public void getByName() {
+    Order orderByName = orderService.getByName("NameTaken");
+    assertNotNull(orderByName);
+    assertThat(orderByName.getName(), is("NameTaken"));
   }
 
   @Test
-  public void getByName_Test_Fail() {
-    Order testOrder = orderService.getByName("dummyOrder");
-    assertNull(testOrder);
+  public void existsByName() {
+    assertTrue(orderService.existsByName("NameTaken"));
+    assertFalse(orderService.existsByName("NameNew"));
   }
 
   @Test
-  public void existByName_Test() {
-    boolean testExistence = orderService.existsByName("testName1");
-    assertTrue(testExistence);
+  public void getErrorFlashAttributes() {
+    String message = "Enter order name.";
+
+    when((Object) methodService.getErrorMessageFlashAttributes(
+        notNull(),
+        notNull(),
+        notNull())).thenReturn(errorFlashAttributes);
+
+    for (int i = 0; i < 3; i++) {
+      if (i == 1) {
+        order.setName("");
+        message = "Empty order name.";
+      } else if (i == 2) {
+        order.setName("NameTaken");
+        message = "Order name already exists.";
+      }
+
+      assertFalse(orderService.getErrorFlashAttributes(order, redirectAttributes).isEmpty());
+
+      ArgumentCaptor<String> stringArgument = ArgumentCaptor.forClass(String.class);
+      ArgumentCaptor<String> stringArgument2 = ArgumentCaptor.forClass(String.class);
+      verify(methodService, atLeast(1))
+          .getErrorMessageFlashAttributes(
+              stringArgument.capture(),
+              any(RedirectAttributes.class),
+              stringArgument2.capture());
+      verifyNoMoreInteractions(methodService);
+      assertThat(stringArgument.getValue(), is(message));
+      assertThat(stringArgument2.getValue(), is("orderError"));
+      clearInvocations();
+    }
   }
 
-  @Test
-  public void existByName_Test_False() {
-    boolean testExistence = orderService.existsByName("dummyOrder");
-    assertFalse(testExistence);
-  }
+
 }

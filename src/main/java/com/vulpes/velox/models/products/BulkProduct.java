@@ -7,6 +7,7 @@ import org.hibernate.envers.Audited;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,13 @@ public class BulkProduct extends Product  {
 
   @OneToMany(mappedBy = "bulkProduct", cascade = CascadeType.REMOVE)
   private List<Shipment> shipments;
+
+  public BulkProduct() {
+  }
+
+  public BulkProduct(BigInteger value) {
+    super(value);
+  }
 
   public List<Shipment> getShipments() {
     return shipments;

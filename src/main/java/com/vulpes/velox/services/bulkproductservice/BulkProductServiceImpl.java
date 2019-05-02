@@ -3,11 +3,13 @@ package com.vulpes.velox.services.bulkproductservice;
 import com.vulpes.velox.dtos.ProductDto;
 import com.vulpes.velox.models.products.BulkProduct;
 import com.vulpes.velox.repositories.BulkProductRepository;
+import com.vulpes.velox.services.methodservice.MethodService;
 import com.vulpes.velox.services.productservice.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +18,15 @@ public class BulkProductServiceImpl implements BulkProductService {
 
   private BulkProductRepository bulkProductRepository;
   private ProductService productService;
+  private MethodService methodService;
 
   @Autowired
-  public BulkProductServiceImpl(BulkProductRepository bulkProductRepository, ProductService productService) {
+  public BulkProductServiceImpl(BulkProductRepository bulkProductRepository,
+                                ProductService productService,
+                                MethodService methodService) {
     this.bulkProductRepository = bulkProductRepository;
     this.productService = productService;
+    this.methodService = methodService;
   }
 
   @Override
@@ -43,23 +49,10 @@ public class BulkProductServiceImpl implements BulkProductService {
 
   @Override
   public Map<String, ?> getErrorFlashAttributes(BulkProduct bulkProduct, RedirectAttributes redirectAttributes) {
-    if(bulkProduct.getName() == null) {
-      return getErrorMessageFlashAttributes("Enter bulk product name.", redirectAttributes);
-    }
-    if(bulkProduct.getName().isEmpty()) {
-      return getErrorMessageFlashAttributes("Empty bulk product name.", redirectAttributes);
-    }
-    if(productService.existsByName(bulkProduct.getName())) {
-      return getErrorMessageFlashAttributes("Product name already exists.", redirectAttributes);
-    }
-    return redirectAttributes.getFlashAttributes();
-  }
-
-  private Map<String, ?> getErrorMessageFlashAttributes(String message,
-                                                        RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("bulkProductError", true);
-    redirectAttributes.addFlashAttribute("errorMessage", message);
-    return redirectAttributes.getFlashAttributes();
+    return methodService.getNameErrorAttributes(
+        bulkProduct,
+        redirectAttributes,
+        "bulkProductError");
   }
 
   @Override
@@ -72,6 +65,15 @@ public class BulkProductServiceImpl implements BulkProductService {
   @Override
   public List<BulkProduct> getAllFilteredBy(String filter) {
     return bulkProductRepository.findAllByNameContaining(filter);
+  }
+
+  @Override
+  public void saveNewBulkProduct(BulkProduct bulkProduct, String unit) {
+    bulkProduct.setQuantity((long) 0);
+    bulkProduct.setPrice((long) 0);
+    bulkProduct.setValue(BigInteger.valueOf(0));
+    bulkProduct.setUnit(unit);
+    productService.save(bulkProduct);
   }
 
 }
